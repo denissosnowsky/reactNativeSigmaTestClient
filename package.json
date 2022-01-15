@@ -21,6 +21,7 @@
     "**/*.{js,jsx,ts,tsx}": "yarn run lint:fix"
   },
   "dependencies": {
+    "@expo/vector-icons": "^12.0.5",
     "@reduxjs/toolkit": "^1.7.1",
     "axios": "^0.24.0",
     "expo": "~44.0.0",
@@ -43,6 +44,7 @@
     "@types/react-native": "~0.64.12",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
+    "babel-plugin-module-resolver": "^4.1.0",
     "eslint": "8.2.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "^8.3.0",
@@ -54,7 +56,8 @@
     "eslint-plugin-react-hooks": "4.3.0",
     "husky": "^7.0.0",
     "lint-staged": "^12.1.7",
-    "prettier": "2.5.1",
+    "metro-react-native-babel-preset": "^0.66.2",
+    "prettier": "2.4.1",
     "pretty-quick": "^3.1.3",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "~4.3.5"

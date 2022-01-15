@@ -1,0 +1,11 @@
+export default {
+  MAIN_COLOR: '#362EFF',
+  SUCCESS_COLOR: '#21B017',
+  DELETE_COLOR: 'red',
+  PLACEHOLDER_COLOR: '#618EFF',
+  MAIN_FS: 20,
+  ALERT_FS: 23,
+  SUCCESS_ALERT_BG: 'rgba(255, 117, 120, 0.9)',
+  BORDER_COLOR: '#999',
+  CANCEL_COLOR: '#999',
+};
