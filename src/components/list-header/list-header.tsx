@@ -2,10 +2,11 @@ import React, { useCallback, VFC } from 'react';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { actions as todosActions } from '~store/todo/todo.actions';
 import { SortTypes, TodosColumns } from '~types/todo.types';
 import todosSelectors from '~store/todo/todo.selectors';
-
+import globalStyles from '~global/constants.style';
 import styles from './list-header.style';
 
 export const ListHeader: VFC = () => {
@@ -63,13 +64,21 @@ export const ListHeader: VFC = () => {
     <View style={styles.wrapper}>
       <TouchableWithoutFeedback onPress={() => dispatch(todosActions.todoSort(TodosColumns.ID))}>
         <View style={styles.id}>
-          <FontAwesome name={iconPicker(TodosColumns.ID)} size={20} color="black" />
+          <FontAwesome
+            name={iconPicker(TodosColumns.ID)}
+            size={globalStyles.HEADER_CION_SIZE}
+            color={globalStyles.ICON_DEF_COLOR}
+          />
           <Text style={styles.headerText}> ID</Text>
         </View>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback onPress={() => dispatch(todosActions.todoSort(TodosColumns.NAME))}>
         <View style={styles.text}>
-          <FontAwesome name={iconPicker(TodosColumns.NAME)} size={20} color="black" />
+          <FontAwesome
+            name={iconPicker(TodosColumns.NAME)}
+            size={globalStyles.HEADER_CION_SIZE}
+            color={globalStyles.ICON_DEF_COLOR}
+          />
           <Text style={styles.headerText}> Name</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -78,7 +87,11 @@ export const ListHeader: VFC = () => {
           onPress={() => dispatch(todosActions.todoSort(TodosColumns.SELECT))}
         >
           <View style={styles.complete}>
-            <FontAwesome name={iconPicker(TodosColumns.SELECT)} size={20} color="black" />
+            <FontAwesome
+              name={iconPicker(TodosColumns.SELECT)}
+              size={globalStyles.HEADER_CION_SIZE}
+              color={globalStyles.ICON_DEF_COLOR}
+            />
             <Text style={styles.headerText}> Selected</Text>
           </View>
         </TouchableWithoutFeedback>
@@ -87,7 +100,11 @@ export const ListHeader: VFC = () => {
           onPress={() => dispatch(todosActions.todoSort(TodosColumns.STATUS))}
         >
           <View style={styles.complete}>
-            <FontAwesome name={iconPicker(TodosColumns.STATUS)} size={20} color="black" />
+            <FontAwesome
+              name={iconPicker(TodosColumns.STATUS)}
+              size={globalStyles.HEADER_CION_SIZE}
+              color={globalStyles.ICON_DEF_COLOR}
+            />
             <Text style={styles.headerText}> Status</Text>
           </View>
         </TouchableWithoutFeedback>

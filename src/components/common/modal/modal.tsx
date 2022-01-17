@@ -7,13 +7,14 @@ import styles from './modal.style';
 import { BlueText } from '../text';
 
 export const ModalFC: VFC<Props> = ({ itemsQuantity, confirm, decline, showModal, closeModal }) => {
+  const IS_ONE_QUANTITY = itemsQuantity === 1;
   return (
     <>
       <Modal isOpen={showModal} onClose={closeModal}>
-        <Modal.Content maxWidth="400px" style={styles.wrapper}>
+        <Modal.Content maxWidth={globalStyles.MODAL_WD} style={styles.wrapper}>
           <View style={styles.textWrapper}>
             <BlueText fs={globalStyles.MAIN_FS}>{`Delete ${itemsQuantity} ${
-              itemsQuantity === 1 ? 'todo' : 'todos'
+              IS_ONE_QUANTITY ? 'todo' : 'todos'
             }?`}</BlueText>
           </View>
           <View style={styles.buttonsWrapper}>

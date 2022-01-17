@@ -1,21 +1,42 @@
-import React, { VFC } from 'react';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import React, { useCallback, VFC } from 'react';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
-import globalStyles from '~global/constants.style';
 
-export const ButtonIcon: VFC<Props> = ({ onPress, variant }) => (
-  <TouchableOpacity onPress={onPress}>
-    {variant === 'add' ? (
-      <Ionicons name="add-circle" size={50} color={globalStyles.SUCCESS_COLOR} />
-    ) : variant === 'delete' ? (
-      <MaterialCommunityIcons name="delete-circle" size={50} color={globalStyles.DELETE_COLOR} />
-    ) : variant === 'save' ? (
-      <MaterialCommunityIcons name="content-save" size={50} color={globalStyles.MAIN_COLOR} />
-    ) : variant === 'cancel' ? (
-      <MaterialCommunityIcons name="cancel" size={50} color={globalStyles.CANCEL_COLOR} />
-    ) : null}
-  </TouchableOpacity>
-);
+import globalStyles from '~global/constants.style';
+import { TodoButtonsNameType } from '~types/todo.types';
+
+export const ButtonIcon: VFC<Props> = ({ onPress, variant }) => {
+  const iconNamePicker = useCallback(
+    (
+      btnVariant: typeof variant,
+    ): {
+      name: TodoButtonsNameType;
+      color: string;
+    } => {
+      switch (btnVariant) {
+        case 'add':
+          return { name: 'plus-circle', color: globalStyles.SUCCESS_COLOR };
+        case 'delete':
+          return { name: 'delete-circle', color: globalStyles.DELETE_COLOR };
+        case 'save':
+          return { name: 'content-save', color: globalStyles.MAIN_COLOR };
+        default:
+          return { name: 'cancel', color: globalStyles.CANCEL_COLOR };
+      }
+    },
+    [],
+  );
+
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <MaterialCommunityIcons
+        name={iconNamePicker(variant).name}
+        size={globalStyles.ICON_MED_SIZE}
+        color={iconNamePicker(variant).color}
+      />
+    </TouchableOpacity>
+  );
+};
 
 type Props = {
   onPress?: () => void;

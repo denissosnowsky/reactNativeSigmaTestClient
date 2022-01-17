@@ -28,3 +28,5 @@ export type TodoDTO = {
   title: string;
   completed: boolean;
 };
+
+export type TodoButtonsNameType = 'plus-circle' | 'delete-circle' | 'content-save' | 'cancel';

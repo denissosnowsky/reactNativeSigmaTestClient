@@ -20,6 +20,7 @@ export const TodoList: VFC = () => {
   const page = useSelector(todosSelectors.page);
   const loading = useSelector(todosSelectors.loading);
   const isListInitializing = useSelector(todosSelectors.isListInitializing);
+  const isTodosEmpty = todos.length === 0;
 
   useEffect(() => {
     dispatch(todosThunks.fetchTodos());
@@ -72,7 +73,11 @@ export const TodoList: VFC = () => {
 
   return (
     <>
-      {todos.length !== 0 ? (
+      {isTodosEmpty ? (
+        <View style={styles.nonListWrapper}>
+          <BlueText fs={globalStyle.BIG_FT}>Add your first Todo</BlueText>
+        </View>
+      ) : (
         <>
           <ListHeader />
           <FlatList
@@ -85,10 +90,6 @@ export const TodoList: VFC = () => {
             ListFooterComponent={footerItem}
           />
         </>
-      ) : (
-        <View style={styles.nonListWrapper}>
-          <BlueText fs={35}>Add your first Todo</BlueText>
-        </View>
       )}
     </>
   );

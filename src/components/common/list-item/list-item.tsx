@@ -24,6 +24,10 @@ export const ListItem: VFC<Props> = ({
   const inputRef: Ref<HTMLInputElement> = useRef(null);
   const isMultipleEditing = editingTodos.length > 1;
   const isCurrentItemEditing = editingTodos.some((todo) => todo.id === id);
+  const isIdShouldBeShown = complete || !editingMode || isMultipleEditing;
+  const isUncompleteTodoIsEditing = editingMode && !complete && !isMultipleEditing;
+  const isTodoSelectedOrCompleted =
+    (complete && !isMultipleEditing) || (isCurrentItemEditing && isMultipleEditing);
 
   const onCheckPressHandle = () => {
     if (!editingMode && onPressCheck) {
@@ -48,17 +52,17 @@ export const ListItem: VFC<Props> = ({
   return (
     <TouchableWithoutFeedback
       onLongPress={onLongPress}
-      delayLongPress={800}
+      delayLongPress={globalStyles.DEALY_PRESS}
       onPress={onSelectHandler}
     >
       <View style={[styles.wrapper, editingMode && styles.active]}>
-        {(complete || !editingMode || isMultipleEditing) && (
+        {isIdShouldBeShown && (
           <View style={styles.id}>
             <BlueText fs={globalStyles.MAIN_FS}>{`${id}.`}</BlueText>
           </View>
         )}
         <View style={styles.text}>
-          {editingMode && !complete && !isMultipleEditing ? (
+          {isUncompleteTodoIsEditing ? (
             <Input
               placeholder="Enter todo"
               value={inputValue}
@@ -72,15 +76,23 @@ export const ListItem: VFC<Props> = ({
           )}
         </View>
         <View style={styles.complete}>
-          {editingMode && !complete && !isMultipleEditing ? (
-            <MaterialCommunityIcons name="pencil" size={30} color={globalStyles.CANCEL_COLOR} />
-          ) : (complete && !isMultipleEditing) || (isCurrentItemEditing && isMultipleEditing) ? (
-            <AntDesign name="checkcircle" size={35} color={globalStyles.SUCCESS_COLOR} />
+          {isUncompleteTodoIsEditing ? (
+            <MaterialCommunityIcons
+              name="pencil"
+              size={globalStyles.ICON_EXSM_SIZE}
+              color={globalStyles.CANCEL_COLOR}
+            />
+          ) : isTodoSelectedOrCompleted ? (
+            <AntDesign
+              name="checkcircle"
+              size={globalStyles.ICON_SM_SIZE}
+              color={globalStyles.SUCCESS_COLOR}
+            />
           ) : (
             <MaterialCommunityIcons
               name="checkbox-blank-circle-outline"
-              size={35}
-              color="#000"
+              size={globalStyles.ICON_SM_SIZE}
+              color={globalStyles.ICON_DEF_COLOR}
               onPress={isMultipleEditing ? onSelectHandler : onCheckPressHandle}
             />
           )}

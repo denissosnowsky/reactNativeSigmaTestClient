@@ -12,14 +12,15 @@ import styles from './todo-form.style';
 
 export const TodoForm: VFC = () => {
   const dispatch = useDispatch();
-  const editingMode = useSelector(todoSelectors.editingMode);
-  const editingTodos = useSelector(todoSelectors.editingTodos);
-  const editingInput = useSelector(todoSelectors.editingInput);
   const [formValue, setFormValue] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const isEditingMode = useSelector(todoSelectors.editingMode);
+  const editingTodos = useSelector(todoSelectors.editingTodos);
+  const editingInput = useSelector(todoSelectors.editingInput);
   const isMultipleEditing = editingTodos.length > 1;
+  const isSaveButtonShouldBeShown = !isMultipleEditing && !editingTodos[0]?.completed;
 
-  const clearForm = () => {
+  const clearFormHandler = () => {
     setFormValue('');
     Keyboard.dismiss();
   };
@@ -27,30 +28,30 @@ export const TodoForm: VFC = () => {
   const addTodoHandler = () => {
     if (formValue) {
       dispatch(todosThunks.addTodo({ userId: 1, title: formValue }));
-      clearForm();
+      clearFormHandler();
     }
   };
 
   const deleteTodoHandler = () => {
     dispatch(todosThunks.deleteTodo(editingTodos));
-    clearForm();
+    clearFormHandler();
     setShowModal(false);
   };
 
   const cancelHandler = () => {
     dispatch(todosActions.todoEditModeOff());
-    clearForm();
+    clearFormHandler();
   };
 
   const changeTodoHandler = () => {
     dispatch(todosThunks.changeTodo(editingTodos[0]!.id, editingInput));
-    clearForm();
+    clearFormHandler();
   };
 
   return (
     <>
       <View style={styles.wrapepr}>
-        {!editingMode ? (
+        {!isEditingMode ? (
           <>
             <Input
               placeholder="Add new todo"
@@ -62,15 +63,9 @@ export const TodoForm: VFC = () => {
           </>
         ) : (
           <View
-            style={
-              isMultipleEditing || editingTodos[0]?.completed
-                ? styles.twoBtnEditBlock
-                : styles.threeBtnEditBlock
-            }
+            style={isSaveButtonShouldBeShown ? styles.threeBtnEditBlock : styles.twoBtnEditBlock}
           >
-            {!isMultipleEditing && !editingTodos[0]?.completed && (
-              <ButtonIcon onPress={changeTodoHandler} variant="save" />
-            )}
+            {isSaveButtonShouldBeShown && <ButtonIcon onPress={changeTodoHandler} variant="save" />}
             <ButtonIcon onPress={() => setShowModal(true)} variant="delete" />
             <ButtonIcon onPress={cancelHandler} variant="cancel" />
           </View>
