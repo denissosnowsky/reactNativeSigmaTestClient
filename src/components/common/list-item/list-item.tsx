@@ -4,7 +4,7 @@ import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import globalStyles from '~global/constants.style';
-import { actions as todosActions } from '~store/todo/todo.actions';
+import { todoActions } from '~store/todo';
 import todosSelectors from '~store/todo/todo.selectors';
 import { BlueText } from '../text';
 import styles from './list-item.style';
@@ -38,9 +38,9 @@ export const ListItem: VFC<Props> = ({
   const onSelectHandler = () => {
     if (isMultipleEditing) {
       if (isCurrentItemEditing) {
-        dispatch(todosActions.todoDeselect(id));
+        dispatch(todoActions.todoDeselectOn(id));
       } else {
-        dispatch(todosActions.todoSelect(id));
+        dispatch(todoActions.todoSelectOn(id));
       }
     }
   };
@@ -66,7 +66,7 @@ export const ListItem: VFC<Props> = ({
             <Input
               placeholder="Enter todo"
               value={inputValue}
-              onChange={(value: string) => dispatch(todosActions.todoEditingInputChange(value))}
+              onChange={(value: string) => dispatch(todoActions.todoEditingInputChange(value))}
               ref={inputRef}
             />
           ) : (

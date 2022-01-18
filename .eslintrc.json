@@ -47,13 +47,17 @@
     "no-nested-ternary": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
     "react/display-name": 0,
-    "no-shadow": 0
+    "no-shadow": 0,
+    "prefer-destructuring": 0
   },
   "overrides": [
     {
       "files": ["src/store/**/*.reducer.ts"],
       "rules": {
-        "default-param-last": "off"
+        "default-param-last": "off",
+        "no-param-reassign": "off",
+        "no-self-assign": "off",
+        "@typescript-eslint/no-unused-vars": "off"
       }
     }
   ],

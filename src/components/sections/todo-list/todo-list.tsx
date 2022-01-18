@@ -6,8 +6,7 @@ import { ListItem } from '~components/common/list-item';
 import { TodoDTO } from '~types/todo.types';
 import todosSelectors from '~store/todo/todo.selectors';
 import { BlueText } from '~components/common/text';
-import { thunks as todosThunks } from '~store/todo';
-import { actions as todosActions } from '~store/todo/todo.actions';
+import { todoThunks, todoActions } from '~store/todo';
 import { ListHeader } from '~components/list-header/list-header';
 import globalStyle from '~global/constants.style';
 import styles from './todo-list.style';
@@ -23,11 +22,11 @@ export const TodoList: VFC = () => {
   const isTodosEmpty = todos.length === 0;
 
   useEffect(() => {
-    dispatch(todosThunks.fetchTodos());
+    dispatch(todoThunks.todosFetchThunk());
   }, [dispatch, page]);
 
   useEffect(() => {
-    dispatch(todosThunks.getCursor());
+    dispatch(todoThunks.todoGetCursorThunk());
   }, [dispatch]);
 
   const renderItem = useCallback(
@@ -37,8 +36,8 @@ export const TodoList: VFC = () => {
           id={item.id}
           text={item.title}
           complete={item.completed}
-          onPressCheck={() => dispatch(todosThunks.completeTodo(item.id))}
-          onLongPress={() => dispatch(todosActions.todoEditModeOn(item.id))}
+          onPressCheck={() => dispatch(todoThunks.todoCompleteThunk(item.id))}
+          onLongPress={() => dispatch(todoActions.todoEditModeOn(item.id))}
           editingMode={editingTodos.some((todo) => todo.id === item.id)}
         />
       );
@@ -59,7 +58,7 @@ export const TodoList: VFC = () => {
 
   const onEndReached = useCallback(() => {
     if (allTodosCount > todos.length && !loading) {
-      dispatch(todosActions.todoNextPage());
+      dispatch(todoActions.todoNextPageRequested());
     }
   }, [dispatch, allTodosCount, todos, loading]);
 

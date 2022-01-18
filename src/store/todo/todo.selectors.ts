@@ -1,7 +1,9 @@
 import { SortTypes, TodoDTO } from '~types/todo.types';
-import { stringSorting } from '~utils/stringSorting';
-import { booleanSorting } from '~utils/booleanSorting';
 import { AppState } from '~store';
+import { idSorting } from '~utils/idSorting';
+import { nameSorting } from '~utils/nameSorting';
+import { statusSorting } from '~utils/statusSorting';
+import { selectSorting } from '~utils/selectSorting';
 
 const loading = (state: AppState): boolean => state.todo.loading;
 const error = (state: AppState): string => state.todo.error;
@@ -24,30 +26,17 @@ const todos = (state: AppState): Array<TodoDTO> => {
 
   switch (state.todo.filterMode) {
     case SortTypes.ID_ASC:
-      return todosList.sort((a, b) => a.id - b.id);
     case SortTypes.ID_DESC:
-      return todosList.sort((a, b) => b.id - a.id);
+      return idSorting(state.todo.filterMode, todosList);
     case SortTypes.NAME_ASC:
-      return todosList.sort((a, b) => {
-        return stringSorting(a.title.toLowerCase(), b.title.toLowerCase(), 'asc');
-      });
     case SortTypes.NAME_DESC:
-      return todosList.sort((a, b) => {
-        return stringSorting(a.title.toLowerCase(), b.title.toLowerCase(), 'desc');
-      });
+      return nameSorting(state.todo.filterMode, todosList);
     case SortTypes.STATUS_ASC:
-      return todosList.sort((a, b) => {
-        return booleanSorting(a.completed, b.completed, 'asc');
-      });
     case SortTypes.STATUS_DESC:
-      return todosList.sort((a, b) => {
-        return booleanSorting(a.completed, b.completed, 'desc');
-      });
-    case SortTypes.SELECT_ASC: {
-      return [...edidtinTodos, ...notEditingTodos];
-    }
+      return statusSorting(state.todo.filterMode, todosList);
+    case SortTypes.SELECT_ASC:
     case SortTypes.SELECT_DESC:
-      return [...notEditingTodos, ...edidtinTodos];
+      return selectSorting(state.todo.filterMode, edidtinTodos, notEditingTodos);
     default:
       return todosList;
   }

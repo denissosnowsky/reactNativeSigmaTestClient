@@ -22,6 +22,7 @@ module.exports = function (api) {
             '.native.js',
           ],
         },
+        '@babel/plugin-proposal-export-namespace-from',
       ],
     ],
   };

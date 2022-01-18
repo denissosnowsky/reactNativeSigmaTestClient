@@ -3,7 +3,7 @@ import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { actions as todosActions } from '~store/todo/todo.actions';
+import { todoActions } from '~store/todo';
 import { SortTypes, TodosColumns } from '~types/todo.types';
 import todosSelectors from '~store/todo/todo.selectors';
 import globalStyles from '~global/constants.style';
@@ -62,7 +62,9 @@ export const ListHeader: VFC = () => {
 
   return (
     <View style={styles.wrapper}>
-      <TouchableWithoutFeedback onPress={() => dispatch(todosActions.todoSort(TodosColumns.ID))}>
+      <TouchableWithoutFeedback
+        onPress={() => dispatch(todoActions.todoSortRequested(TodosColumns.ID))}
+      >
         <View style={styles.id}>
           <FontAwesome
             name={iconPicker(TodosColumns.ID)}
@@ -72,7 +74,9 @@ export const ListHeader: VFC = () => {
           <Text style={styles.headerText}> ID</Text>
         </View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => dispatch(todosActions.todoSort(TodosColumns.NAME))}>
+      <TouchableWithoutFeedback
+        onPress={() => dispatch(todoActions.todoSortRequested(TodosColumns.NAME))}
+      >
         <View style={styles.text}>
           <FontAwesome
             name={iconPicker(TodosColumns.NAME)}
@@ -84,7 +88,7 @@ export const ListHeader: VFC = () => {
       </TouchableWithoutFeedback>
       {isMultipleEditing ? (
         <TouchableWithoutFeedback
-          onPress={() => dispatch(todosActions.todoSort(TodosColumns.SELECT))}
+          onPress={() => dispatch(todoActions.todoSortRequested(TodosColumns.SELECT))}
         >
           <View style={styles.complete}>
             <FontAwesome
@@ -97,7 +101,7 @@ export const ListHeader: VFC = () => {
         </TouchableWithoutFeedback>
       ) : (
         <TouchableWithoutFeedback
-          onPress={() => dispatch(todosActions.todoSort(TodosColumns.STATUS))}
+          onPress={() => dispatch(todoActions.todoSortRequested(TodosColumns.STATUS))}
         >
           <View style={styles.complete}>
             <FontAwesome

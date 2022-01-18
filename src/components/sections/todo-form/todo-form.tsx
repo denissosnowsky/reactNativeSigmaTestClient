@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { ButtonIcon } from '~components/common/button-icon';
 import { Input } from '~components/common/input';
-import { thunks as todosThunks } from '~store/todo';
+import { todoThunks, todoActions } from '~store/todo';
 import todoSelectors from '~store/todo/todo.selectors';
-import { actions as todosActions } from '~store/todo/todo.actions';
 import { ModalFC } from '~components/common/modal';
 import styles from './todo-form.style';
 
@@ -27,24 +26,24 @@ export const TodoForm: VFC = () => {
 
   const addTodoHandler = () => {
     if (formValue) {
-      dispatch(todosThunks.addTodo({ userId: 1, title: formValue }));
+      dispatch(todoThunks.todoAddThunk({ userId: 1, title: formValue }));
       clearFormHandler();
     }
   };
 
   const deleteTodoHandler = () => {
-    dispatch(todosThunks.deleteTodo(editingTodos));
+    dispatch(todoThunks.todoDeleteThunk(editingTodos));
     clearFormHandler();
     setShowModal(false);
   };
 
   const cancelHandler = () => {
-    dispatch(todosActions.todoEditModeOff());
+    dispatch(todoActions.todoEditModeOff());
     clearFormHandler();
   };
 
   const changeTodoHandler = () => {
-    dispatch(todosThunks.changeTodo(editingTodos[0]!.id, editingInput));
+    dispatch(todoThunks.todoChangeThunk(editingTodos[0]!.id, editingInput));
     clearFormHandler();
   };
 
