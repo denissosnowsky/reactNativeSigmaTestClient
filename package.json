@@ -15,7 +15,11 @@
     "prettier": "prettier --check \"**/*.{tsx, ts}\"",
     "prettier:fix": "prettier --write \"**/*.{tsx, ts}\"",
     "prettier:staged": "pretty-quick --pattern \"**/*.{tsx, ts}\" --staged",
-    "pre-commit-check": "yarn run prettier:staged && yarn run lint:staged"
+    "pre-commit-check": "yarn run prettier:staged && yarn run lint:staged",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "test:coverage": "jest --verbose --coverage",
+    "test:coverageWithHtml": "jest --verbose --coverage && start ./coverage/lcov-report/index.html"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": "yarn run lint:fix"
@@ -24,9 +28,12 @@
     "@expo/vector-icons": "^12.0.5",
     "@reduxjs/toolkit": "^1.7.1",
     "axios": "^0.24.0",
+    "babel-jest": "26",
     "expo": "~44.0.0",
     "expo-constants": "~13.0.0",
     "expo-status-bar": "~1.2.0",
+    "jest": "26",
+    "jest-expo": "^44.0.1",
     "native-base": "^3.3.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
@@ -34,18 +41,26 @@
     "react-native-safe-area-context": "3.3.2",
     "react-native-svg": "12.1.1",
     "react-native-web": "0.17.1",
-    "react-redux": "^7.2.6"
+    "react-redux": "^7.2.6",
+    "ts-jest": "26"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/plugin-proposal-export-namespace-from": "^7.16.7",
+    "@babel/preset-env": "^7.16.8",
     "@commitlint/cli": "^16.0.2",
     "@commitlint/config-conventional": "^16.0.0",
+    "@testing-library/jest-native": "^4.0.4",
+    "@testing-library/react-native": "^9.0.0",
+    "@types/jest": "^27.4.0",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.64.12",
+    "@types/react-test-renderer": "^17.0.1",
+    "@types/redux-mock-store": "^1.0.3",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
     "babel-plugin-module-resolver": "^4.1.0",
+    "babel-preset-react-native": "5.0.2",
     "eslint": "8.2.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "^8.3.0",
@@ -56,12 +71,18 @@
     "eslint-plugin-react": "7.28.0",
     "eslint-plugin-react-hooks": "4.3.0",
     "husky": "^7.0.0",
+    "jest-react-native": "^18.0.0",
     "lint-staged": "^12.1.7",
     "metro-react-native-babel-preset": "^0.66.2",
     "prettier": "2.4.1",
     "pretty-quick": "^3.1.3",
+    "react-test-renderer": "^17.0.2",
+    "redux-mock-store": "^1.5.4",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "~4.3.5"
   },
-  "private": true
+  "private": true,
+  "resolutions": {
+    "react-native/@jest/create-cache-key-function": "^27.0.2"
+  }
 }

@@ -6,9 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import globalStyles from '~global/constants.style';
 import { todoActions } from '~store/todo';
 import todosSelectors from '~store/todo/todo.selectors';
+import { dispatchSelection } from '~utils/dispatchSelection';
 import { BlueText } from '../text';
 import styles from './list-item.style';
 import { Input } from '../input';
+import { onCheckPressHandle } from './utils/onCheckPressHandle';
+import { onSelectHandler } from './utils/onSelectHandler';
 
 export const ListItem: VFC<Props> = ({
   id,
@@ -20,30 +23,15 @@ export const ListItem: VFC<Props> = ({
 }) => {
   const dispatch = useDispatch();
   const inputValue = useSelector(todosSelectors.editingInput);
+  const isEdiditngMode = useSelector(todosSelectors.editingMode);
   const editingTodos = useSelector(todosSelectors.editingTodos);
   const inputRef: Ref<HTMLInputElement> = useRef(null);
-  const isMultipleEditing = editingTodos.length > 1;
+  const isMultipleEditing = editingTodos.length > 1 && isEdiditngMode;
   const isCurrentItemEditing = editingTodos.some((todo) => todo.id === id);
   const isIdShouldBeShown = complete || !editingMode || isMultipleEditing;
   const isUncompleteTodoIsEditing = editingMode && !complete && !isMultipleEditing;
   const isTodoSelectedOrCompleted =
     (complete && !isMultipleEditing) || (isCurrentItemEditing && isMultipleEditing);
-
-  const onCheckPressHandle = () => {
-    if (!editingMode && onPressCheck) {
-      onPressCheck();
-    }
-  };
-
-  const onSelectHandler = () => {
-    if (isMultipleEditing) {
-      if (isCurrentItemEditing) {
-        dispatch(todoActions.todoDeselectOn(id));
-      } else {
-        dispatch(todoActions.todoSelectOn(id));
-      }
-    }
-  };
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -53,7 +41,15 @@ export const ListItem: VFC<Props> = ({
     <TouchableWithoutFeedback
       onLongPress={onLongPress}
       delayLongPress={globalStyles.DEALY_PRESS}
-      onPress={onSelectHandler}
+      onPress={() =>
+        onSelectHandler(
+          isMultipleEditing,
+          isCurrentItemEditing,
+          dispatchSelection(dispatch, todoActions.todoDeselectOn(id)),
+          dispatchSelection(dispatch, todoActions.todoSelectOn(id)),
+        )
+      }
+      testID="wrapper"
     >
       <View style={[styles.wrapper, editingMode && styles.active]}>
         {isIdShouldBeShown && (
@@ -87,13 +83,34 @@ export const ListItem: VFC<Props> = ({
               name="checkcircle"
               size={globalStyles.ICON_SM_SIZE}
               color={globalStyles.SUCCESS_COLOR}
+              onPress={
+                isMultipleEditing
+                  ? () =>
+                      onSelectHandler(
+                        isMultipleEditing,
+                        isCurrentItemEditing,
+                        dispatchSelection(dispatch, todoActions.todoDeselectOn(id)),
+                        dispatchSelection(dispatch, todoActions.todoSelectOn(id)),
+                      )
+                  : () => onCheckPressHandle(onPressCheck)
+              }
             />
           ) : (
             <MaterialCommunityIcons
               name="checkbox-blank-circle-outline"
               size={globalStyles.ICON_SM_SIZE}
               color={globalStyles.ICON_DEF_COLOR}
-              onPress={isMultipleEditing ? onSelectHandler : onCheckPressHandle}
+              onPress={
+                isMultipleEditing
+                  ? () =>
+                      onSelectHandler(
+                        isMultipleEditing,
+                        isCurrentItemEditing,
+                        dispatchSelection(dispatch, todoActions.todoDeselectOn(id)),
+                        dispatchSelection(dispatch, todoActions.todoSelectOn(id)),
+                      )
+                  : () => onCheckPressHandle(onPressCheck)
+              }
             />
           )}
         </View>
@@ -107,6 +124,6 @@ type Props = {
   text: string;
   complete: boolean;
   editingMode?: boolean;
-  onPressCheck?: () => void;
-  onLongPress?: () => void;
+  onPressCheck: () => void;
+  onLongPress: () => void;
 };

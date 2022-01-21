@@ -1,7 +1,8 @@
 import React, { VFC } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { NativeBaseProvider } from 'native-base';
+import { KeyboardAvoidingView, NativeBaseProvider } from 'native-base';
 import { Provider } from 'react-redux';
+import { Platform } from 'react-native';
 
 import { Todos } from '~screens/todos';
 import store from './src/store';
@@ -12,8 +13,13 @@ const App: VFC = () => {
     <Provider store={store}>
       <NativeBaseProvider>
         <ErrorBoundary>
-          <Todos />
-          <StatusBar style="auto" />
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{ display: 'flex', height: '100%' }}
+          >
+            <Todos />
+            <StatusBar style="auto" />
+          </KeyboardAvoidingView>
         </ErrorBoundary>
       </NativeBaseProvider>
     </Provider>

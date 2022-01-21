@@ -20,12 +20,12 @@ export const todoDeleteReducer = {
     state.editingTodos = [];
     state.editingInput = '';
   },
-  todoDeleteFailed(state: TodoState, action: PayloadAction<string>) {
+  todoDeleteFailed(state: TodoState, action: PayloadAction<{ error: string; ids: number[] }>) {
     state.todos = [...state.todos, ...state.editingTodos!];
     state.allTodosCount += state.editingTodos!.length;
-    state.deletedTodosBeforeNewPage -= action.payload.length;
+    state.deletedTodosBeforeNewPage -= action.payload.ids.length;
     state.editingTodos = [];
     state.editingInput = '';
-    state.error = action.payload;
+    state.error = action.payload.error;
   },
 };

@@ -9,7 +9,7 @@ const newEditingTodos = (state: TodoState, action: PayloadAction<number>) =>
 export const todoEditReducer = {
   todoEditModeOn(state: TodoState, action: PayloadAction<number>) {
     state.editingTodos = [...state.editingTodos, newEditingTodos(state, action)];
-    state.editingInput = newEditingTodos(state, action)?.title ?? '';
+    state.editingInput = newEditingTodos(state, action).title;
     state.editingMode = true;
   },
   todoEditModeOff(state: TodoState) {

@@ -1,73 +1,31 @@
-import React, { useCallback, VFC } from 'react';
+import React, { VFC } from 'react';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { todoActions } from '~store/todo';
-import { SortTypes, TodosColumns } from '~types/todo.types';
+import { TodosColumns } from '~types/todo.types';
 import todosSelectors from '~store/todo/todo.selectors';
 import globalStyles from '~global/constants.style';
+import { dispatchSelection } from '~utils/dispatchSelection';
 import styles from './list-header.style';
+import { iconPicker } from './utils/iconPicker';
 
 export const ListHeader: VFC = () => {
   const dispatch = useDispatch();
   const filterMode = useSelector(todosSelectors.filterMode);
-  const isMultipleEditing = useSelector(todosSelectors.editingTodos).length > 1;
-
-  const iconPicker = useCallback(
-    (columnType: TodosColumns): 'sort' | 'sort-asc' | 'sort-desc' => {
-      switch (columnType) {
-        case TodosColumns.ID:
-          switch (filterMode) {
-            case SortTypes.ID_ASC:
-              return 'sort-asc';
-            case SortTypes.ID_DESC:
-              return 'sort-desc';
-            default:
-              return 'sort';
-          }
-        case TodosColumns.NAME:
-          switch (filterMode) {
-            case SortTypes.NAME_ASC:
-              return 'sort-asc';
-            case SortTypes.NAME_DESC:
-              return 'sort-desc';
-            default:
-              return 'sort';
-          }
-        case TodosColumns.STATUS:
-          switch (filterMode) {
-            case SortTypes.STATUS_ASC:
-              return 'sort-asc';
-            case SortTypes.STATUS_DESC:
-              return 'sort-desc';
-            default:
-              return 'sort';
-          }
-        case TodosColumns.SELECT:
-          switch (filterMode) {
-            case SortTypes.SELECT_ASC:
-              return 'sort-asc';
-            case SortTypes.SELECT_DESC:
-              return 'sort-desc';
-            default:
-              return 'sort';
-          }
-        default:
-          return 'sort';
-      }
-    },
-    [filterMode],
-  );
+  const editingMode = useSelector(todosSelectors.editingMode);
+  const editingTodos = useSelector(todosSelectors.editingTodos);
+  const isMultipleEditing = editingTodos.length > 1 && editingMode;
 
   return (
     <View style={styles.wrapper}>
       <TouchableWithoutFeedback
-        onPress={() => dispatch(todoActions.todoSortRequested(TodosColumns.ID))}
+        onPress={dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.ID))}
       >
         <View style={styles.id}>
           <FontAwesome
-            name={iconPicker(TodosColumns.ID)}
+            name={iconPicker(TodosColumns.ID, filterMode)}
             size={globalStyles.HEADER_CION_SIZE}
             color={globalStyles.ICON_DEF_COLOR}
           />
@@ -75,11 +33,11 @@ export const ListHeader: VFC = () => {
         </View>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback
-        onPress={() => dispatch(todoActions.todoSortRequested(TodosColumns.NAME))}
+        onPress={dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.NAME))}
       >
         <View style={styles.text}>
           <FontAwesome
-            name={iconPicker(TodosColumns.NAME)}
+            name={iconPicker(TodosColumns.NAME, filterMode)}
             size={globalStyles.HEADER_CION_SIZE}
             color={globalStyles.ICON_DEF_COLOR}
           />
@@ -88,11 +46,11 @@ export const ListHeader: VFC = () => {
       </TouchableWithoutFeedback>
       {isMultipleEditing ? (
         <TouchableWithoutFeedback
-          onPress={() => dispatch(todoActions.todoSortRequested(TodosColumns.SELECT))}
+          onPress={dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.SELECT))}
         >
           <View style={styles.complete}>
             <FontAwesome
-              name={iconPicker(TodosColumns.SELECT)}
+              name={iconPicker(TodosColumns.SELECT, filterMode)}
               size={globalStyles.HEADER_CION_SIZE}
               color={globalStyles.ICON_DEF_COLOR}
             />
@@ -101,11 +59,11 @@ export const ListHeader: VFC = () => {
         </TouchableWithoutFeedback>
       ) : (
         <TouchableWithoutFeedback
-          onPress={() => dispatch(todoActions.todoSortRequested(TodosColumns.STATUS))}
+          onPress={dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.STATUS))}
         >
           <View style={styles.complete}>
             <FontAwesome
-              name={iconPicker(TodosColumns.STATUS)}
+              name={iconPicker(TodosColumns.STATUS, filterMode)}
               size={globalStyles.HEADER_CION_SIZE}
               color={globalStyles.ICON_DEF_COLOR}
             />

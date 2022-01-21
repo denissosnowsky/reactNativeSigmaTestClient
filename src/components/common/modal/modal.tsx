@@ -10,7 +10,7 @@ export const ModalFC: VFC<Props> = ({ itemsQuantity, confirm, decline, showModal
   const IS_ONE_QUANTITY = itemsQuantity === 1;
   return (
     <>
-      <Modal isOpen={showModal} onClose={closeModal}>
+      <Modal isOpen={showModal} onClose={closeModal} testID="wrapper">
         <Modal.Content maxWidth={globalStyles.MODAL_WD} style={styles.wrapper}>
           <View style={styles.textWrapper}>
             <BlueText fs={globalStyles.MAIN_FS}>{`Delete ${itemsQuantity} ${
@@ -18,8 +18,8 @@ export const ModalFC: VFC<Props> = ({ itemsQuantity, confirm, decline, showModal
             }?`}</BlueText>
           </View>
           <View style={styles.buttonsWrapper}>
-            <Button onPress={confirm} title="Yes" />
-            <Button onPress={decline} title="No" />
+            <Button onPress={confirm} title="Yes" testID="yes" />
+            <Button onPress={decline} title="No" testID="no" />
           </View>
         </Modal.Content>
       </Modal>

@@ -16,10 +16,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
   },
-  boardAvoidBlock: {
-    display: 'flex',
-    height: '100%',
-  },
   alert: {
     position: 'absolute',
     top: 50,

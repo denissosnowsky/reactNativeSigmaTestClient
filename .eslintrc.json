@@ -48,7 +48,8 @@
     "@typescript-eslint/no-non-null-assertion": 0,
     "react/display-name": 0,
     "no-shadow": 0,
-    "prefer-destructuring": 0
+    "prefer-destructuring": 0,
+    "react-hooks/exhaustive-deps": 0
   },
   "overrides": [
     {
@@ -58,6 +59,14 @@
         "no-param-reassign": "off",
         "no-self-assign": "off",
         "@typescript-eslint/no-unused-vars": "off"
+      }
+    },
+    {
+      "files": ["src/**/*.test.ts", "src/**/*.test.tsx"],
+      "rules": {
+        "no-magic-numbers": "off",
+        "import/no-extraneous-dependencies": "off",
+        "no-promise-executor-return": "off"
       }
     }
   ],
