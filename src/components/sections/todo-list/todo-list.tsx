@@ -74,7 +74,7 @@ export const TodoList: VFC = () => {
   if (isListInitializing) {
     return (
       <View style={styles.nonListWrapper} testID="init">
-        <ActivityIndicator size="large" color={globalStyle.MAIN_COLOR} />
+        <ActivityIndicator size="large" color={globalStyle.MAIN_COLOR} testID="todo-loading" />
       </View>
     );
   }

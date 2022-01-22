@@ -22,6 +22,7 @@ export const ListHeader: VFC = () => {
     <View style={styles.wrapper}>
       <TouchableWithoutFeedback
         onPress={dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.ID))}
+        testID="id-filter"
       >
         <View style={styles.id}>
           <FontAwesome
@@ -34,6 +35,7 @@ export const ListHeader: VFC = () => {
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback
         onPress={dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.NAME))}
+        testID="name-filter"
       >
         <View style={styles.text}>
           <FontAwesome
@@ -47,6 +49,7 @@ export const ListHeader: VFC = () => {
       {isMultipleEditing ? (
         <TouchableWithoutFeedback
           onPress={dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.SELECT))}
+          testID="select-filter"
         >
           <View style={styles.complete}>
             <FontAwesome
@@ -60,6 +63,7 @@ export const ListHeader: VFC = () => {
       ) : (
         <TouchableWithoutFeedback
           onPress={dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.STATUS))}
+          testID="status-filter"
         >
           <View style={styles.complete}>
             <FontAwesome

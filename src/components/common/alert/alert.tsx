@@ -7,7 +7,7 @@ import styles from './alert.style';
 export const Alert: VFC<Props> = ({ status, text, isShown }) => {
   return (
     <AlertNB
-      testID="wrapper"
+      testID="alert-wrapper"
       w={globalStyles.CONTAINER_WD}
       status={status}
       style={[styles.wrapper, isShown ? styles.isShown : styles.isHidden]}

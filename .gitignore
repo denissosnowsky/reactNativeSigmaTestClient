@@ -17,3 +17,5 @@ web-build/
 
 cache/
 coverage/
+
+cypress/videos/

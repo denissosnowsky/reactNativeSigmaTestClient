@@ -89,7 +89,7 @@ describe('List item component', () => {
       </NativeBaseProvider>,
     );
     // When
-    fireEvent(getByTestId('wrapper'), 'onLongPress');
+    fireEvent(getByTestId('list-item-wrapper'), 'onLongPress');
     // Then
     expect(onLongPressMock).toHaveBeenCalled();
   });
@@ -298,7 +298,7 @@ describe('List item component', () => {
         </Provider>
       </NativeBaseProvider>,
     );
-    fireEvent(getByTestId('wrapper'), 'onPress');
+    fireEvent(getByTestId('list-item-wrapper'), 'onPress');
     // Then
     expect(onSelectHandler).toHaveBeenCalled();
   });

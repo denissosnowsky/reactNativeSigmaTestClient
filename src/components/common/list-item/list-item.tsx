@@ -49,7 +49,7 @@ export const ListItem: VFC<Props> = ({
           dispatchSelection(dispatch, todoActions.todoSelectOn(id)),
         )
       }
-      testID="wrapper"
+      testID="list-item-wrapper"
     >
       <View style={[styles.wrapper, editingMode && styles.active]}>
         {isIdShouldBeShown && (
@@ -74,6 +74,7 @@ export const ListItem: VFC<Props> = ({
         <View style={styles.complete}>
           {isUncompleteTodoIsEditing ? (
             <MaterialCommunityIcons
+              testID="pencil"
               name="pencil"
               size={globalStyles.ICON_EXSM_SIZE}
               color={globalStyles.CANCEL_COLOR}
@@ -83,6 +84,7 @@ export const ListItem: VFC<Props> = ({
               name="checkcircle"
               size={globalStyles.ICON_SM_SIZE}
               color={globalStyles.SUCCESS_COLOR}
+              testID="check"
               onPress={
                 isMultipleEditing
                   ? () =>
@@ -98,6 +100,7 @@ export const ListItem: VFC<Props> = ({
           ) : (
             <MaterialCommunityIcons
               name="checkbox-blank-circle-outline"
+              testID="circle-blank"
               size={globalStyles.ICON_SM_SIZE}
               color={globalStyles.ICON_DEF_COLOR}
               onPress={

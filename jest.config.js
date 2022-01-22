@@ -20,7 +20,7 @@ module.exports = {
   transformIgnorePatterns: [
     '<rootDir>/node_modules/(react-clone-referenced-element|@react-native-community|react-navigation|@react-navigation/.*|@unimodules/.*|native-base|react-native-code-push)',
   ],
-  testPathIgnorePatterns: ['<rootDir>/node_modules/', '\\.snap$'],
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/cypress/', '\\.snap$'],
   cacheDirectory: '.jest/cache',
   testEnvironment: 'jsdom',
   coverageThreshold: {
@@ -38,5 +38,6 @@ module.exports = {
     '<rootDir>/src/assets',
     '<rootDir>/src/global',
     '<rootDir>/src/types',
+    '<rootDir>/cypress',
   ],
 };

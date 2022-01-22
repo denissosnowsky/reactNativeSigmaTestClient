@@ -33,7 +33,7 @@ describe('Alert component', () => {
       </NativeBaseProvider>,
     );
     // Then
-    expect(queryByTestId('wrapper')).toHaveStyle({ display: 'flex' });
+    expect(queryByTestId('alert-wrapper')).toHaveStyle({ display: 'flex' });
   });
 
   it('alert shouldn"t be shown with false isShown prop', () => {
@@ -44,7 +44,7 @@ describe('Alert component', () => {
       </NativeBaseProvider>,
     );
     // Then
-    expect(queryByTestId('wrapper')).toHaveStyle({ display: 'none' });
+    expect(queryByTestId('alert-wrapper')).toHaveStyle({ display: 'none' });
   });
 
   it('alert should show proper status', () => {
@@ -68,7 +68,7 @@ describe('Alert component', () => {
       </NativeBaseProvider>,
     );
     // Then
-    const alerts = getAllByTestId('wrapper');
+    const alerts = getAllByTestId('alert-wrapper');
     expect(alerts[0].props.style[0].backgroundColor).toBe(uiKitBGColors[0].color);
     expect(alerts[1].props.style[0].backgroundColor).toBe(uiKitBGColors[1].color);
     expect(alerts[2].props.style[0].backgroundColor).toBe(uiKitBGColors[2].color);
