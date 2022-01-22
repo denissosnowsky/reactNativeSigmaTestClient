@@ -4,7 +4,7 @@ import Constants from 'expo-constants';
 import ApiServiceAbstract from '../types/api-service.abstract';
 
 export const axiosInstance = axios.create({
-  baseURL: Constants.manifest?.extra?.api_url || '',
+  baseURL: Constants.manifest?.extra?.dev_url || '',
 });
 
 export class ApiService extends ApiServiceAbstract {

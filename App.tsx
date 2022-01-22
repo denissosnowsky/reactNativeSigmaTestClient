@@ -1,24 +1,23 @@
-import React from 'react';
+import React, { VFC } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { Box, Button, NativeBaseProvider } from 'native-base';
+import { NativeBaseProvider } from 'native-base';
+import { Provider } from 'react-redux';
 
-export default function App() {
+import { Todos } from '~screens/todos';
+import store from './src/store';
+import { ErrorBoundary } from './src/components/containers/error-boundary';
+
+const App: VFC = () => {
   return (
-    <NativeBaseProvider>
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <StatusBar style="auto" />
-      </View>
-    </NativeBaseProvider>
+    <Provider store={store}>
+      <NativeBaseProvider>
+        <ErrorBoundary>
+          <Todos />
+          <StatusBar style="auto" />
+        </ErrorBoundary>
+      </NativeBaseProvider>
+    </Provider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
