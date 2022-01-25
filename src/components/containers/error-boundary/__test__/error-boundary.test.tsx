@@ -1,6 +1,6 @@
 import React from 'react';
 import { cleanup } from '@testing-library/react-native';
-import renderer, { act, create } from 'react-test-renderer';
+import renderer from 'react-test-renderer';
 import '@testing-library/jest-native/extend-expect';
 import { Text } from 'react-native';
 

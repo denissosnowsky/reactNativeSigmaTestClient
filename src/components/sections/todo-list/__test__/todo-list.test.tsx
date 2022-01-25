@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react-native';
+import { render, cleanup } from '@testing-library/react-native';
 import '@testing-library/jest-native/extend-expect';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
@@ -10,7 +10,6 @@ import { NativeBaseProvider } from 'native-base';
 import { TodoState } from '~store/todo';
 import { SortTypes } from '~types/todo.types';
 import { TodoList } from '..';
-import { fetchNextPage } from '../utils/fetchNextPage';
 
 afterEach(cleanup);
 

@@ -16,10 +16,11 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "paths": { "~*": ["./src/*"] },
-    "types": ["jest"],
+    "paths": {
+      "~*": ["./src/*"]
+    },
+    "types": ["jest"]
   },
   "extends": "expo/tsconfig.base",
-  "include": ["src/*.ts"],
-  "exclude": ["src/*.test.ts"]
+  "exclude": ["./cypress/**/*"]
 }
