@@ -7,6 +7,7 @@ import styles from './alert.style';
 export const Alert: VFC<Props> = ({ status, text, isShown }) => {
   return (
     <AlertNB
+      testID="alert-wrapper"
       w={globalStyles.CONTAINER_WD}
       status={status}
       style={[styles.wrapper, isShown ? styles.isShown : styles.isHidden]}
@@ -19,7 +20,12 @@ export const Alert: VFC<Props> = ({ status, text, isShown }) => {
         <HStack flexShrink={1} space={globalStyles.SPACE} justifyContent="space-between">
           <HStack space={globalStyles.FLEX_SHRINK} flexShrink={globalStyles.FLEX_SHRINK}>
             <AlertNB.Icon mt={globalStyles.MT} />
-            <Text fontSize="md" color={globalStyles.NB_GREY_COLOR} style={styles.text}>
+            <Text
+              fontSize="md"
+              color={globalStyles.NB_GREY_COLOR}
+              style={styles.text}
+              testID="text"
+            >
               {text}
             </Text>
           </HStack>

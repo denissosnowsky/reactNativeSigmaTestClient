@@ -28,7 +28,7 @@ export const ButtonIcon: VFC<Props> = ({ onPress, variant }) => {
   );
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} accessibilityRole="button">
       <MaterialCommunityIcons
         name={iconNamePicker(variant).name}
         size={globalStyles.ICON_MED_SIZE}

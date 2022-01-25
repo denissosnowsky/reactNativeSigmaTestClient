@@ -7,19 +7,24 @@ import { TodoDTO } from '~types/todo.types';
 import todosSelectors from '~store/todo/todo.selectors';
 import { BlueText } from '~components/common/text';
 import { todoThunks, todoActions } from '~store/todo';
+import { dispatchSelection } from '~utils/dispatchSelection';
 import { ListHeader } from '~components/list-header/list-header';
 import globalStyle from '~global/constants.style';
 import styles from './todo-list.style';
+import { fetchNextPage } from './utils/fetchNextPage';
+import { compareIds } from './utils/compareIds';
 
 export const TodoList: VFC = () => {
   const dispatch = useDispatch();
   const todos = useSelector(todosSelectors.todos);
   const editingTodos = useSelector(todosSelectors.editingTodos);
   const allTodosCount = useSelector(todosSelectors.allTodosCount);
+  const editingMode = useSelector(todosSelectors.editingMode);
   const page = useSelector(todosSelectors.page);
   const loading = useSelector(todosSelectors.loading);
   const isListInitializing = useSelector(todosSelectors.isListInitializing);
   const isTodosEmpty = todos.length === 0;
+  const isCanLoadMorePages = allTodosCount > todos.length && !loading;
 
   useEffect(() => {
     dispatch(todoThunks.todosFetchThunk());
@@ -36,19 +41,21 @@ export const TodoList: VFC = () => {
           id={item.id}
           text={item.title}
           complete={item.completed}
-          onPressCheck={() => dispatch(todoThunks.todoCompleteThunk(item.id))}
-          onLongPress={() => dispatch(todoActions.todoEditModeOn(item.id))}
-          editingMode={editingTodos.some((todo) => todo.id === item.id)}
+          onPressCheck={dispatchSelection(dispatch, todoThunks.todoCompleteThunk(item.id))}
+          onLongPress={dispatchSelection(dispatch, todoActions.todoEditModeOn(item.id))}
+          editingMode={editingTodos.some(compareIds(item.id)) && editingMode}
         />
       );
     },
-    [dispatch, editingTodos],
+    [dispatch, editingTodos, editingMode],
   );
 
   const footerItem = useCallback(
     () => (
       <View style={styles.loadingWrapper}>
-        {loading && <ActivityIndicator size="small" color={globalStyle.MAIN_COLOR} />}
+        {loading && (
+          <ActivityIndicator size="small" color={globalStyle.MAIN_COLOR} testID="loading" />
+        )}
       </View>
     ),
     [loading],
@@ -56,16 +63,18 @@ export const TodoList: VFC = () => {
 
   const keyExtractor = useCallback((item: TodoDTO) => String(item.id), []);
 
-  const onEndReached = useCallback(() => {
-    if (allTodosCount > todos.length && !loading) {
-      dispatch(todoActions.todoNextPageRequested());
-    }
-  }, [dispatch, allTodosCount, todos, loading]);
+  const onEndReached = useCallback(
+    fetchNextPage(
+      isCanLoadMorePages,
+      dispatchSelection(dispatch, todoActions.todoNextPageRequested()),
+    ),
+    [dispatch, isCanLoadMorePages],
+  );
 
   if (isListInitializing) {
     return (
-      <View style={styles.nonListWrapper}>
-        <ActivityIndicator size="large" color={globalStyle.MAIN_COLOR} />
+      <View style={styles.nonListWrapper} testID="init">
+        <ActivityIndicator size="large" color={globalStyle.MAIN_COLOR} testID="todo-loading" />
       </View>
     );
   }
@@ -87,6 +96,7 @@ export const TodoList: VFC = () => {
             onEndReached={onEndReached}
             onEndReachedThreshold={0.5}
             ListFooterComponent={footerItem}
+            testID="list"
           />
         </>
       )}

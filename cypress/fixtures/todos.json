@@ -1,0 +1,45 @@
+{
+  "todos": [
+    {
+      "_id": "61ebc86e72e598a602f48b35",
+      "completed": false,
+      "title": "mock todo 1",
+      "id": 213,
+      "userId": 1,
+      "__v": 0
+    },
+    {
+      "_id": "61eb2704fe8f6ab7faa5eae4",
+      "completed": false,
+      "title": "mock todo 2",
+      "id": 212,
+      "userId": 1,
+      "__v": 0
+    },
+    {
+      "_id": "61eb26d4fe8f6ab7faa5eae2",
+      "completed": false,
+      "title": "mock todo 3",
+      "id": 211,
+      "userId": 1,
+      "__v": 0
+    },
+    {
+      "_id": "61eadcff40ccbc2f7fe1ca8e",
+      "completed": false,
+      "title": "mock todo 4",
+      "id": 210,
+      "userId": 1,
+      "__v": 0
+    },
+    {
+      "_id": "61eac709c0343abac6510a23",
+      "completed": false,
+      "title": "mock todo 5",
+      "id": 209,
+      "userId": 1,
+      "__v": 0
+    }
+  ],
+  "count": 5
+}

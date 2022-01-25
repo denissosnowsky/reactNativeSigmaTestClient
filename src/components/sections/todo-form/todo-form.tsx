@@ -6,46 +6,52 @@ import { ButtonIcon } from '~components/common/button-icon';
 import { Input } from '~components/common/input';
 import { todoThunks, todoActions } from '~store/todo';
 import todoSelectors from '~store/todo/todo.selectors';
+import { dispatchSelection } from '~utils/dispatchSelection';
 import { ModalFC } from '~components/common/modal';
 import styles from './todo-form.style';
+import { clearFormHandler } from './utils/clearFormHandler';
+import { addTodoHandler } from './utils/addTodoHandler';
+import { changeTodoHandler } from './utils/changeTodoHandler';
+import { cancelHandler } from './utils/cancelHandler';
+import { deleteTodoHandler } from './utils/deleteTodoHandler';
 
 export const TodoForm: VFC = () => {
   const dispatch = useDispatch();
-  const [formValue, setFormValue] = useState('');
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = React.useState(false);
+  const [formValue, setFormValue] = React.useState('');
   const isEditingMode = useSelector(todoSelectors.editingMode);
   const editingTodos = useSelector(todoSelectors.editingTodos);
   const editingInput = useSelector(todoSelectors.editingInput);
-  const isMultipleEditing = editingTodos.length > 1;
-  const isSaveButtonShouldBeShown = !isMultipleEditing && !editingTodos[0]?.completed;
+  const isMultipleEditing = editingTodos.length > 1 && isEditingMode;
+  const isSaveButtonShouldBeShown =
+    !isMultipleEditing && !editingTodos[0]?.completed && isEditingMode;
 
-  const clearFormHandler = () => {
-    setFormValue('');
-    Keyboard.dismiss();
-  };
+  const addHandler = () =>
+    addTodoHandler(
+      formValue,
+      dispatchSelection(dispatch, todoThunks.todoAddThunk({ userId: 1, title: formValue })),
+      clearFormHandler(setFormValue, Keyboard),
+    );
 
-  const addTodoHandler = () => {
-    if (formValue) {
-      dispatch(todoThunks.todoAddThunk({ userId: 1, title: formValue }));
-      clearFormHandler();
-    }
-  };
+  const changeHandler = () =>
+    changeTodoHandler(
+      dispatchSelection(dispatch, todoThunks.todoChangeThunk(editingTodos[0]!.id, editingInput)),
+      clearFormHandler(setFormValue, Keyboard),
+    );
 
-  const deleteTodoHandler = () => {
-    dispatch(todoThunks.todoDeleteThunk(editingTodos));
-    clearFormHandler();
-    setShowModal(false);
-  };
+  const cancelAllHandler = () =>
+    cancelHandler(
+      dispatchSelection(dispatch, todoActions.todoEditModeOff()),
+      clearFormHandler(setFormValue, Keyboard),
+      setShowModal,
+    );
 
-  const cancelHandler = () => {
-    dispatch(todoActions.todoEditModeOff());
-    clearFormHandler();
-  };
-
-  const changeTodoHandler = () => {
-    dispatch(todoThunks.todoChangeThunk(editingTodos[0]!.id, editingInput));
-    clearFormHandler();
-  };
+  const deleteHandler = () =>
+    deleteTodoHandler(
+      dispatchSelection(dispatch, todoThunks.todoDeleteThunk(editingTodos)),
+      clearFormHandler(setFormValue, Keyboard),
+      setShowModal,
+    );
 
   return (
     <>
@@ -58,15 +64,16 @@ export const TodoForm: VFC = () => {
               value={formValue}
               underlined
             />
-            <ButtonIcon onPress={addTodoHandler} variant="add" />
+            <ButtonIcon onPress={addHandler} variant="add" />
           </>
         ) : (
           <View
             style={isSaveButtonShouldBeShown ? styles.threeBtnEditBlock : styles.twoBtnEditBlock}
+            testID="btnWrapper"
           >
-            {isSaveButtonShouldBeShown && <ButtonIcon onPress={changeTodoHandler} variant="save" />}
+            {isSaveButtonShouldBeShown && <ButtonIcon onPress={changeHandler} variant="save" />}
             <ButtonIcon onPress={() => setShowModal(true)} variant="delete" />
-            <ButtonIcon onPress={cancelHandler} variant="cancel" />
+            <ButtonIcon onPress={cancelAllHandler} variant="cancel" />
           </View>
         )}
       </View>
@@ -74,11 +81,8 @@ export const TodoForm: VFC = () => {
         showModal={showModal}
         closeModal={() => setShowModal(false)}
         itemsQuantity={editingTodos.length}
-        confirm={deleteTodoHandler}
-        decline={() => {
-          cancelHandler();
-          setShowModal(false);
-        }}
+        confirm={deleteHandler}
+        decline={cancelAllHandler}
       />
     </>
   );
