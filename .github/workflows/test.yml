@@ -37,5 +37,8 @@ jobs:
       - name: Lint
         run: yarn run lint
 
+      - name: install jest
+        run: yarn global add jest
+
       - name: Tests
         run: yarn run test:coverage
