@@ -1,4 +1,4 @@
-import React, { useState, VFC } from 'react';
+import React, { VFC } from 'react';
 import { Keyboard, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 

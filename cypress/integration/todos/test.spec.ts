@@ -49,11 +49,11 @@ describe('Todo e2e operations', () => {
     cy.visit('/');
     // Then
     const firstTodo = cy.get('[data-testid="list-item-wrapper"]').first();
-    firstTodo.within(($icon) => {
+    firstTodo.within(() => {
       cy.get('[data-testid="circle-blank"]').should('be.visible');
       cy.get('[data-testid="check"]').should('not.exist');
     });
-    firstTodo.within(($icon) => {
+    firstTodo.within(() => {
       // When
       cy.get('[data-testid="circle-blank"]').click();
       // Then
@@ -152,7 +152,7 @@ describe('Todo e2e operations', () => {
     // When
     cy.visit('/');
     const firstTodo = cy.get('[data-testid="list-item-wrapper"]').first();
-    firstTodo.within(($icon) => {
+    firstTodo.within(() => {
       cy.get('[data-testid="circle-blank"]').click();
     });
     // Then
@@ -193,17 +193,6 @@ describe('Todo e2e operations', () => {
     // Then
     cy.contains('Some error happened').should('be.visible');
   });
-
-  /* it('user should be able to compelte and deceompelte todo', () => {
-    // Given
-    cy.intercept('/todos?limit*', { fixture: 'todos.json' });
-    cy.intercept('/todos/cursor', '200');
-    // When
-    cy.visit('/');
-    cy.get('[data-testid="list-item-wrapper"]').first().trigger('mousedown', { force: true });
-    cy.wait(2000);
-    cy.get('[data-testid="list-item-wrapper"]').first().trigger('mouseup', { force: true });
-  }); */
 });
 
 export {};
