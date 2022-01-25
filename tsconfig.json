@@ -16,8 +16,14 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "paths": { "~*": ["./src/*"] },
-    "types": ["jest"],
+    "paths": {
+      "~*": ["./src/*"],
+      "@testing-library/react-native": ["./node_modules/@testing-library/react-native/typings/index"],
+      "@testing-library/jest-native/extend-expect": ["./node_modules/@testing-library/jest-native/extend-expect"],
+      "react-test-renderer": ["./node_modules/@types/react-test-renderer/index"],
+      "redux-mock-store": ["./node_modules/@types/redux-mock-store/index"]
+    },
+    "types": ["jest"]
   },
   "extends": "expo/tsconfig.base",
   "include": ["src/*.ts"],
