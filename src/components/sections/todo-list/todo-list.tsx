@@ -83,7 +83,7 @@ export const TodoList: VFC = () => {
     <>
       {isTodosEmpty ? (
         <View style={styles.nonListWrapper}>
-          <BlueText fs={globalStyle.BIG_FT}>Add your first Todo</BlueText>
+          <BlueText fs={globalStyle.BIG_FS}>Add your first Todo</BlueText>
         </View>
       ) : (
         <>

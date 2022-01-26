@@ -131,7 +131,7 @@ describe('List item component', () => {
     });
   });
 
-  it('list item render check icon when completed and check callback should be fired', () => {
+  it('list item should render check icon when completed and check callback should be fired', () => {
     // Given
     const id = 1;
     const text = 'todo';
@@ -155,7 +155,7 @@ describe('List item component', () => {
     tree.unmount();
   });
 
-  it('list item render check icon when multiple selected and fire select callback', () => {
+  it('list item should render check icon when multiple selected and fire select callback', () => {
     // Given
     const id = 1;
     const text = 'todo';
@@ -188,7 +188,7 @@ describe('List item component', () => {
     tree.unmount();
   });
 
-  it('list item render pencil icon when changing title', () => {
+  it('list item should render pencil icon when changing title', () => {
     // Given
     const id = 1;
     const text = 'todo';
@@ -217,7 +217,7 @@ describe('List item component', () => {
     tree.unmount();
   });
 
-  it('list item render empty circle icon when non compelted and check callback should be fired', () => {
+  it('list item should render empty circle icon when non compelted and check callback should be fired', () => {
     // Given
     const id = 1;
     const text = 'todo';
@@ -247,7 +247,7 @@ describe('List item component', () => {
     tree.unmount();
   });
 
-  it('non-selected list item render empty circle icon when multiple selection', () => {
+  it('non-selected list item should render empty circle icon when multiple selection', () => {
     // Given
     const id = 1;
     const text = 'todo';

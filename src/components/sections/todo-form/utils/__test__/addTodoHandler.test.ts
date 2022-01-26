@@ -1,6 +1,6 @@
 import { addTodoHandler } from '../addTodoHandler';
 
-describe('AddTodoHandler form util', () => {
+describe('AddTodoHandler from util', () => {
   it('addTodoHandler should fire dispatch and clearForm callbacks when form value is true', () => {
     // Given
     const formValue = 'value';

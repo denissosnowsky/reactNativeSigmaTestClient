@@ -1,7 +1,7 @@
 import { KeyboardStatic } from 'react-native';
 import { clearFormHandler } from '../clearFormHandler';
 
-describe('ClearFormHandler form util', () => {
+describe('ClearFormHandler from util', () => {
   it('clearFormHandler should emptify useState callback and hide keyboard', () => {
     // Given
     const useStateChangeMock = jest.fn();

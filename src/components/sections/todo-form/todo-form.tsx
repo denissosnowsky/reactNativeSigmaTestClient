@@ -14,6 +14,7 @@ import { addTodoHandler } from './utils/addTodoHandler';
 import { changeTodoHandler } from './utils/changeTodoHandler';
 import { cancelHandler } from './utils/cancelHandler';
 import { deleteTodoHandler } from './utils/deleteTodoHandler';
+import { selectAllTodosHandler } from './utils/selectAllTodosHandler';
 
 export const TodoForm: VFC = () => {
   const dispatch = useDispatch();
@@ -53,6 +54,9 @@ export const TodoForm: VFC = () => {
       setShowModal,
     );
 
+  const selectAllHandler = () =>
+    selectAllTodosHandler(dispatchSelection(dispatch, todoActions.todoSelectAll()));
+
   return (
     <>
       <View style={styles.wrapepr}>
@@ -68,10 +72,15 @@ export const TodoForm: VFC = () => {
           </>
         ) : (
           <View
-            style={isSaveButtonShouldBeShown ? styles.threeBtnEditBlock : styles.twoBtnEditBlock}
+            style={
+              isSaveButtonShouldBeShown || isMultipleEditing
+                ? styles.threeBtnEditBlock
+                : styles.twoBtnEditBlock
+            }
             testID="btnWrapper"
           >
             {isSaveButtonShouldBeShown && <ButtonIcon onPress={changeHandler} variant="save" />}
+            {isMultipleEditing && <ButtonIcon onPress={selectAllHandler} variant="select-all" />}
             <ButtonIcon onPress={() => setShowModal(true)} variant="delete" />
             <ButtonIcon onPress={cancelAllHandler} variant="cancel" />
           </View>

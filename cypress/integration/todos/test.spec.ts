@@ -1,3 +1,11 @@
+/// <reference types="cypress" />
+
+type ExtendedCy = typeof cy & {
+  findAllByText: (arg: string) => any; // eslint-disable-line
+  findByTestId: (arg: string) => any; // eslint-disable-line
+};
+const _cy = cy as ExtendedCy;
+
 describe('Todo e2e operations', () => {
   it('user should see loading before first todos fetching', async () => {
     // Given
@@ -84,7 +92,7 @@ describe('Todo e2e operations', () => {
     // When
     cy.visit('/');
     // Then
-    cy.findAllByText('Add your first Todo').should('be.visible');
+    _cy.findAllByText('Add your first Todo').should('be.visible');
   });
 
   it('user should be able to filter todos by id', async () => {
@@ -99,14 +107,14 @@ describe('Todo e2e operations', () => {
       .contains('mock todo 1')
       .should('be.visible');
     // When
-    cy.findByTestId('id-filter').click();
+    _cy.findByTestId('id-filter').click();
     // Then
     cy.get('[data-testid="list-item-wrapper"]')
       .first()
       .contains('mock todo 1')
       .should('be.visible');
     // When
-    cy.findByTestId('id-filter').click();
+    _cy.findByTestId('id-filter').click();
     // Then
     cy.get('[data-testid="list-item-wrapper"]')
       .first()
@@ -126,14 +134,14 @@ describe('Todo e2e operations', () => {
       .contains('mock todo 1')
       .should('be.visible');
     // When
-    cy.findByTestId('name-filter').click();
+    _cy.findByTestId('name-filter').click();
     // Then
     cy.get('[data-testid="list-item-wrapper"]')
       .first()
       .contains('mock todo 5')
       .should('be.visible');
     // When
-    cy.findByTestId('name-filter').click();
+    _cy.findByTestId('name-filter').click();
     // Then
     cy.get('[data-testid="list-item-wrapper"]')
       .first()
@@ -161,11 +169,11 @@ describe('Todo e2e operations', () => {
       .contains('mock todo 1')
       .should('be.visible');
     // When
-    cy.findByTestId('status-filter').click();
+    _cy.findByTestId('status-filter').click();
     // Then
     cy.get('[data-testid="list-item-wrapper"]').last().contains('mock todo 1').should('be.visible');
     // When
-    cy.findByTestId('status-filter').click();
+    _cy.findByTestId('status-filter').click();
     // Then
     cy.get('[data-testid="list-item-wrapper"]')
       .first()
@@ -179,19 +187,9 @@ describe('Todo e2e operations', () => {
     // When
     cy.visit('/');
     cy.intercept('/todos?limit=30&skip=0', { fixture: 'todosTwiceFetching/todos1.json' });
-    cy.findByTestId('todo-loading').should('be.visible');
+    _cy.findByTestId('todo-loading').should('be.visible');
     cy.wait(1000);
     cy.intercept('/todos?limit=30&skip=30', { fixture: 'todosTwiceFetching/todos2.json' });
-  });
-
-  it('user should be able to see error message when server error', () => {
-    // Given
-    cy.intercept('/todos?limit*', { forceNetworkError: true });
-    cy.intercept('/todos/cursor', '200');
-    // When
-    cy.visit('/');
-    // Then
-    cy.contains('Some error happened').should('be.visible');
   });
 });
 

@@ -27,7 +27,7 @@ export const ListHeader: VFC = () => {
         <View style={styles.id}>
           <FontAwesome
             name={iconPicker(TodosColumns.ID, filterMode)}
-            size={globalStyles.HEADER_CION_SIZE}
+            size={globalStyles.HEADER_ICON_SIZE}
             color={globalStyles.ICON_DEF_COLOR}
           />
           <Text style={styles.headerText}> ID</Text>
@@ -40,7 +40,7 @@ export const ListHeader: VFC = () => {
         <View style={styles.text}>
           <FontAwesome
             name={iconPicker(TodosColumns.NAME, filterMode)}
-            size={globalStyles.HEADER_CION_SIZE}
+            size={globalStyles.HEADER_ICON_SIZE}
             color={globalStyles.ICON_DEF_COLOR}
           />
           <Text style={styles.headerText}> Name</Text>
@@ -54,7 +54,7 @@ export const ListHeader: VFC = () => {
           <View style={styles.complete}>
             <FontAwesome
               name={iconPicker(TodosColumns.SELECT, filterMode)}
-              size={globalStyles.HEADER_CION_SIZE}
+              size={globalStyles.HEADER_ICON_SIZE}
               color={globalStyles.ICON_DEF_COLOR}
             />
             <Text style={styles.headerText}> Selected</Text>
@@ -68,7 +68,7 @@ export const ListHeader: VFC = () => {
           <View style={styles.complete}>
             <FontAwesome
               name={iconPicker(TodosColumns.STATUS, filterMode)}
-              size={globalStyles.HEADER_CION_SIZE}
+              size={globalStyles.HEADER_ICON_SIZE}
               color={globalStyles.ICON_DEF_COLOR}
             />
             <Text style={styles.headerText}> Status</Text>

@@ -14,6 +14,7 @@ import { SortTypes } from '~types/todo.types';
 import { addTodoHandler } from '../utils/addTodoHandler';
 import { cancelHandler } from '../utils/cancelHandler';
 import { changeTodoHandler } from '../utils/changeTodoHandler';
+import { selectAllTodosHandler } from '../utils/selectAllTodosHandler';
 import { TodoForm } from '..';
 
 afterEach(cleanup);
@@ -22,6 +23,7 @@ jest.mock('../utils/addTodoHandler');
 jest.mock('../utils/clearFormHandler');
 jest.mock('../utils/cancelHandler');
 jest.mock('../utils/changeTodoHandler');
+jest.mock('../utils/selectAllTodosHandler');
 
 let state: TodoState;
 let store: Store<any, AnyAction>;
@@ -101,7 +103,7 @@ describe('TodoForm component', () => {
     expect(getAllByA11yRole('button').length).toBe(3);
   });
 
-  it('form should hide save button when one non-completed element is editing', () => {
+  it('form should hide save button when one completed element is editing', () => {
     const spy = jest.spyOn(redux, 'useSelector');
     spy.mockReturnValueOnce(true);
     spy.mockReturnValueOnce([{ completed: true }]);
@@ -117,24 +119,6 @@ describe('TodoForm component', () => {
     expect(getByTestId('btnWrapper')).toHaveStyle({ width: '40%' });
     expect(getAllByA11yRole('button').length).toBe(2);
   });
-
-  it('form should hide save button when multiple elements are editing', () => {
-    const spy = jest.spyOn(redux, 'useSelector');
-    spy.mockReturnValueOnce(true);
-    spy.mockReturnValueOnce([{ completed: false }, { completed: false }]);
-    // When
-    const { getByTestId, getAllByA11yRole } = render(
-      <NativeBaseProvider initialWindowMetrics={inset}>
-        <Provider store={store}>
-          <TodoForm />
-        </Provider>
-      </NativeBaseProvider>,
-    );
-    // Then
-    expect(getByTestId('btnWrapper')).toHaveStyle({ width: '40%' });
-    expect(getAllByA11yRole('button').length).toBe(2);
-  });
-
   it('form should show add button and fire add callback', () => {
     // When
     const tree = renderer.create(
@@ -177,5 +161,28 @@ describe('TodoForm component', () => {
     // Then
     expect(changeTodoHandler).toHaveBeenCalled();
     expect(cancelHandler).toHaveBeenCalled();
+  });
+
+  it('form should hide save button, show select-all button and fire its callback when multiple elements are editing', () => {
+    const spy = jest.spyOn(redux, 'useSelector');
+    spy.mockReturnValueOnce(true);
+    spy.mockReturnValueOnce([{ completed: false }, { completed: false }]);
+    // When
+    const tree = renderer.create(
+      <NativeBaseProvider initialWindowMetrics={inset}>
+        <Provider store={store}>
+          <TodoForm />
+        </Provider>
+      </NativeBaseProvider>,
+    );
+    // Then
+    const buttons = tree.root.findAllByType(MaterialCommunityIcons);
+    expect(buttons[0].props.name).toBe('checkbox-multiple-marked-circle');
+    expect(buttons[1].props.name).toBe('delete-circle');
+    expect(buttons[2].props.name).toBe('cancel');
+    // When
+    fireEvent.press(buttons[0]);
+    // Then
+    expect(selectAllTodosHandler).toHaveBeenCalled();
   });
 });
