@@ -22,7 +22,7 @@ export const Alert: VFC<Props> = ({ status, text, isShown }) => {
             <AlertNB.Icon mt={globalStyles.MT} />
             <Text
               fontSize="md"
-              color={globalStyles.NB_GREY_COLOR}
+              color={globalStyles.LIGHT_NB_GREY_COLOR}
               style={styles.text}
               testID="text"
             >

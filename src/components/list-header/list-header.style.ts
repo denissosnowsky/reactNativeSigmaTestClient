@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 45,
-    backgroundColor: '#fff',
     borderRadius: 10,
     shadowColor: '#000',
     shadowRadius: 2,

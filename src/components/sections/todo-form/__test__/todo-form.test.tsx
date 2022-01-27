@@ -164,6 +164,7 @@ describe('TodoForm component', () => {
   });
 
   it('form should hide save button, show select-all button and fire its callback when multiple elements are editing', () => {
+    // Given
     const spy = jest.spyOn(redux, 'useSelector');
     spy.mockReturnValueOnce(true);
     spy.mockReturnValueOnce([{ completed: false }, { completed: false }]);

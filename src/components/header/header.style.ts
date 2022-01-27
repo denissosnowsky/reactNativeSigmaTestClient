@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     width: 180,
     display: 'flex',
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 80,
     marginBottom: 20,
   },
   image: {

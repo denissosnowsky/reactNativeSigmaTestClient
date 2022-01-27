@@ -1,4 +1,4 @@
-import React, { Ref, useEffect, useRef, VFC } from 'react';
+import React, { Ref, useContext, useEffect, useRef, VFC } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import globalStyles from '~global/constants.style';
 import { todoActions } from '~store/todo';
 import todosSelectors from '~store/todo/todo.selectors';
+import { ThemeContext } from '~contexts';
 import { dispatchSelection } from '~utils/dispatchSelection';
 import { BlueText } from '../text';
 import styles from './list-item.style';
@@ -32,6 +33,7 @@ export const ListItem: VFC<Props> = ({
   const isUncompleteTodoIsEditing = editingMode && !complete && !isMultipleEditing;
   const isTodoSelectedOrCompleted =
     (complete && !isMultipleEditing) || (isCurrentItemEditing && isMultipleEditing);
+  const theme = useContext(ThemeContext);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -51,7 +53,13 @@ export const ListItem: VFC<Props> = ({
       }
       testID="list-item-wrapper"
     >
-      <View style={[styles.wrapper, editingMode && styles.active]}>
+      <View
+        style={[
+          styles.wrapper,
+          editingMode && styles.active,
+          { backgroundColor: theme.listItemBG },
+        ]}
+      >
         {isIdShouldBeShown && (
           <View style={styles.id}>
             <BlueText fs={globalStyles.MAIN_FS}>{`${id}.`}</BlueText>
@@ -77,7 +85,7 @@ export const ListItem: VFC<Props> = ({
               testID="pencil"
               name="pencil"
               size={globalStyles.ICON_EXSM_SIZE}
-              color={globalStyles.CANCEL_COLOR}
+              color={globalStyles.LIGHT_CANCEL_COLOR}
             />
           ) : isTodoSelectedOrCompleted ? (
             <AntDesign

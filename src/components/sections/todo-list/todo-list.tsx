@@ -54,7 +54,7 @@ export const TodoList: VFC = () => {
     () => (
       <View style={styles.loadingWrapper}>
         {loading && (
-          <ActivityIndicator size="small" color={globalStyle.MAIN_COLOR} testID="loading" />
+          <ActivityIndicator size="small" color={globalStyle.LIGHT_MAIN_COLOR} testID="loading" />
         )}
       </View>
     ),
@@ -74,7 +74,11 @@ export const TodoList: VFC = () => {
   if (isListInitializing) {
     return (
       <View style={styles.nonListWrapper} testID="init">
-        <ActivityIndicator size="large" color={globalStyle.MAIN_COLOR} testID="todo-loading" />
+        <ActivityIndicator
+          size="large"
+          color={globalStyle.LIGHT_MAIN_COLOR}
+          testID="todo-loading"
+        />
       </View>
     );
   }

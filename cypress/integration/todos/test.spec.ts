@@ -191,6 +191,37 @@ describe('Todo e2e operations', () => {
     cy.wait(1000);
     cy.intercept('/todos?limit=30&skip=30', { fixture: 'todosTwiceFetching/todos2.json' });
   });
+
+  it('user should be able to see error message when server error', () => {
+    // Given
+    cy.intercept('/todos?limit*', { forceNetworkError: true });
+    cy.intercept('/todos/cursor', '200');
+    // When
+    cy.visit('/');
+    // Then
+    cy.contains('Some error happened').should('be.visible');
+  });
+
+  it('user should see be able to switch light/dark modes', async () => {
+    // Given
+    cy.intercept('/todos?limit*', { fixture: 'todos.json' });
+    cy.intercept('/todos/cursor', '200');
+    // When
+    cy.visit('/');
+    // Then
+    cy.get('[data-testid="sun"]').should('be.visible');
+    cy.get('[data-testid="moon"]').should('not.exist');
+    // When
+    cy.get('[data-testid="sun"]').click();
+    // Then
+    cy.get('[data-testid="sun"]').should('not.exist');
+    cy.get('[data-testid="moon"]').should('be.visible');
+    // When
+    cy.get('[data-testid="moon"]').click();
+    // Then
+    cy.get('[data-testid="sun"]').should('be.visible');
+    cy.get('[data-testid="moon"]').should('not.exist');
+  });
 });
 
 export {};

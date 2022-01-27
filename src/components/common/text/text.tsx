@@ -1,16 +1,20 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { Text } from 'native-base';
 
-import globalStyles from '~global/constants.style';
+import { ThemeContext } from '~contexts';
 
-export const BlueText: FC<Props> = ({ children, fs, isCrossed }) => (
-  <Text
-    style={{ color: globalStyles.MAIN_COLOR, fontSize: fs, lineHeight: fs }}
-    strikeThrough={isCrossed}
-  >
-    {children}
-  </Text>
-);
+export const BlueText: FC<Props> = ({ children, fs, isCrossed }) => {
+  const theme = useContext(ThemeContext);
+
+  return (
+    <Text
+      style={{ color: theme.textColor, fontSize: fs, lineHeight: fs }}
+      strikeThrough={isCrossed}
+    >
+      {children}
+    </Text>
+  );
+};
 
 type Props = {
   fs?: number;

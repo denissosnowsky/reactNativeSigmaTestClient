@@ -1,12 +1,15 @@
-import React, { FC, useState, Ref, forwardRef } from 'react';
+import React, { FC, useState, Ref, forwardRef, useContext } from 'react';
 import { Input as InputNB } from 'native-base';
 
 import globalStyles from '~global/constants.style';
+import { ThemeContext } from '~contexts';
 import styles from './input.style';
 
 export const Input: FC<Props> = forwardRef(
   ({ placeholder, value, underlined, onChange }, ref: Ref<HTMLInputElement>) => {
     const [text, setText] = useState('');
+    const theme = useContext(ThemeContext);
+
     const onChangeHandler = (targetValue: string) => {
       setText(targetValue);
       if (onChange) {
@@ -16,10 +19,16 @@ export const Input: FC<Props> = forwardRef(
 
     return (
       <InputNB
-        style={[styles.input, underlined && { borderBottomColor: globalStyles.BORDER_COLOR }]}
+        style={[
+          styles.input,
+          { color: theme.textColor },
+          underlined && {
+            borderBottomColor: globalStyles.LIGHT_BORDER_COLOR,
+          },
+        ]}
         placeholder={placeholder}
         variant="underlined"
-        placeholderTextColor={globalStyles.PLACEHOLDER_COLOR}
+        placeholderTextColor={theme.placeholder}
         value={value ?? text}
         onChangeText={(targetValue) => onChangeHandler(targetValue)}
         ref={ref}

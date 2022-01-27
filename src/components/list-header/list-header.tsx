@@ -1,4 +1,4 @@
-import React, { VFC } from 'react';
+import React, { useContext, VFC } from 'react';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ import { todoActions } from '~store/todo';
 import { TodosColumns } from '~types/todo.types';
 import todosSelectors from '~store/todo/todo.selectors';
 import globalStyles from '~global/constants.style';
+import { ThemeContext } from '~contexts';
 import { dispatchSelection } from '~utils/dispatchSelection';
 import styles from './list-header.style';
 import { iconPicker } from './utils/iconPicker';
@@ -17,9 +18,10 @@ export const ListHeader: VFC = () => {
   const editingMode = useSelector(todosSelectors.editingMode);
   const editingTodos = useSelector(todosSelectors.editingTodos);
   const isMultipleEditing = editingTodos.length > 1 && editingMode;
+  const theme = useContext(ThemeContext);
 
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper, { backgroundColor: theme.listItemBG }]}>
       <TouchableWithoutFeedback
         onPress={dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.ID))}
         testID="id-filter"

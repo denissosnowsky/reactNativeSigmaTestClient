@@ -7,8 +7,13 @@ const styles = StyleSheet.create({
     fontSize: globalStyle.ALERT_FS,
   },
   wrapper: {
-    backgroundColor: globalStyle.SUCCESS_ALERT_BG,
-    top: 50,
+    backgroundColor: globalStyle.LIGHT_SUCCESS_ALERT_BG,
+    position: 'absolute',
+    top: 70,
+    width: 300,
+    padding: 10,
+    left: '50%',
+    transform: [{ translateX: -150 }],
   },
   isShown: {
     display: 'flex',
