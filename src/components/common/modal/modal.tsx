@@ -1,5 +1,5 @@
 import React, { useContext, VFC } from 'react';
-import { Button, View } from 'react-native';
+import { Button, Platform, View } from 'react-native';
 import { Modal } from 'native-base';
 
 import globalStyles from '~global/constants.style';
@@ -10,6 +10,7 @@ import { BlueText } from '../text';
 export const ModalFC: VFC<Props> = ({ itemsQuantity, confirm, decline, showModal, closeModal }) => {
   const IS_ONE_QUANTITY = itemsQuantity === 1;
   const theme = useContext(ThemeContext);
+  const isIos = Platform.OS === 'ios';
   return (
     <>
       <Modal isOpen={showModal} onClose={closeModal} testID="wrapper">
@@ -23,8 +24,18 @@ export const ModalFC: VFC<Props> = ({ itemsQuantity, confirm, decline, showModal
             }?`}</BlueText>
           </View>
           <View style={styles.buttonsWrapper}>
-            <Button onPress={confirm} title="Yes" testID="yes" color={theme.button} />
-            <Button onPress={decline} title="No" testID="no" color={theme.button} />
+            <Button
+              onPress={confirm}
+              title="Yes"
+              testID="yes"
+              color={isIos ? theme.button : globalStyles.LIGHT_BUTTON_COLOR}
+            />
+            <Button
+              onPress={decline}
+              title="No"
+              testID="no"
+              color={isIos ? theme.button : globalStyles.LIGHT_BUTTON_COLOR}
+            />
           </View>
         </Modal.Content>
       </Modal>
