@@ -100,4 +100,72 @@ describe('Todo delete reducer', () => {
     );
     expect(newState.allTodosCount).toBe(state.allTodosCount + state.editingTodos.length);
   });
+
+  it('delete reducer request should change cursor if last todo was deleted', () => {
+    const prevTodos = [
+      { id: 1, userId: 1, title: 'todo1', completed: false },
+      { id: 2, userId: 2, title: 'todo2', completed: false },
+    ];
+    const deletedTodosIds = [2];
+    const newState = counterSlice.reducer(
+      {
+        ...state,
+        todos: prevTodos,
+        cursor: 2,
+      },
+      counterSlice.actions.todoDeleteRequested(deletedTodosIds),
+    );
+    expect(newState.cursor).toEqual(1);
+  });
+
+  it('delete reducer request shouldn"t change cursor if last todo wasn"t deleted', () => {
+    const prevTodos = [
+      { id: 1, userId: 1, title: 'todo1', completed: false },
+      { id: 2, userId: 2, title: 'todo2', completed: false },
+    ];
+    const deletedTodosIds = [1];
+    const newState = counterSlice.reducer(
+      {
+        ...state,
+        todos: prevTodos,
+        cursor: 2,
+      },
+      counterSlice.actions.todoDeleteRequested(deletedTodosIds),
+    );
+    expect(newState.cursor).toEqual(2);
+  });
+
+  it('delete reducer fail shouldn"t change cursor if last todo was deleted', () => {
+    const prevTodos = [
+      { id: 1, userId: 1, title: 'todo1', completed: false },
+      { id: 2, userId: 2, title: 'todo2', completed: false },
+    ];
+    const deletedTodosIds = [2];
+    const newState = counterSlice.reducer(
+      {
+        ...state,
+        todos: prevTodos,
+        cursor: 2,
+      },
+      counterSlice.actions.todoDeleteFailed({ error: 'error', ids: deletedTodosIds }),
+    );
+    expect(newState.cursor).toEqual(2);
+  });
+
+  it('delete reducer fail shouldn"t change cursor if last todo wasn"t deleted', () => {
+    const prevTodos = [
+      { id: 1, userId: 1, title: 'todo1', completed: false },
+      { id: 2, userId: 2, title: 'todo2', completed: false },
+    ];
+    const deletedTodosIds = [1];
+    const newState = counterSlice.reducer(
+      {
+        ...state,
+        todos: prevTodos,
+        cursor: 2,
+      },
+      counterSlice.actions.todoDeleteFailed({ error: 'error', ids: deletedTodosIds }),
+    );
+    expect(newState.cursor).toEqual(2);
+  });
 });
