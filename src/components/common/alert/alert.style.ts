@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     padding: 10,
     left: '50%',
     transform: [{ translateX: -150 }],
+    display: 'flex',
   },
   isShown: {
     display: 'flex',
