@@ -81,6 +81,6 @@ describe('Todos screen', () => {
       </NativeBaseProvider>,
     );
     // Then
-    expect(queryByText('Some error happened')).toBeTruthy();
+    expect(queryByText('Some error happened')).toBeFalsy();
   });
 });

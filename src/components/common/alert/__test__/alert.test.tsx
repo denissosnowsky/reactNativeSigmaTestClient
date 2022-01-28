@@ -27,24 +27,24 @@ describe('Alert component', () => {
 
   it('alert should be shown with true isShown prop', () => {
     // When
-    const { queryByTestId } = render(
+    const { queryByText } = render(
       <NativeBaseProvider initialWindowMetrics={inset}>
-        <Alert status="info" text="Text" isShown />
+        <Alert status="info" text="Some error happened" isShown />
       </NativeBaseProvider>,
     );
     // Then
-    expect(queryByTestId('alert-wrapper')).toHaveStyle({ display: 'flex' });
+    expect(queryByText('Some error happened')).toBeTruthy();
   });
 
   it('alert shouldn"t be shown with false isShown prop', () => {
     // When
-    const { queryByTestId } = render(
+    const { queryByText } = render(
       <NativeBaseProvider initialWindowMetrics={inset}>
-        <Alert status="info" text="Text" isShown={false} />
+        <Alert status="info" text="Some error happened" isShown={false} />
       </NativeBaseProvider>,
     );
     // Then
-    expect(queryByTestId('alert-wrapper')).toHaveStyle({ display: 'none' });
+    expect(queryByText('Some error happened')).toBeFalsy();
   });
 
   it('alert should show proper status', () => {
