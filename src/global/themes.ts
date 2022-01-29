@@ -8,6 +8,8 @@ export const themes = {
     textColor: globalStyles.LIGHT_MAIN_COLOR,
     modal: globalStyles.LIGHT_MODAL_BG,
     button: globalStyles.LIGHT_BUTTON_COLOR,
+    tabBarBG: globalStyles.LIGHT_TAB_BAR_BG,
+    shadowedColor: globalStyles.LIGHT_CANCEL_COLOR,
   },
   dark: {
     background: globalStyles.DARK_BACKGROUND_COLOR,
@@ -16,5 +18,7 @@ export const themes = {
     textColor: globalStyles.DARK_MAIN_COLOR,
     modal: globalStyles.DARK_MODAL_BG,
     button: globalStyles.DARK_BUTTON_COLOR,
+    tabBarBG: globalStyles.DARK_TAB_BAR_BG,
+    shadowedColor: globalStyles.DARK_CANCEL_COLOR,
   },
 };

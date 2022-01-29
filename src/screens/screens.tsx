@@ -7,8 +7,8 @@ import todoSelectors from '~store/todo/todo.selectors';
 import { Alert } from '~components/common/alert';
 import { ThemeContext } from '~contexts';
 import { themes } from '~global/themes';
+import { TabNavigation } from '~navigation/tab-navigation';
 import styles from './screents.style';
-import { Todos } from './todos';
 
 export const Screens: VFC = () => {
   const error = useSelector(todoSelectors.error);
@@ -17,7 +17,7 @@ export const Screens: VFC = () => {
   return (
     <ThemeContext.Provider value={isLightMode ? themes.light : themes.dark}>
       <View style={styles.container}>
-        <Todos />
+        <TabNavigation />
         <Alert text="Some error happened" status="error" isShown={Boolean(error)} />
       </View>
     </ThemeContext.Provider>

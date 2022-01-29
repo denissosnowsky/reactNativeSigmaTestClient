@@ -19,7 +19,7 @@ export const Todos: VFC = () => {
           testID="todosWrapper"
         >
           <Header />
-          <View style={styles.body}>
+          <View style={[styles.body]}>
             <TodoForm />
             <TodoList />
           </View>
