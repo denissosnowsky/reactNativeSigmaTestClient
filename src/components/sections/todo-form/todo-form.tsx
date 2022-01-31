@@ -61,15 +61,16 @@ export const TodoForm: VFC = () => {
     <>
       <View style={styles.wrapepr}>
         {!isEditingMode ? (
-          <>
+          <View style={styles.formWrapper}>
             <Input
               placeholder="Add new todo"
               onChange={setFormValue}
               value={formValue}
               underlined
+              style={styles.input}
             />
             <ButtonIcon onPress={addHandler} variant="add" />
-          </>
+          </View>
         ) : (
           <View
             style={

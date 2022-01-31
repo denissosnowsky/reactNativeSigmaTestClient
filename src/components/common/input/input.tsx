@@ -1,12 +1,13 @@
 import React, { FC, useState, Ref, forwardRef, useContext } from 'react';
 import { Input as InputNB } from 'native-base';
+import { StyleProp, TextStyle } from 'react-native';
 
 import globalStyles from '~global/constants.style';
 import { ThemeContext } from '~contexts';
 import styles from './input.style';
 
 export const Input: FC<Props> = forwardRef(
-  ({ placeholder, value, underlined, onChange }, ref: Ref<HTMLInputElement>) => {
+  ({ placeholder, value, underlined, style, onChange }, ref: Ref<HTMLInputElement>) => {
     const [text, setText] = useState('');
     const theme = useContext(ThemeContext);
 
@@ -25,6 +26,7 @@ export const Input: FC<Props> = forwardRef(
           underlined && {
             borderBottomColor: globalStyles.LIGHT_BORDER_COLOR,
           },
+          style,
         ]}
         placeholder={placeholder}
         variant="underlined"
@@ -43,4 +45,5 @@ type Props = {
   value?: string;
   underlined?: boolean;
   ref?: Ref<HTMLInputElement>;
+  style?: StyleProp<TextStyle>;
 };

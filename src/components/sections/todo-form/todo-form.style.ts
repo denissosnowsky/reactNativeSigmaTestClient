@@ -20,6 +20,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '60%',
   },
+  formWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  input: {
+    flex: 1,
+    marginRight: 20,
+  },
 });
 
 export default styles;
