@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   wrapepr: {
     position: 'absolute',
-    top: 50,
+    top: 40,
     right: 20,
   },
 });

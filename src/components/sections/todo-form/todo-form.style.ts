@@ -2,11 +2,12 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   wrapepr: {
-    height: 110,
+    height: 70,
     width: '75%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginTop: 10,
   },
   twoBtnEditBlock: {
     display: 'flex',
@@ -25,10 +26,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    height: 50,
   },
   input: {
     flex: 1,
-    marginRight: 20,
+    marginRight: 10,
+  },
+  letterWrapper: {
+    height: 70,
+    marginRight: 15,
   },
 });
 

@@ -23,9 +23,9 @@ export const Theme: FC = ({ children }) => {
       <View style={styles.wrapepr}>
         <TouchableOpacity onPress={switchHandler}>
           {isLightMode ? (
-            <Ionicons name="md-sunny" size={50} color="orange" testID="sun" />
+            <Ionicons name="md-sunny" size={40} color="orange" testID="sun" />
           ) : (
-            <Ionicons name="moon" size={50} color="#fff" testID="moon" />
+            <Ionicons name="moon" size={40} color="#fff" testID="moon" />
           )}
         </TouchableOpacity>
       </View>

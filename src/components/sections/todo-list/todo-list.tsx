@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, VFC } from 'react';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { ActivityIndicator, Animated, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ListItem } from '~components/common/list-item';
@@ -14,7 +14,7 @@ import styles from './todo-list.style';
 import { fetchNextPage } from './utils/fetchNextPage';
 import { compareIds } from './utils/compareIds';
 
-export const TodoList: VFC = () => {
+export const TodoList: VFC<Props> = ({ onScroll }) => {
   const dispatch = useDispatch();
   const todos = useSelector(todosSelectors.todos);
   const editingTodos = useSelector(todosSelectors.editingTodos);
@@ -92,7 +92,7 @@ export const TodoList: VFC = () => {
       ) : (
         <>
           <ListHeader />
-          <FlatList
+          <Animated.FlatList
             style={styles.wrapper}
             data={todos}
             renderItem={renderItem}
@@ -101,9 +101,14 @@ export const TodoList: VFC = () => {
             onEndReachedThreshold={0.5}
             ListFooterComponent={footerItem}
             testID="list"
+            onScroll={onScroll}
           />
         </>
       )}
     </>
   );
+};
+
+type Props = {
+  onScroll: (...args: unknown[]) => void;
 };
