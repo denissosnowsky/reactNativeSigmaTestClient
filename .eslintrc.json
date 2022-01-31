@@ -78,6 +78,12 @@
         "react/jsx-props-no-spreading": "off",
         "react/destructuring-assignment": "off"
       }
+    },
+    {
+      "files": ["src/navigation/**/*"],
+      "rules": {
+        "react/no-unstable-nested-components": "off"
+      }
     }
   ],
   "settings": {

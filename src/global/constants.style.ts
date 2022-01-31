@@ -12,6 +12,7 @@ export default {
   LIGHT_LIST_ITEM_BG: '#fff',
   LIGHT_MODAL_BG: '#fff',
   LIGHT_BUTTON_COLOR: '#362EFF',
+  LIGHT_TAB_BAR_BG: '#fff',
 
   DARK_BACKGROUND_COLOR: '#5468ff',
   DARK_PLACEHOLDER_COLOR: '#eeeeee',
@@ -19,6 +20,8 @@ export default {
   DARK_MAIN_COLOR: '#eeeeee',
   DARK_MODAL_BG: '#666',
   DARK_BUTTON_COLOR: '#fff',
+  DARK_TAB_BAR_BG: '#666',
+  DARK_CANCEL_COLOR: '#000',
 
   ICON_MED_SIZE: 50,
   ICON_SM_SIZE: 35,
@@ -47,4 +50,6 @@ export default {
   HEADER_COLOR_5: '#00ab9f',
   HEADER_COLOR_6: '#ff00ae',
   HEADER_COLOR_7: '#000000',
+
+  TAB_BAR_FS: 12,
 };
