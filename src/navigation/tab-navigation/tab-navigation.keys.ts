@@ -1,2 +1,2 @@
-export const Main = 'Main';
+export const List = 'List';
 export const Profile = 'Profile';

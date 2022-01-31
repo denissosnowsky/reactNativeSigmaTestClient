@@ -9,7 +9,7 @@ import { ThemeContext } from '~contexts';
 import * as TabNavigationKeys from './tab-navigation.keys';
 
 export type RootTabParamList = {
-  [TabNavigationKeys.Main]: undefined;
+  [TabNavigationKeys.List]: undefined;
   [TabNavigationKeys.Profile]: undefined;
 };
 
@@ -30,11 +30,11 @@ export const TabNavigation: VFC = () => {
       }}
     >
       <Tab.Screen
-        name={TabNavigationKeys.Main}
+        name={TabNavigationKeys.List}
         component={Todos}
         options={{
           tabBarIcon: ({ focused, color }) => {
-            const iconName = focused ? 'md-home' : 'md-home-outline';
+            const iconName = focused ? 'list' : 'list';
             return <Ionicons name={iconName} size={30} color={color} />;
           },
         }}
