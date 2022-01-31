@@ -47,4 +47,13 @@ describe('Button with icon', () => {
     // Then
     expect(tree.root.findByType(MaterialCommunityIcons).props.name).toBe('cancel');
   });
+
+  it('button should render select-all icon when select-all variant', async () => {
+    // Given
+    const tree = renderer.create(<ButtonIcon onPress={jest.fn()} variant="select-all" />);
+    // Then
+    expect(tree.root.findByType(MaterialCommunityIcons).props.name).toBe(
+      'checkbox-multiple-marked-circle',
+    );
+  });
 });

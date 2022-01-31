@@ -29,4 +29,9 @@ export type TodoDTO = {
   completed: boolean;
 };
 
-export type TodoButtonsNameType = 'plus-circle' | 'delete-circle' | 'content-save' | 'cancel';
+export type TodoButtonsNameType =
+  | 'plus-circle'
+  | 'delete-circle'
+  | 'content-save'
+  | 'cancel'
+  | 'checkbox-multiple-marked-circle';

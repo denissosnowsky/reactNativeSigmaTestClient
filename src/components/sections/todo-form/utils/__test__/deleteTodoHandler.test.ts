@@ -1,6 +1,6 @@
 import { deleteTodoHandler } from '../deleteTodoHandler';
 
-describe('CancelHandler form util', () => {
+describe('CancelHandler from util', () => {
   it('cancelHandler should fire dispatch and clearForm callbacks', () => {
     // Given
     const dispatchClb = jest.fn();

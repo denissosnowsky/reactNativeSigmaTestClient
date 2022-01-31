@@ -1,6 +1,6 @@
 import { changeTodoHandler } from '../changeTodoHandler';
 
-describe('ChangeHandler form util', () => {
+describe('ChangeHandler from util', () => {
   it('changeTodoHandler should fire dispatch and clearForm callbacks', () => {
     // Given
     const dispatchClb = jest.fn();

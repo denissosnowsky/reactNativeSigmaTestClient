@@ -71,6 +71,13 @@
         "@typescript-eslint/no-explicit-any": "off",
         "import/no-unresolved": "off"
       }
+    },
+    {
+      "files": ["src/components/common/svg/*"],
+      "rules": {
+        "react/jsx-props-no-spreading": "off",
+        "react/destructuring-assignment": "off"
+      }
     }
   ],
   "settings": {

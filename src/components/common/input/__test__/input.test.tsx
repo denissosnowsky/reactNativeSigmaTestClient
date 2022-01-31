@@ -54,7 +54,7 @@ describe('Input component', () => {
     );
     // Then
     expect(getByPlaceholderText(placeholder)).toHaveStyle({
-      borderBottomColor: globalStyles.BORDER_COLOR,
+      borderBottomColor: globalStyles.LIGHT_BORDER_COLOR,
     });
   });
 

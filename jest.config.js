@@ -38,6 +38,7 @@ module.exports = {
     '<rootDir>/src/assets',
     '<rootDir>/src/global',
     '<rootDir>/src/types',
+    '<rootDir>/src/contexts',
     '<rootDir>/cypress',
   ],
 };

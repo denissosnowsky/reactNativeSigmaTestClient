@@ -1,4 +1,5 @@
 import { AppState } from '~store';
+import { ThemeState } from '~store/theme';
 import { SortTypes } from '~types/todo.types';
 import { idSorting } from '~utils/idSorting';
 import { nameSorting } from '~utils/nameSorting';
@@ -9,10 +10,11 @@ import todoSelectors from '../todo.selectors';
 
 describe('Todo selectors', () => {
   let getStateMock: AppState;
-  let state: TodoState;
+  let todoState: TodoState;
+  let themeState: ThemeState;
 
   beforeEach(() => {
-    state = {
+    todoState = {
       loading: false,
       error: 'Error happend',
       cursor: 0,
@@ -46,56 +48,62 @@ describe('Todo selectors', () => {
       skip: 10,
       deletedTodosBeforeNewPage: 2,
     };
+    themeState = {
+      isLightMode: true,
+    };
     getStateMock = {
-      todo: state,
+      todo: todoState,
+      theme: themeState,
     };
   });
 
   it('todo loading should be fetched', () => {
-    expect(todoSelectors.loading(getStateMock)).toBe(state.loading);
+    expect(todoSelectors.loading(getStateMock)).toBe(todoState.loading);
   });
 
   it('todo error should be fetched', () => {
-    expect(todoSelectors.error(getStateMock)).toBe(state.error);
+    expect(todoSelectors.error(getStateMock)).toBe(todoState.error);
   });
 
   it('todo cursor should be fetched', () => {
-    expect(todoSelectors.cursor(getStateMock)).toBe(state.cursor);
+    expect(todoSelectors.cursor(getStateMock)).toBe(todoState.cursor);
   });
 
   it('todo editingMode should be fetched', () => {
-    expect(todoSelectors.editingMode(getStateMock)).toBe(state.editingMode);
+    expect(todoSelectors.editingMode(getStateMock)).toBe(todoState.editingMode);
   });
 
   it('todo editingTodos should be fetched', () => {
-    expect(todoSelectors.editingTodos(getStateMock)).toBe(state.editingTodos);
+    expect(todoSelectors.editingTodos(getStateMock)).toBe(todoState.editingTodos);
   });
 
   it('todo editingInput should be fetched', () => {
-    expect(todoSelectors.editingInput(getStateMock)).toBe(state.editingInput);
+    expect(todoSelectors.editingInput(getStateMock)).toBe(todoState.editingInput);
   });
 
   it('todo filterMode should be fetched', () => {
-    expect(todoSelectors.filterMode(getStateMock)).toBe(state.filterMode);
+    expect(todoSelectors.filterMode(getStateMock)).toBe(todoState.filterMode);
   });
 
   it('todo allTodosCount should be fetched', () => {
-    expect(todoSelectors.allTodosCount(getStateMock)).toBe(state.allTodosCount);
+    expect(todoSelectors.allTodosCount(getStateMock)).toBe(todoState.allTodosCount);
   });
 
   it('todo isListInitializing should be fetched', () => {
     const stateWithoutInitializing = {
       todo: {
-        ...state,
+        ...todoState,
         loading: true,
       },
+      theme: themeState,
     };
     const stateWithInitializing = {
       todo: {
-        ...state,
+        ...todoState,
         loading: true,
         todos: [],
       },
+      theme: themeState,
     };
 
     expect(todoSelectors.isListInitializing(getStateMock)).toBeFalsy();
@@ -104,12 +112,13 @@ describe('Todo selectors', () => {
   });
 
   it('todo page should be fetched', () => {
-    const page = state.skip / state.limit + 1;
+    const page = todoState.skip / todoState.limit + 1;
     const stateWithFirstPage = {
       todo: {
-        ...state,
+        ...todoState,
         skip: 0,
       },
+      theme: themeState,
     };
 
     expect(todoSelectors.page(getStateMock)).toBe(page);
@@ -120,36 +129,37 @@ describe('Todo selectors', () => {
     const filterPicker = (filter: SortTypes) => {
       return {
         todo: {
-          ...state,
+          ...todoState,
           filterMode: filter,
         },
+        theme: themeState,
       };
     };
 
-    const todosList = [...state.todos];
-    const edidtinTodos = state.editingTodos;
+    const todosList = [...todoState.todos];
+    const edidtinTodos = todoState.editingTodos;
     const notEditingTodos = todosList.filter(
       (todo) => !edidtinTodos.some((eTodo) => eTodo.id === todo.id),
     );
 
-    expect(todoSelectors.todos(getStateMock)).toEqual(state.todos);
+    expect(todoSelectors.todos(getStateMock)).toEqual(todoState.todos);
     expect(todoSelectors.todos(filterPicker(SortTypes.ID_ASC))).toEqual(
-      idSorting(SortTypes.ID_ASC, state.todos),
+      idSorting(SortTypes.ID_ASC, todoState.todos),
     );
     expect(todoSelectors.todos(filterPicker(SortTypes.ID_DESC))).toEqual(
-      idSorting(SortTypes.ID_DESC, state.todos),
+      idSorting(SortTypes.ID_DESC, todoState.todos),
     );
     expect(todoSelectors.todos(filterPicker(SortTypes.NAME_ASC))).toEqual(
-      nameSorting(SortTypes.NAME_ASC, state.todos),
+      nameSorting(SortTypes.NAME_ASC, todoState.todos),
     );
     expect(todoSelectors.todos(filterPicker(SortTypes.NAME_DESC))).toEqual(
-      nameSorting(SortTypes.NAME_DESC, state.todos),
+      nameSorting(SortTypes.NAME_DESC, todoState.todos),
     );
     expect(todoSelectors.todos(filterPicker(SortTypes.STATUS_ASC))).toEqual(
-      statusSorting(SortTypes.STATUS_ASC, state.todos),
+      statusSorting(SortTypes.STATUS_ASC, todoState.todos),
     );
     expect(todoSelectors.todos(filterPicker(SortTypes.STATUS_DESC))).toEqual(
-      statusSorting(SortTypes.STATUS_DESC, state.todos),
+      statusSorting(SortTypes.STATUS_DESC, todoState.todos),
     );
     expect(todoSelectors.todos(filterPicker(SortTypes.SELECT_ASC))).toEqual(
       selectSorting(SortTypes.SELECT_ASC, edidtinTodos, notEditingTodos),

@@ -9,7 +9,7 @@ import { NativeBaseProvider } from 'native-base';
 
 import { TodoState } from '~store/todo';
 import { SortTypes } from '~types/todo.types';
-import { Todos } from '..';
+import { Screens } from '~screens/screens';
 
 afterEach(cleanup);
 
@@ -41,25 +41,46 @@ describe('Todos screen', () => {
     store = mockStore(state);
     const getStateMethod = () => ({
       todo: state,
+      theme: {
+        isLightMode: false,
+      },
     });
     store.getState = getStateMethod;
   });
 
-  it('todo screen should show an error when needed', () => {
+  it('screens should show an error when theme is light', () => {
     // Getting
+    const spySelector = jest.spyOn(redux, 'useSelector');
+    spySelector.mockReturnValue('error').mockReturnValueOnce(true);
     const spyDispatch = jest.spyOn(redux, 'useDispatch');
     spyDispatch.mockReturnValue(jest.fn());
-    const spySelector = jest.spyOn(redux, 'useSelector');
-    spySelector.mockReturnValueOnce('error');
     // When
     const { queryByText } = render(
       <NativeBaseProvider initialWindowMetrics={inset}>
         <Provider store={store}>
-          <Todos />
+          <Screens />
         </Provider>
       </NativeBaseProvider>,
     );
     // Then
     expect(queryByText('Some error happened')).toBeTruthy();
+  });
+
+  it('screens should show an error when theme is dark', () => {
+    // Getting
+    const spySelector = jest.spyOn(redux, 'useSelector');
+    spySelector.mockReturnValue('error').mockReturnValueOnce(false);
+    const spyDispatch = jest.spyOn(redux, 'useDispatch');
+    spyDispatch.mockReturnValue(jest.fn());
+    // When
+    const { queryByText } = render(
+      <NativeBaseProvider initialWindowMetrics={inset}>
+        <Provider store={store}>
+          <Screens />
+        </Provider>
+      </NativeBaseProvider>,
+    );
+    // Then
+    expect(queryByText('Some error happened')).toBeFalsy();
   });
 });

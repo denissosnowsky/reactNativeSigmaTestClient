@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
     fontSize: globalStyles.MAIN_FS,
     width: '100%',
     height: 40,
-    color: globalStyles.MAIN_COLOR,
     borderColor: 'transparent',
   },
 });

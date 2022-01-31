@@ -19,9 +19,14 @@ export const ButtonIcon: VFC<Props> = ({ onPress, variant }) => {
         case 'delete':
           return { name: 'delete-circle', color: globalStyles.DELETE_COLOR };
         case 'save':
-          return { name: 'content-save', color: globalStyles.MAIN_COLOR };
+          return { name: 'content-save', color: globalStyles.LIGHT_MAIN_COLOR };
+        case 'select-all':
+          return {
+            name: 'checkbox-multiple-marked-circle',
+            color: globalStyles.SUCCESS_COLOR,
+          };
         default:
-          return { name: 'cancel', color: globalStyles.CANCEL_COLOR };
+          return { name: 'cancel', color: globalStyles.LIGHT_CANCEL_COLOR };
       }
     },
     [],
@@ -40,5 +45,5 @@ export const ButtonIcon: VFC<Props> = ({ onPress, variant }) => {
 
 type Props = {
   onPress?: () => void;
-  variant: 'add' | 'delete' | 'save' | 'cancel';
+  variant: 'add' | 'delete' | 'save' | 'cancel' | 'select-all';
 };

@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     fontSize: 30,
-    color: globalStyles.MAIN_COLOR,
+    color: globalStyles.LIGHT_MAIN_COLOR,
   },
   subtext: {
     textAlign: 'center',

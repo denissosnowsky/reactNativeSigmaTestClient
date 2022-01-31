@@ -14,6 +14,7 @@ import {
   todoSelectReducer,
   todoEmptifyReducer,
   todoNextPageReducer,
+  todoSelectAllReducer,
 } from './reducers';
 
 export type TodoState = {
@@ -62,6 +63,7 @@ export const counterSlice = createSlice({
     ...todoSelectReducer,
     ...todoEmptifyReducer,
     ...todoNextPageReducer,
+    ...todoSelectAllReducer,
   },
 });
 
