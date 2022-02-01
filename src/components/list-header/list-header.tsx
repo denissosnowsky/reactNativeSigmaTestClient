@@ -20,39 +20,53 @@ export const ListHeader: VFC = () => {
   const isMultipleEditing = editingTodos.length > 1 && editingMode;
   const theme = useContext(ThemeContext);
 
+  const sortById = () => {
+    if (!editingMode) {
+      dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.ID))();
+    }
+  };
+  const sortByName = () => {
+    if (!editingMode) {
+      dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.NAME))();
+    }
+  };
+  const sortByStatus = () => {
+    if (!editingMode) {
+      dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.STATUS))();
+    }
+  };
+  const sortBySelected = () => {
+    dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.SELECT))();
+  };
+
   return (
     <View style={[styles.wrapper, { backgroundColor: theme.listItemBG }]}>
-      <TouchableWithoutFeedback
-        onPress={dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.ID))}
-        testID="id-filter"
-      >
+      <TouchableWithoutFeedback onPress={sortById} testID="id-filter">
         <View style={styles.id}>
-          <FontAwesome
-            name={iconPicker(TodosColumns.ID, filterMode)}
-            size={globalStyles.HEADER_ICON_SIZE}
-            color={globalStyles.ICON_DEF_COLOR}
-          />
+          {!editingMode && (
+            <FontAwesome
+              name={iconPicker(TodosColumns.ID, filterMode)}
+              size={globalStyles.HEADER_ICON_SIZE}
+              color={globalStyles.ICON_DEF_COLOR}
+            />
+          )}
           <Text style={styles.headerText}> ID</Text>
         </View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback
-        onPress={dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.NAME))}
-        testID="name-filter"
-      >
+      <TouchableWithoutFeedback onPress={sortByName} testID="name-filter">
         <View style={styles.text}>
-          <FontAwesome
-            name={iconPicker(TodosColumns.NAME, filterMode)}
-            size={globalStyles.HEADER_ICON_SIZE}
-            color={globalStyles.ICON_DEF_COLOR}
-          />
+          {!editingMode && (
+            <FontAwesome
+              name={iconPicker(TodosColumns.NAME, filterMode)}
+              size={globalStyles.HEADER_ICON_SIZE}
+              color={globalStyles.ICON_DEF_COLOR}
+            />
+          )}
           <Text style={styles.headerText}> Name</Text>
         </View>
       </TouchableWithoutFeedback>
       {isMultipleEditing ? (
-        <TouchableWithoutFeedback
-          onPress={dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.SELECT))}
-          testID="select-filter"
-        >
+        <TouchableWithoutFeedback onPress={sortBySelected} testID="select-filter">
           <View style={styles.complete}>
             <FontAwesome
               name={iconPicker(TodosColumns.SELECT, filterMode)}
@@ -63,16 +77,15 @@ export const ListHeader: VFC = () => {
           </View>
         </TouchableWithoutFeedback>
       ) : (
-        <TouchableWithoutFeedback
-          onPress={dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.STATUS))}
-          testID="status-filter"
-        >
+        <TouchableWithoutFeedback onPress={sortByStatus} testID="status-filter">
           <View style={styles.complete}>
-            <FontAwesome
-              name={iconPicker(TodosColumns.STATUS, filterMode)}
-              size={globalStyles.HEADER_ICON_SIZE}
-              color={globalStyles.ICON_DEF_COLOR}
-            />
+            {!editingMode && (
+              <FontAwesome
+                name={iconPicker(TodosColumns.STATUS, filterMode)}
+                size={globalStyles.HEADER_ICON_SIZE}
+                color={globalStyles.ICON_DEF_COLOR}
+              />
+            )}
             <Text style={styles.headerText}> Status</Text>
           </View>
         </TouchableWithoutFeedback>

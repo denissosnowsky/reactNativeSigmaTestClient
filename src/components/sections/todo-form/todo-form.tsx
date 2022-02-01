@@ -21,11 +21,11 @@ import { selectAllTodosHandler } from './utils/selectAllTodosHandler';
 export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
   const [color, setColor] = useChangeColor();
   const dispatch = useDispatch();
-  const [showModal, setShowModal] = React.useState(false);
   const [formValue, setFormValue] = React.useState('');
   const isEditingMode = useSelector(todoSelectors.editingMode);
   const editingTodos = useSelector(todoSelectors.editingTodos);
   const editingInput = useSelector(todoSelectors.editingInput);
+  const isDeleteModalOpened = useSelector(todoSelectors.isDeleteModalOpened);
   const isMultipleEditing = editingTodos.length > 1 && isEditingMode;
   const isSaveButtonShouldBeShown =
     !isMultipleEditing && !editingTodos[0]?.completed && isEditingMode;
@@ -98,14 +98,14 @@ export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
     cancelHandler(
       dispatchSelection(dispatch, todoActions.todoEditModeOff()),
       clearFormHandler(setFormValue, Keyboard),
-      setShowModal,
+      dispatchSelection(dispatch, todoActions.todoEditDeleteModalModeOn(false)),
     );
 
   const deleteHandler = () =>
     deleteTodoHandler(
       dispatchSelection(dispatch, todoThunks.todoDeleteThunk(editingTodos)),
       clearFormHandler(setFormValue, Keyboard),
-      setShowModal,
+      dispatchSelection(dispatch, todoActions.todoEditDeleteModalModeOn(false)),
     );
 
   const selectAllHandler = () =>
@@ -150,17 +150,19 @@ export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
           >
             {isSaveButtonShouldBeShown && <ButtonIcon onPress={changeHandler} variant="save" />}
             {isMultipleEditing && <ButtonIcon onPress={selectAllHandler} variant="select-all" />}
-            <ButtonIcon onPress={() => setShowModal(true)} variant="delete" />
+            <ButtonIcon
+              onPress={dispatchSelection(dispatch, todoActions.todoEditDeleteModalModeOn(true))}
+              variant="delete"
+            />
             <ButtonIcon onPress={cancelAllHandler} variant="cancel" />
           </View>
         )}
       </View>
       <ModalFC
-        showModal={showModal}
-        closeModal={() => setShowModal(false)}
-        itemsQuantity={editingTodos.length}
+        showModal={isDeleteModalOpened}
         confirm={deleteHandler}
         decline={cancelAllHandler}
+        text={`Delete ${editingTodos.length} ${isMultipleEditing ? 'todos' : 'todo'}?`}
       />
     </>
   );

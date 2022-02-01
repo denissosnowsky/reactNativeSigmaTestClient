@@ -7,21 +7,18 @@ import { ThemeContext } from '~contexts';
 import styles from './modal.style';
 import { BlueText } from '../text';
 
-export const ModalFC: VFC<Props> = ({ itemsQuantity, confirm, decline, showModal, closeModal }) => {
-  const IS_ONE_QUANTITY = itemsQuantity === 1;
+export const ModalFC: VFC<Props> = ({ confirm, decline, showModal, text }) => {
   const theme = useContext(ThemeContext);
   const isIos = Platform.OS === 'ios';
   return (
     <>
-      <Modal isOpen={showModal} onClose={closeModal} testID="wrapper">
+      <Modal isOpen={showModal} testID="wrapper">
         <Modal.Content
           maxWidth={globalStyles.MODAL_WD}
           style={[styles.wrapper, { backgroundColor: theme.modal }]}
         >
           <View style={styles.textWrapper}>
-            <BlueText fs={globalStyles.MAIN_FS}>{`Delete ${itemsQuantity} ${
-              IS_ONE_QUANTITY ? 'todo' : 'todos'
-            }?`}</BlueText>
+            <BlueText fs={globalStyles.MAIN_FS}>{text}</BlueText>
           </View>
           <View style={styles.buttonsWrapper}>
             <Button
@@ -44,9 +41,8 @@ export const ModalFC: VFC<Props> = ({ itemsQuantity, confirm, decline, showModal
 };
 
 type Props = {
-  itemsQuantity: number;
   showModal: boolean;
-  closeModal: () => void;
+  text: string;
   confirm: () => void;
   decline: () => void;
 };

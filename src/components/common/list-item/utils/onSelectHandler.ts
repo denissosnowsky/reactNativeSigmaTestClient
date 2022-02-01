@@ -1,8 +1,11 @@
+import { Keyboard } from 'react-native';
+
 export const onSelectHandler = (
   isMultipleEditing: boolean,
   isCurrentItemEditing: boolean,
   deselectClb: () => void,
   selectClb: () => void,
+  editOffClb: () => void,
 ) => {
   if (isMultipleEditing) {
     if (isCurrentItemEditing) {
@@ -10,5 +13,8 @@ export const onSelectHandler = (
     } else {
       selectClb();
     }
+  } else {
+    editOffClb();
   }
+  Keyboard.dismiss();
 };

@@ -1,9 +1,9 @@
 export const deleteTodoHandler = (
   dispatchClb: () => void,
   clearFormHandler: () => void,
-  closeModal: (arg: boolean) => void,
+  closeModal: () => void,
 ) => {
   dispatchClb();
   clearFormHandler();
-  closeModal(false);
+  closeModal();
 };

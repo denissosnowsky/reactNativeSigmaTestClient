@@ -13,6 +13,7 @@ import styles from './list-item.style';
 import { Input } from '../input';
 import { onCheckPressHandle } from './utils/onCheckPressHandle';
 import { onSelectHandler } from './utils/onSelectHandler';
+import { onCancelEditingHandle } from './utils/onCancelEditingHandle';
 
 export const ListItem: VFC<Props> = ({
   id,
@@ -33,11 +34,22 @@ export const ListItem: VFC<Props> = ({
   const isUncompleteTodoIsEditing = editingMode && !complete && !isMultipleEditing;
   const isTodoSelectedOrCompleted =
     (complete && !isMultipleEditing) || (isCurrentItemEditing && isMultipleEditing);
+  const isOneNonCompleteEditing = editingTodos.length === 1 && editingTodos[0].completed === false;
+  const inputTextWasChanged = isOneNonCompleteEditing && inputValue !== editingTodos[0].title;
   const theme = useContext(ThemeContext);
 
   useEffect(() => {
     inputRef.current?.focus();
   }, [editingMode]);
+
+  const onEditingOffHandler = () => {
+    onCancelEditingHandle(
+      isOneNonCompleteEditing,
+      inputTextWasChanged,
+      dispatchSelection(dispatch, todoActions.todoEditChangeModalModeOn(true)),
+      dispatchSelection(dispatch, todoActions.todoEditModeOff()),
+    );
+  };
 
   return (
     <TouchableWithoutFeedback
@@ -49,6 +61,7 @@ export const ListItem: VFC<Props> = ({
           isCurrentItemEditing,
           dispatchSelection(dispatch, todoActions.todoDeselectOn(id)),
           dispatchSelection(dispatch, todoActions.todoSelectOn(id)),
+          onEditingOffHandler,
         )
       }
       testID="list-item-wrapper"
@@ -101,6 +114,7 @@ export const ListItem: VFC<Props> = ({
                         isCurrentItemEditing,
                         dispatchSelection(dispatch, todoActions.todoDeselectOn(id)),
                         dispatchSelection(dispatch, todoActions.todoSelectOn(id)),
+                        onEditingOffHandler,
                       )
                   : () => onCheckPressHandle(onPressCheck)
               }
@@ -119,6 +133,7 @@ export const ListItem: VFC<Props> = ({
                         isCurrentItemEditing,
                         dispatchSelection(dispatch, todoActions.todoDeselectOn(id)),
                         dispatchSelection(dispatch, todoActions.todoSelectOn(id)),
+                        onEditingOffHandler,
                       )
                   : () => onCheckPressHandle(onPressCheck)
               }

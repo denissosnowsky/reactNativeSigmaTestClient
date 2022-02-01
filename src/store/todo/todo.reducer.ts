@@ -15,6 +15,8 @@ import {
   todoEmptifyReducer,
   todoNextPageReducer,
   todoSelectAllReducer,
+  todoEditChangeModalModeReducer,
+  todoEditDeleteModalModeReducer,
 } from './reducers';
 
 export type TodoState = {
@@ -30,6 +32,8 @@ export type TodoState = {
   limit: number;
   skip: number;
   deletedTodosBeforeNewPage: number;
+  isDeleteModalOpened: boolean;
+  isChangeModalOpened: boolean;
 };
 
 const initialState: TodoState = {
@@ -45,6 +49,8 @@ const initialState: TodoState = {
   limit: 30,
   skip: 0,
   deletedTodosBeforeNewPage: 0,
+  isDeleteModalOpened: false,
+  isChangeModalOpened: false,
 };
 
 export const counterSlice = createSlice({
@@ -64,6 +70,8 @@ export const counterSlice = createSlice({
     ...todoEmptifyReducer,
     ...todoNextPageReducer,
     ...todoSelectAllReducer,
+    ...todoEditChangeModalModeReducer,
+    ...todoEditDeleteModalModeReducer,
   },
 });
 

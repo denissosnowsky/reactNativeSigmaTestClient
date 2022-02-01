@@ -1,3 +1,5 @@
+import { Draft } from '@reduxjs/toolkit';
+
 import { SortTypes, TodoDTO } from '~types/todo.types';
 import { AppState } from '~store';
 import { idSorting } from '~utils/idSorting';
@@ -41,6 +43,8 @@ const todos = (state: AppState): Array<TodoDTO> => {
       return todosList;
   }
 };
+const isDeleteModalOpened = (state: AppState): boolean => state.todo.isDeleteModalOpened;
+const isChangeModalOpened = (state: AppState): boolean => state.todo.isChangeModalOpened;
 
 export default {
   loading,
@@ -54,4 +58,6 @@ export default {
   allTodosCount,
   page,
   isListInitializing,
+  isDeleteModalOpened,
+  isChangeModalOpened,
 };
