@@ -4,7 +4,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { todoActions } from '~store/todo';
-import { TodosColumns } from '~types/todo.types';
+import { CompletenceFilter, TodosColumns } from '~types/todo.types';
 import todosSelectors from '~store/todo/todo.selectors';
 import globalStyles from '~global/constants.style';
 import { ThemeContext } from '~contexts';
@@ -17,6 +17,10 @@ export const ListHeader: VFC = () => {
   const filterMode = useSelector(todosSelectors.filterMode);
   const editingMode = useSelector(todosSelectors.editingMode);
   const editingTodos = useSelector(todosSelectors.editingTodos);
+  const completenceFilterMode = useSelector(todosSelectors.completenceFilterMode);
+  const isFilteredByCompletence =
+    completenceFilterMode === CompletenceFilter.COMPLETED ||
+    completenceFilterMode === CompletenceFilter.UNCOMPLETED;
   const isMultipleEditing = editingTodos.length > 1 && editingMode;
   const theme = useContext(ThemeContext);
 
@@ -31,7 +35,7 @@ export const ListHeader: VFC = () => {
     }
   };
   const sortByStatus = () => {
-    if (!editingMode) {
+    if (!editingMode && !isFilteredByCompletence) {
       dispatchSelection(dispatch, todoActions.todoSortRequested(TodosColumns.STATUS))();
     }
   };
@@ -79,14 +83,26 @@ export const ListHeader: VFC = () => {
       ) : (
         <TouchableWithoutFeedback onPress={sortByStatus} testID="status-filter">
           <View style={styles.complete}>
-            {!editingMode && (
+            {!editingMode && !isFilteredByCompletence && (
               <FontAwesome
                 name={iconPicker(TodosColumns.STATUS, filterMode)}
                 size={globalStyles.HEADER_ICON_SIZE}
                 color={globalStyles.ICON_DEF_COLOR}
               />
             )}
-            <Text style={styles.headerText}> Status</Text>
+            <Text
+              style={[
+                styles.headerText,
+                {
+                  color: isFilteredByCompletence
+                    ? globalStyles.LIGHT_CANCEL_COLOR
+                    : globalStyles.DARK_CANCEL_COLOR,
+                },
+              ]}
+            >
+              {' '}
+              Status
+            </Text>
           </View>
         </TouchableWithoutFeedback>
       )}

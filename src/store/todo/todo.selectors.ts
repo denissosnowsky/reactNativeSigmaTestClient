@@ -1,6 +1,6 @@
 import { Draft } from '@reduxjs/toolkit';
 
-import { SortTypes, TodoDTO } from '~types/todo.types';
+import { CompletenceFilter, SortTypes, TodoDTO } from '~types/todo.types';
 import { AppState } from '~store';
 import { idSorting } from '~utils/idSorting';
 import { nameSorting } from '~utils/nameSorting';
@@ -45,6 +45,8 @@ const todos = (state: AppState): Array<TodoDTO> => {
 };
 const isDeleteModalOpened = (state: AppState): boolean => state.todo.isDeleteModalOpened;
 const isChangeModalOpened = (state: AppState): boolean => state.todo.isChangeModalOpened;
+const completenceFilterMode = (state: AppState): CompletenceFilter =>
+  state.todo.completenceFilterMode;
 
 export default {
   loading,
@@ -60,4 +62,5 @@ export default {
   isListInitializing,
   isDeleteModalOpened,
   isChangeModalOpened,
+  completenceFilterMode,
 };

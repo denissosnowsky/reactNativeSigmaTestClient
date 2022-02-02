@@ -20,6 +20,8 @@ export const todosFetchThunk =
       }>('/todos', {
         limit: getState().todo.limit + getState().todo.deletedTodosBeforeNewPage,
         skip: getState().todo.skip - getState().todo.deletedTodosBeforeNewPage,
+        complete: getState().todo.completenceFilterMode,
+        important: '',
       });
 
       dispatch(todoActions.todosFetchSuccessful({ todos: data.todos, count: data.count }));

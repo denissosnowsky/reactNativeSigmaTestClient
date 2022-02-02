@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   wrapepr: {
-    height: 70,
+    height: 60,
     width: '75%',
     display: 'flex',
     alignItems: 'center',

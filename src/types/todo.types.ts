@@ -27,6 +27,7 @@ export type TodoDTO = {
   id: number;
   title: string;
   completed: boolean;
+  important: ImportantEnum;
 };
 
 export type TodoButtonsNameType =
@@ -34,4 +35,23 @@ export type TodoButtonsNameType =
   | 'delete-circle'
   | 'content-save'
   | 'cancel'
-  | 'checkbox-multiple-marked-circle';
+  | 'checkbox-multiple-marked-circle'
+  | 'circle-off-outline'
+  | 'filter-variant'
+  | 'menu-down'
+  | 'menu-up'
+  | 'checkbox-blank-circle-outline'
+  | 'check-circle';
+
+export enum CompletenceFilter {
+  DEFAULT = '',
+  COMPLETED = 'complete',
+  UNCOMPLETED = 'uncomplete',
+}
+
+export enum ImportantEnum {
+  DEFAULT = '',
+  HIGH = 'high',
+  NORMAL = 'normal',
+  LOW = 'low',
+}

@@ -25,7 +25,7 @@ export default {
 
   ICON_MED_SIZE: 50,
   ICON_SM_SIZE: 35,
-  ICON_EXSM_SIZE: 30,
+  ICON_EXSM_SIZE: 25,
   ICON_DEF_COLOR: '#000',
 
   MAIN_FS: 20,

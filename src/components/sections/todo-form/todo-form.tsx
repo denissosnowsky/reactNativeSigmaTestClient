@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, VFC } from 'react';
-import { Animated, Easing, Keyboard, TouchableWithoutFeedback, View } from 'react-native';
+import { Animated, Keyboard, TouchableWithoutFeedback, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ButtonIcon } from '~components/common/button-icon';
@@ -10,6 +10,8 @@ import { dispatchSelection } from '~utils/dispatchSelection';
 import { ModalFC } from '~components/common/modal';
 import { TitleLetterSVG } from '~components/common/svg';
 import { useChangeColor } from '~hooks/useChangeColor';
+import { animationWithTime } from '~utils/animationWithTime';
+import { ListFilter } from '~components/list-filter';
 import styles from './todo-form.style';
 import { clearFormHandler } from './utils/clearFormHandler';
 import { addTodoHandler } from './utils/addTodoHandler';
@@ -40,18 +42,8 @@ export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
 
       if (v.value > scrollAnimatedOffset && !isAnimationStartScrollActivated) {
         Animated.parallel([
-          Animated.timing(letterScaleAndOpacity, {
-            toValue: 1,
-            duration: 150,
-            useNativeDriver: false,
-            easing: Easing.inOut(Easing.linear),
-          }),
-          Animated.timing(letterWidth, {
-            toValue: logoLetterWidth,
-            duration: 150,
-            useNativeDriver: false,
-            easing: Easing.inOut(Easing.linear),
-          }),
+          animationWithTime(letterScaleAndOpacity, 1, 150),
+          animationWithTime(letterWidth, logoLetterWidth, 150),
         ]).start();
 
         isAnimationStartScrollActivated = true;
@@ -60,18 +52,8 @@ export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
 
       if (v.value < scrollAnimatedOffset && !isAnimationEndScrollActivated) {
         Animated.parallel([
-          Animated.timing(letterScaleAndOpacity, {
-            toValue: 0,
-            duration: 100,
-            useNativeDriver: false,
-            easing: Easing.inOut(Easing.linear),
-          }),
-          Animated.timing(letterWidth, {
-            toValue: 0,
-            duration: 100,
-            useNativeDriver: false,
-            easing: Easing.inOut(Easing.linear),
-          }),
+          animationWithTime(letterScaleAndOpacity, 0, 100),
+          animationWithTime(letterWidth, 0, 100),
         ]).start();
 
         isAnimationEndScrollActivated = true;
@@ -164,6 +146,7 @@ export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
         decline={cancelAllHandler}
         text={`Delete ${editingTodos.length} ${isMultipleEditing ? 'todos' : 'todo'}?`}
       />
+      <ListFilter />
     </>
   );
 };

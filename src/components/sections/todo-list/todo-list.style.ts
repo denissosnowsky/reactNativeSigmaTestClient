@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingLeft: 10,
     paddingRight: 10,
+    zIndex: -1,
   },
   nonListWrapper: {
     display: 'flex',

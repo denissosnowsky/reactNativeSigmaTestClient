@@ -11,6 +11,7 @@ import { dispatchSelection } from '~utils/dispatchSelection';
 import { todoThunks, todoActions } from '~store/todo';
 import { ModalFC } from '~components/common/modal';
 import todoSelectors from '~store/todo/todo.selectors';
+import { animationWithTime } from '~utils/animationWithTime';
 import styles from './todos.style';
 import { cancelHandler } from './utils/cancelHandler';
 import { changeTodoHandler } from './utils/changeTodoHandler';
@@ -74,18 +75,8 @@ export const Todos: VFC = () => {
 
       if (v.value > scrollAnimatedOffset && !isAnimationStartScrollActivated) {
         Animated.parallel([
-          Animated.timing(headerScaleAndOpacity, {
-            toValue: 0,
-            duration: 150,
-            useNativeDriver: false,
-            easing: Easing.inOut(Easing.linear),
-          }),
-          Animated.timing(headerHeight, {
-            toValue: 0,
-            duration: 150,
-            useNativeDriver: false,
-            easing: Easing.inOut(Easing.linear),
-          }),
+          animationWithTime(headerScaleAndOpacity, 0, 150),
+          animationWithTime(headerHeight, 0, 150),
         ]).start();
 
         isAnimationStartScrollActivated = true;
@@ -94,18 +85,8 @@ export const Todos: VFC = () => {
 
       if (v.value < scrollAnimatedOffset && !isAnimationEndScrollActivated) {
         Animated.parallel([
-          Animated.timing(headerScaleAndOpacity, {
-            toValue: 1,
-            duration: 100,
-            useNativeDriver: false,
-            easing: Easing.inOut(Easing.linear),
-          }),
-          Animated.timing(headerHeight, {
-            toValue: headerInitHeight,
-            duration: 100,
-            useNativeDriver: false,
-            easing: Easing.inOut(Easing.linear),
-          }),
+          animationWithTime(headerScaleAndOpacity, 1, 100),
+          animationWithTime(headerHeight, headerInitHeight, 100),
         ]).start();
 
         isAnimationEndScrollActivated = true;

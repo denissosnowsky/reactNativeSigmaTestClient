@@ -50,7 +50,8 @@
     "no-shadow": 0,
     "prefer-destructuring": 0,
     "react-hooks/exhaustive-deps": 0,
-    "import/no-extraneous-dependencies": 0
+    "import/no-extraneous-dependencies": 0,
+    "react/no-array-index-key": 0
   },
   "overrides": [
     {

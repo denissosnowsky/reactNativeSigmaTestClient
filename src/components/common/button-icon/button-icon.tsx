@@ -4,8 +4,9 @@ import { TouchableOpacity } from 'react-native';
 
 import globalStyles from '~global/constants.style';
 import { TodoButtonsNameType } from '~types/todo.types';
+import styles from './button-icon.style';
 
-export const ButtonIcon: VFC<Props> = ({ onPress, variant }) => {
+export const ButtonIcon: VFC<Props> = ({ onPress, variant, size }) => {
   const iconNamePicker = useCallback(
     (
       btnVariant: typeof variant,
@@ -25,6 +26,19 @@ export const ButtonIcon: VFC<Props> = ({ onPress, variant }) => {
             name: 'checkbox-multiple-marked-circle',
             color: globalStyles.SUCCESS_COLOR,
           };
+        case 'default-hide':
+          return { name: 'circle-off-outline', color: globalStyles.ICON_DEF_COLOR };
+        case 'filter':
+          return { name: 'filter-variant', color: globalStyles.ICON_DEF_COLOR };
+        case 'down':
+          return { name: 'menu-down', color: globalStyles.ICON_DEF_COLOR };
+        case 'up':
+          return { name: 'menu-up', color: globalStyles.ICON_DEF_COLOR };
+        case 'circle-outline':
+          return { name: 'checkbox-blank-circle-outline', color: globalStyles.ICON_DEF_COLOR };
+        case 'check':
+          return { name: 'check-circle', color: globalStyles.SUCCESS_COLOR };
+        case 'cancel':
         default:
           return { name: 'cancel', color: globalStyles.LIGHT_CANCEL_COLOR };
       }
@@ -33,10 +47,10 @@ export const ButtonIcon: VFC<Props> = ({ onPress, variant }) => {
   );
 
   return (
-    <TouchableOpacity onPress={onPress} accessibilityRole="button">
+    <TouchableOpacity onPress={onPress} accessibilityRole="button" style={styles.wrapper}>
       <MaterialCommunityIcons
         name={iconNamePicker(variant).name}
-        size={globalStyles.ICON_MED_SIZE}
+        size={size ?? globalStyles.ICON_MED_SIZE}
         color={iconNamePicker(variant).color}
       />
     </TouchableOpacity>
@@ -45,5 +59,17 @@ export const ButtonIcon: VFC<Props> = ({ onPress, variant }) => {
 
 type Props = {
   onPress?: () => void;
-  variant: 'add' | 'delete' | 'save' | 'cancel' | 'select-all';
+  size?: number;
+  variant:
+    | 'add'
+    | 'delete'
+    | 'save'
+    | 'cancel'
+    | 'select-all'
+    | 'default-hide'
+    | 'filter'
+    | 'down'
+    | 'up'
+    | 'circle-outline'
+    | 'check';
 };

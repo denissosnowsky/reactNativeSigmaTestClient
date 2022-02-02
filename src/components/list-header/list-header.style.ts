@@ -13,10 +13,11 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     shadowOpacity: 0.2,
     elevation: 5,
-    marginTop: 30,
+    marginTop: 15,
     padding: 10,
     marginLeft: 10,
     marginRight: 10,
+    zIndex: -1,
   },
   headerText: {
     fontSize: globalStyles.MAIN_FS,

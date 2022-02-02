@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 7,
     padding: 10,
+    zIndex: -1,
   },
   active: {
     borderColor: globalStyles.LIGHT_MAIN_COLOR,

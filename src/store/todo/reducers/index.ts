@@ -13,3 +13,4 @@ export * from './todoNextPage.reducer';
 export * from './todoSelectAll.reducer';
 export * from './todoEditDeleteModalMode.reducer';
 export * from './todoEditChangeModalMode.reducer';
+export * from './todoCompletenceFilter.reducer';
