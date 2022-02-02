@@ -9,17 +9,13 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
   },
-  hideCompleteWrapper: {
+  filterWrapper: {
     height: 50,
     width: '80%',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  sortImportantWrapper: {
-    height: 50,
-    width: '80%',
   },
   filter: {
     height: 40,

@@ -6,7 +6,9 @@ import { ButtonIcon } from '~components/common/button-icon';
 import { Selector } from '~components/common/selector';
 import globalStyles from '~global/constants.style';
 import todosSelectors from '~store/todo/todo.selectors';
-import { CompletenceFilter } from '~types/todo.types';
+import { iconPickerImportantFilter } from '~utils/iconPickerImportantFilter';
+import { CompletenceFilter, ImportantEnum } from '~types/todo.types';
+import { iconPickerCompleteFilter } from '~utils/iconPickerCompleteFilter';
 import { todoActions, todoThunks } from '~store/todo';
 import { animationWithTime } from '~utils/animationWithTime';
 import styles from './list-filter.style';
@@ -14,47 +16,83 @@ import styles from './list-filter.style';
 export const ListFilter: VFC = () => {
   const [filter, setFilter] = useState(false);
   const completenceFilterMode = useSelector(todosSelectors.completenceFilterMode);
+  const importantFilterMode = useSelector(todosSelectors.importantFilterMode);
+  const page = useSelector(todosSelectors.page);
   const dispatch = useDispatch();
   const filtersScaleAndOpacity = useRef(new Animated.Value(0)).current;
   const filtersEndScale = 1;
   const filtersHeight = useRef(new Animated.Value(0)).current;
-  const filtersEndHeight = 55;
+  const filtersEndHeight = 110;
+  const isFirstPage = page === 1;
 
   const completenceFilterData = [
     {
       name: 'default status',
       action: () => {
         dispatch(todoActions.todoCompletenceFilterRequested(CompletenceFilter.DEFAULT));
-        /* dispatch(todoThunks.todosFetchThunk()); */
+        if (isFirstPage) {
+          dispatch(todoThunks.todosFetchThunk());
+        }
       },
     },
     {
       name: 'completed',
       action: () => {
         dispatch(todoActions.todoCompletenceFilterRequested(CompletenceFilter.COMPLETED));
-        /* dispatch(todoThunks.todosFetchThunk()); */
+        if (isFirstPage) {
+          dispatch(todoThunks.todosFetchThunk());
+        }
       },
     },
     {
       name: 'uncompleted',
       action: () => {
         dispatch(todoActions.todoCompletenceFilterRequested(CompletenceFilter.UNCOMPLETED));
-        /* dispatch(todoThunks.todosFetchThunk()); */
+        if (isFirstPage) {
+          dispatch(todoThunks.todosFetchThunk());
+        }
       },
     },
   ];
 
-  const iconPicker = (completenceFilterMode: CompletenceFilter) => {
-    switch (completenceFilterMode) {
-      case CompletenceFilter.COMPLETED:
-        return 'check';
-      case CompletenceFilter.UNCOMPLETED:
-        return 'circle-outline';
-      case CompletenceFilter.DEFAULT:
-      default:
-        return 'default-hide';
-    }
-  };
+  const importanceFilterData = [
+    {
+      name: 'default priority',
+      action: () => {
+        dispatch(todoActions.todoImportanceFilterRequested(ImportantEnum.DEFAULT));
+        if (isFirstPage) {
+          dispatch(todoThunks.todosFetchThunk());
+        }
+      },
+    },
+    {
+      name: 'high priority',
+      action: () => {
+        dispatch(todoActions.todoImportanceFilterRequested(ImportantEnum.HIGH));
+        if (isFirstPage) {
+          dispatch(todoThunks.todosFetchThunk());
+        }
+      },
+    },
+    {
+      name: 'normal priority',
+      action: () => {
+        dispatch(todoActions.todoImportanceFilterRequested(ImportantEnum.NORMAL));
+        if (isFirstPage) {
+          dispatch(todoThunks.todosFetchThunk());
+        }
+      },
+    },
+    {
+      name: 'low priority',
+      action: () => {
+        dispatch(todoActions.todoImportanceFilterRequested(ImportantEnum.LOW));
+        if (isFirstPage) {
+          dispatch(todoThunks.todosFetchThunk());
+        }
+      },
+    },
+  ];
 
   const onFilterClickHandler = () => {
     if (!filter) {
@@ -76,7 +114,7 @@ export const ListFilter: VFC = () => {
     <>
       <View style={styles.filter}>
         <ButtonIcon
-          variant="filter"
+          variant={filter ? 'filter-opened' : 'filter-closed'}
           size={globalStyles.ICON_SM_SIZE}
           onPress={onFilterClickHandler}
         />
@@ -91,13 +129,19 @@ export const ListFilter: VFC = () => {
           },
         ]}
       >
-        {/* <View style={styles.sortImportantWrapper} /> */}
-        <View style={styles.hideCompleteWrapper}>
+        <View style={styles.filterWrapper}>
           <ButtonIcon
-            variant={iconPicker(completenceFilterMode)}
+            variant={iconPickerCompleteFilter(completenceFilterMode)}
             size={globalStyles.ICON_SM_SIZE}
           />
           <Selector style={styles.selector} data={completenceFilterData} />
+        </View>
+        <View style={[styles.filterWrapper, { zIndex: -1 }]}>
+          <ButtonIcon
+            variant={iconPickerImportantFilter(importantFilterMode)}
+            size={globalStyles.ICON_SM_SIZE}
+          />
+          <Selector style={styles.selector} data={importanceFilterData} />
         </View>
       </Animated.View>
     </>

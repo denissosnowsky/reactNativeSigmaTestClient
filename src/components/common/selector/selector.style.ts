@@ -31,9 +31,8 @@ const styles = StyleSheet.create({
   dropdownMenu: {
     position: 'absolute',
     width: '100%',
-    top: 43,
+    top: 40,
     left: 5,
-    zIndex: 15,
     borderWidth: 1,
     borderColor: globalStyles.LIGHT_CANCEL_COLOR,
     borderRadius: 10,

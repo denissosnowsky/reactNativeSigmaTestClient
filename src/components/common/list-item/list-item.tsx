@@ -7,6 +7,7 @@ import globalStyles from '~global/constants.style';
 import { todoActions } from '~store/todo';
 import todosSelectors from '~store/todo/todo.selectors';
 import { ThemeContext } from '~contexts';
+import { ImportantEnum } from '~types/todo.types';
 import { dispatchSelection } from '~utils/dispatchSelection';
 import { BlueText } from '../text';
 import styles from './list-item.style';
@@ -14,12 +15,15 @@ import { Input } from '../input';
 import { onCheckPressHandle } from './utils/onCheckPressHandle';
 import { onSelectHandler } from './utils/onSelectHandler';
 import { onCancelEditingHandle } from './utils/onCancelEditingHandle';
+import { LinearSVG } from '../svg/linear-svg';
+import { getPriorityColor } from './utils/getPriorityColor';
 
 export const ListItem: VFC<Props> = ({
   id,
   text,
   complete,
   editingMode,
+  importance,
   onPressCheck,
   onLongPress,
 }) => {
@@ -37,6 +41,7 @@ export const ListItem: VFC<Props> = ({
   const isOneNonCompleteEditing = editingTodos.length === 1 && editingTodos[0].completed === false;
   const inputTextWasChanged = isOneNonCompleteEditing && inputValue !== editingTodos[0].title;
   const theme = useContext(ThemeContext);
+  const todoWrapper: React.LegacyRef<View> = useRef(null);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -72,10 +77,20 @@ export const ListItem: VFC<Props> = ({
           editingMode && styles.active,
           { backgroundColor: theme.listItemBG },
         ]}
+        ref={todoWrapper}
       >
         {isIdShouldBeShown && (
           <View style={styles.id}>
-            <BlueText fs={globalStyles.MAIN_FS}>{`${id}.`}</BlueText>
+            <View style={styles.idTextWrapper}>
+              <View style={styles.idText}>
+                <BlueText fs={globalStyles.MAIN_FS}>{`${id}.`}</BlueText>
+              </View>
+              <LinearSVG
+                height="100%"
+                color1={importance ? getPriorityColor(importance) : theme.listItemBG}
+                color2={theme.listItemBG}
+              />
+            </View>
           </View>
         )}
         <View style={styles.text}>
@@ -149,6 +164,7 @@ type Props = {
   id: number;
   text: string;
   complete: boolean;
+  importance: ImportantEnum;
   editingMode?: boolean;
   onPressCheck: () => void;
   onLongPress: () => void;

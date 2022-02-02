@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: '50%',
+    zIndex: -1,
   },
   loadingWrapper: {
     display: 'flex',

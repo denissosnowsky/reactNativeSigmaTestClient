@@ -37,11 +37,14 @@ export type TodoButtonsNameType =
   | 'cancel'
   | 'checkbox-multiple-marked-circle'
   | 'circle-off-outline'
-  | 'filter-variant'
   | 'menu-down'
   | 'menu-up'
   | 'checkbox-blank-circle-outline'
-  | 'check-circle';
+  | 'check-circle'
+  | 'filter'
+  | 'filter-menu-outline'
+  | 'bookmark'
+  | 'bookmark-outline';
 
 export enum CompletenceFilter {
   DEFAULT = '',
@@ -55,3 +58,21 @@ export enum ImportantEnum {
   NORMAL = 'normal',
   LOW = 'low',
 }
+
+export type IconsNames =
+  | 'add'
+  | 'delete'
+  | 'save'
+  | 'cancel'
+  | 'select-all'
+  | 'default-hide'
+  | 'filter-opened'
+  | 'filter-closed'
+  | 'down'
+  | 'up'
+  | 'circle-outline'
+  | 'check'
+  | 'high-priority'
+  | 'normal-priority'
+  | 'low-priority'
+  | 'none-priority';

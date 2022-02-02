@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, VFC } from 'react';
+import React, { useContext, useEffect, useRef, useState, VFC } from 'react';
 import { Animated, Keyboard, TouchableWithoutFeedback, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -11,7 +11,10 @@ import { ModalFC } from '~components/common/modal';
 import { TitleLetterSVG } from '~components/common/svg';
 import { useChangeColor } from '~hooks/useChangeColor';
 import { animationWithTime } from '~utils/animationWithTime';
+import { iconPickerImportantFilter } from '~utils/iconPickerImportantFilter';
 import { ListFilter } from '~components/list-filter';
+import { IconsNames, ImportantEnum } from '~types/todo.types';
+import { ThemeContext } from '~contexts';
 import styles from './todo-form.style';
 import { clearFormHandler } from './utils/clearFormHandler';
 import { addTodoHandler } from './utils/addTodoHandler';
@@ -19,8 +22,12 @@ import { changeTodoHandler } from './utils/changeTodoHandler';
 import { cancelHandler } from './utils/cancelHandler';
 import { deleteTodoHandler } from './utils/deleteTodoHandler';
 import { selectAllTodosHandler } from './utils/selectAllTodosHandler';
+import { getPriorityButtons } from './utils/getPriorityButtons';
 
 export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
+  const theme = useContext(ThemeContext);
+  const [priorityDropdown, setPriorityDropdown] = useState(false);
+  const [temporaryNewPriority, setTemporaryNewPriority] = useState('');
   const [color, setColor] = useChangeColor();
   const dispatch = useDispatch();
   const [formValue, setFormValue] = React.useState('');
@@ -34,6 +41,8 @@ export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
   const logoLetterWidth = 35;
   const letterScaleAndOpacity = useRef(new Animated.Value(0)).current;
   const letterWidth = useRef(new Animated.Value(0)).current;
+  const todoPriority = editingTodos[0]?.important;
+  const [chosenPriority, setChosenPriority] = useState<ImportantEnum>(todoPriority);
 
   useEffect(() => {
     const id = listScrollY.addListener((v) => {
@@ -67,31 +76,70 @@ export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
     addTodoHandler(
       formValue,
       dispatchSelection(dispatch, todoThunks.todoAddThunk({ userId: 1, title: formValue })),
-      clearFormHandler(setFormValue, Keyboard),
+      clearFormHandler(
+        setFormValue,
+        Keyboard,
+        setTemporaryNewPriority,
+        setChosenPriority,
+        todoPriority,
+      ),
     );
 
   const changeHandler = () =>
     changeTodoHandler(
-      dispatchSelection(dispatch, todoThunks.todoChangeThunk(editingTodos[0]!.id, editingInput)),
-      clearFormHandler(setFormValue, Keyboard),
+      dispatchSelection(
+        dispatch,
+        todoThunks.todoChangeThunk(editingTodos[0]!.id, editingInput, chosenPriority),
+      ),
+      clearFormHandler(
+        setFormValue,
+        Keyboard,
+        setTemporaryNewPriority,
+        setChosenPriority,
+        chosenPriority,
+      ),
     );
 
   const cancelAllHandler = () =>
     cancelHandler(
       dispatchSelection(dispatch, todoActions.todoEditModeOff()),
-      clearFormHandler(setFormValue, Keyboard),
+      clearFormHandler(
+        setFormValue,
+        Keyboard,
+        setTemporaryNewPriority,
+        setChosenPriority,
+        todoPriority,
+      ),
       dispatchSelection(dispatch, todoActions.todoEditDeleteModalModeOn(false)),
     );
 
   const deleteHandler = () =>
     deleteTodoHandler(
       dispatchSelection(dispatch, todoThunks.todoDeleteThunk(editingTodos)),
-      clearFormHandler(setFormValue, Keyboard),
+      clearFormHandler(
+        setFormValue,
+        Keyboard,
+        setTemporaryNewPriority,
+        setChosenPriority,
+        todoPriority,
+      ),
       dispatchSelection(dispatch, todoActions.todoEditDeleteModalModeOn(false)),
     );
 
   const selectAllHandler = () =>
     selectAllTodosHandler(dispatchSelection(dispatch, todoActions.todoSelectAll()));
+
+  const currentTodoPriority = iconPickerImportantFilter(todoPriority);
+
+  const allPriorityButtons: Array<{ name: IconsNames; action: () => void }> = getPriorityButtons(
+    setPriorityDropdown,
+    setTemporaryNewPriority,
+    setChosenPriority,
+  );
+
+  const nonChosenPriorityButtons = allPriorityButtons.filter(
+    (btn) => btn.name !== (temporaryNewPriority ? temporaryNewPriority : currentTodoPriority),
+  );
 
   return (
     <>
@@ -123,13 +171,32 @@ export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
           </View>
         ) : (
           <View
-            style={
+            style={[
               isSaveButtonShouldBeShown || isMultipleEditing
-                ? styles.threeBtnEditBlock
-                : styles.twoBtnEditBlock
-            }
+                ? styles.fourBtnEditBlock
+                : styles.twoBtnEditBlock,
+            ]}
             testID="btnWrapper"
           >
+            {isSaveButtonShouldBeShown && (
+              <View style={styles.priorityWrapper}>
+                <ButtonIcon
+                  onPress={() => setPriorityDropdown(!priorityDropdown)}
+                  variant={
+                    temporaryNewPriority
+                      ? (temporaryNewPriority as IconsNames)
+                      : currentTodoPriority
+                  }
+                />
+                {priorityDropdown && (
+                  <View style={[styles.priorityDropdown, { backgroundColor: theme.listItemBG }]}>
+                    {nonChosenPriorityButtons.map((btn, i) => (
+                      <ButtonIcon variant={btn.name} onPress={btn.action} key={i} />
+                    ))}
+                  </View>
+                )}
+              </View>
+            )}
             {isSaveButtonShouldBeShown && <ButtonIcon onPress={changeHandler} variant="save" />}
             {isMultipleEditing && <ButtonIcon onPress={selectAllHandler} variant="select-all" />}
             <ButtonIcon

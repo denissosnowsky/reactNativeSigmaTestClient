@@ -16,8 +16,6 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginTop: 15,
     marginBottom: 7,
-    padding: 10,
-    zIndex: -1,
   },
   active: {
     borderColor: globalStyles.LIGHT_MAIN_COLOR,
@@ -28,19 +26,36 @@ const styles = StyleSheet.create({
     elevation: 15,
   },
   id: {
-    width: 45,
+    width: 55,
     display: 'flex',
     alignItems: 'center',
+    height: '100%',
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    overflow: 'hidden',
+  },
+  idTextWrapper: {
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
   },
   text: {
     flex: 1,
-    paddingLeft: 5,
-    paddingRight: 5,
+    padding: 5,
   },
   complete: {
     width: 55,
     display: 'flex',
     alignItems: 'center',
+  },
+  idText: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{ translateY: -7 }, { translateX: -15 }],
+    zIndex: 1,
   },
 });
 

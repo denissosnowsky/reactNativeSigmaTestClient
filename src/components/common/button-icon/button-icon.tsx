@@ -3,7 +3,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 
 import globalStyles from '~global/constants.style';
-import { TodoButtonsNameType } from '~types/todo.types';
+import { IconsNames, TodoButtonsNameType } from '~types/todo.types';
 import styles from './button-icon.style';
 
 export const ButtonIcon: VFC<Props> = ({ onPress, variant, size }) => {
@@ -28,8 +28,10 @@ export const ButtonIcon: VFC<Props> = ({ onPress, variant, size }) => {
           };
         case 'default-hide':
           return { name: 'circle-off-outline', color: globalStyles.ICON_DEF_COLOR };
-        case 'filter':
-          return { name: 'filter-variant', color: globalStyles.ICON_DEF_COLOR };
+        case 'filter-opened':
+          return { name: 'filter-menu-outline', color: globalStyles.ICON_DEF_COLOR };
+        case 'filter-closed':
+          return { name: 'filter', color: globalStyles.ICON_DEF_COLOR };
         case 'down':
           return { name: 'menu-down', color: globalStyles.ICON_DEF_COLOR };
         case 'up':
@@ -38,6 +40,14 @@ export const ButtonIcon: VFC<Props> = ({ onPress, variant, size }) => {
           return { name: 'checkbox-blank-circle-outline', color: globalStyles.ICON_DEF_COLOR };
         case 'check':
           return { name: 'check-circle', color: globalStyles.SUCCESS_COLOR };
+        case 'high-priority':
+          return { name: 'bookmark', color: globalStyles.HIGH_P_COLOR };
+        case 'normal-priority':
+          return { name: 'bookmark', color: globalStyles.NORMAL_P_COLOR };
+        case 'low-priority':
+          return { name: 'bookmark', color: globalStyles.LOW_P_COLOR };
+        case 'none-priority':
+          return { name: 'bookmark-outline', color: globalStyles.ICON_DEF_COLOR };
         case 'cancel':
         default:
           return { name: 'cancel', color: globalStyles.LIGHT_CANCEL_COLOR };
@@ -60,16 +70,5 @@ export const ButtonIcon: VFC<Props> = ({ onPress, variant, size }) => {
 type Props = {
   onPress?: () => void;
   size?: number;
-  variant:
-    | 'add'
-    | 'delete'
-    | 'save'
-    | 'cancel'
-    | 'select-all'
-    | 'default-hide'
-    | 'filter'
-    | 'down'
-    | 'up'
-    | 'circle-outline'
-    | 'check';
+  variant: IconsNames;
 };

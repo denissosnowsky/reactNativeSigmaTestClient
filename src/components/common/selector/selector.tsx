@@ -30,18 +30,20 @@ export const Selector: VFC<Props> = ({ style, data }) => {
 
   return (
     <TouchableWithoutFeedback onPress={onDropdownOpenedHandle}>
-      <View style={[styles.selector, { backgroundColor: theme.listItemBG }, style]}>
-        <View style={styles.textWrapper}>
-          <BlueText fs={globalStyles.MAIN_FS} style={styles.dropdownItemText}>
-            {chosen}
-          </BlueText>
-        </View>
-        <View style={styles.iconWrapper}>
-          <ButtonIcon
-            variant={dropdownOpened ? 'down' : 'up'}
-            size={globalStyles.ICON_SM_SIZE}
-            onPress={onDropdownOpenedHandle}
-          />
+      <>
+        <View style={[styles.selector, { backgroundColor: theme.listItemBG }, style]}>
+          <View style={styles.textWrapper}>
+            <BlueText fs={globalStyles.MAIN_FS} style={styles.dropdownItemText}>
+              {chosen}
+            </BlueText>
+          </View>
+          <View style={styles.iconWrapper}>
+            <ButtonIcon
+              variant={dropdownOpened ? 'down' : 'up'}
+              size={globalStyles.ICON_SM_SIZE}
+              onPress={onDropdownOpenedHandle}
+            />
+          </View>
         </View>
         {dropdownOpened && (
           <View style={[styles.dropdownMenu, { backgroundColor: theme.listItemBG }]}>
@@ -58,7 +60,7 @@ export const Selector: VFC<Props> = ({ style, data }) => {
             ))}
           </View>
         )}
-      </View>
+      </>
     </TouchableWithoutFeedback>
   );
 };

@@ -21,9 +21,8 @@ export const todosFetchThunk =
         limit: getState().todo.limit + getState().todo.deletedTodosBeforeNewPage,
         skip: getState().todo.skip - getState().todo.deletedTodosBeforeNewPage,
         complete: getState().todo.completenceFilterMode,
-        important: '',
+        important: getState().todo.importantFilterMode,
       });
-
       dispatch(todoActions.todosFetchSuccessful({ todos: data.todos, count: data.count }));
     } catch (e) {
       const error = e as Error;

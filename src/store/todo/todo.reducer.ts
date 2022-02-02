@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { CompletenceFilter, SortTypes, TodoDTO } from '~types/todo.types';
+import { CompletenceFilter, ImportantEnum, SortTypes, TodoDTO } from '~types/todo.types';
 import {
   todoAddReducer,
   todoFetchReducer,
@@ -18,6 +18,7 @@ import {
   todoEditChangeModalModeReducer,
   todoEditDeleteModalModeReducer,
   todoCompletenceFilterReducer,
+  todoImportanceFilterReducer,
 } from './reducers';
 
 export type TodoState = {
@@ -36,6 +37,7 @@ export type TodoState = {
   isDeleteModalOpened: boolean;
   isChangeModalOpened: boolean;
   completenceFilterMode: CompletenceFilter;
+  importantFilterMode: ImportantEnum;
 };
 
 const initialState: TodoState = {
@@ -54,6 +56,7 @@ const initialState: TodoState = {
   isDeleteModalOpened: false,
   isChangeModalOpened: false,
   completenceFilterMode: CompletenceFilter.DEFAULT,
+  importantFilterMode: ImportantEnum.DEFAULT,
 };
 
 export const counterSlice = createSlice({
@@ -76,6 +79,7 @@ export const counterSlice = createSlice({
     ...todoEditChangeModalModeReducer,
     ...todoEditDeleteModalModeReducer,
     ...todoCompletenceFilterReducer,
+    ...todoImportanceFilterReducer,
   },
 });
 

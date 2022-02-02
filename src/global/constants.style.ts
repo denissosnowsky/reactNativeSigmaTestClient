@@ -1,6 +1,7 @@
 export default {
   SUCCESS_COLOR: '#21B017',
   DELETE_COLOR: 'red',
+  WHITE_COLOR: '#fff',
 
   LIGHT_BACKGROUND_COLOR: '#FFF69C',
   LIGHT_SUCCESS_ALERT_BG: 'rgba(255, 117, 120, 0.9)',
@@ -52,4 +53,8 @@ export default {
   HEADER_COLOR_7: '#000000',
 
   TAB_BAR_FS: 12,
+
+  HIGH_P_COLOR: 'red',
+  NORMAL_P_COLOR: 'orange',
+  LOW_P_COLOR: 'green',
 };
