@@ -15,6 +15,7 @@ import { iconPickerImportantFilter } from '~utils/iconPickerImportantFilter';
 import { ListFilter } from '~components/list-filter';
 import { IconsNames, ImportantEnum } from '~types/todo.types';
 import { ThemeContext } from '~contexts';
+import globalStyles from '~global/constants.style';
 import styles from './todo-form.style';
 import { clearFormHandler } from './utils/clearFormHandler';
 import { addTodoHandler } from './utils/addTodoHandler';
@@ -24,10 +25,14 @@ import { deleteTodoHandler } from './utils/deleteTodoHandler';
 import { selectAllTodosHandler } from './utils/selectAllTodosHandler';
 import { getPriorityButtons } from './utils/getPriorityButtons';
 
-export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
+export const TodoForm: VFC<Props> = ({
+  listScrollY,
+  scrollAnimatedOffset,
+  chosenPriority,
+  setChosenPriority,
+}) => {
   const theme = useContext(ThemeContext);
   const [priorityDropdown, setPriorityDropdown] = useState(false);
-  const [temporaryNewPriority, setTemporaryNewPriority] = useState('');
   const [color, setColor] = useChangeColor();
   const dispatch = useDispatch();
   const [formValue, setFormValue] = React.useState('');
@@ -42,7 +47,18 @@ export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
   const letterScaleAndOpacity = useRef(new Animated.Value(0)).current;
   const letterWidth = useRef(new Animated.Value(0)).current;
   const todoPriority = editingTodos[0]?.important;
-  const [chosenPriority, setChosenPriority] = useState<ImportantEnum>(todoPriority);
+  const [filter, setFilter] = useState(false);
+  const filtersScaleAndOpacity = useRef(new Animated.Value(0)).current;
+  const filtersEndScale = 1;
+  const filtersHeight = useRef(new Animated.Value(0)).current;
+  const filtersEndHeight = 110;
+
+  useEffect(() => {
+    if (!isEditingMode) {
+      setPriorityDropdown(false);
+      setChosenPriority(null);
+    }
+  }, [isEditingMode]);
 
   useEffect(() => {
     const id = listScrollY.addListener((v) => {
@@ -76,53 +92,33 @@ export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
     addTodoHandler(
       formValue,
       dispatchSelection(dispatch, todoThunks.todoAddThunk({ userId: 1, title: formValue })),
-      clearFormHandler(
-        setFormValue,
-        Keyboard,
-        setTemporaryNewPriority,
-        setChosenPriority,
-        todoPriority,
-      ),
+      clearFormHandler(setFormValue, Keyboard, setChosenPriority, todoPriority),
     );
 
   const changeHandler = () =>
     changeTodoHandler(
       dispatchSelection(
         dispatch,
-        todoThunks.todoChangeThunk(editingTodos[0]!.id, editingInput, chosenPriority),
+        todoThunks.todoChangeThunk(
+          editingTodos[0]!.id,
+          editingInput,
+          chosenPriority !== null ? chosenPriority : todoPriority,
+        ),
       ),
-      clearFormHandler(
-        setFormValue,
-        Keyboard,
-        setTemporaryNewPriority,
-        setChosenPriority,
-        chosenPriority,
-      ),
+      clearFormHandler(setFormValue, Keyboard, setChosenPriority, chosenPriority),
     );
 
   const cancelAllHandler = () =>
     cancelHandler(
       dispatchSelection(dispatch, todoActions.todoEditModeOff()),
-      clearFormHandler(
-        setFormValue,
-        Keyboard,
-        setTemporaryNewPriority,
-        setChosenPriority,
-        todoPriority,
-      ),
+      clearFormHandler(setFormValue, Keyboard, setChosenPriority, todoPriority),
       dispatchSelection(dispatch, todoActions.todoEditDeleteModalModeOn(false)),
     );
 
   const deleteHandler = () =>
     deleteTodoHandler(
       dispatchSelection(dispatch, todoThunks.todoDeleteThunk(editingTodos)),
-      clearFormHandler(
-        setFormValue,
-        Keyboard,
-        setTemporaryNewPriority,
-        setChosenPriority,
-        todoPriority,
-      ),
+      clearFormHandler(setFormValue, Keyboard, setChosenPriority, todoPriority),
       dispatchSelection(dispatch, todoActions.todoEditDeleteModalModeOn(false)),
     );
 
@@ -133,19 +129,41 @@ export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
 
   const allPriorityButtons: Array<{ name: IconsNames; action: () => void }> = getPriorityButtons(
     setPriorityDropdown,
-    setTemporaryNewPriority,
     setChosenPriority,
   );
 
   const nonChosenPriorityButtons = allPriorityButtons.filter(
-    (btn) => btn.name !== (temporaryNewPriority ? temporaryNewPriority : currentTodoPriority),
+    (btn) =>
+      btn.name !==
+      (chosenPriority !== null ? iconPickerImportantFilter(chosenPriority) : currentTodoPriority),
   );
+
+  const onFilterClickHandler = () => {
+    if (!filter) {
+      Animated.sequence([
+        animationWithTime(filtersHeight, filtersEndHeight, 100),
+        animationWithTime(filtersScaleAndOpacity, filtersEndScale, 100),
+      ]).start();
+      setFilter(true);
+    } else {
+      Animated.sequence([
+        animationWithTime(filtersScaleAndOpacity, 0, 100),
+        animationWithTime(filtersHeight, 0, 100),
+      ]).start();
+      setFilter(false);
+    }
+  };
 
   return (
     <>
       <View style={styles.wrapepr}>
         {!isEditingMode ? (
           <View style={styles.formWrapper}>
+            <ButtonIcon
+              variant={filter ? 'filter-opened' : 'filter-closed'}
+              size={globalStyles.ICON_SM_SIZE}
+              onPress={onFilterClickHandler}
+            />
             <TouchableWithoutFeedback onPress={setColor} accessibilityRole="button">
               <Animated.View
                 style={[
@@ -183,8 +201,8 @@ export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
                 <ButtonIcon
                   onPress={() => setPriorityDropdown(!priorityDropdown)}
                   variant={
-                    temporaryNewPriority
-                      ? (temporaryNewPriority as IconsNames)
+                    chosenPriority !== null
+                      ? iconPickerImportantFilter(chosenPriority)
                       : currentTodoPriority
                   }
                 />
@@ -213,7 +231,7 @@ export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
         decline={cancelAllHandler}
         text={`Delete ${editingTodos.length} ${isMultipleEditing ? 'todos' : 'todo'}?`}
       />
-      <ListFilter />
+      <ListFilter height={filtersHeight} scaleAndOpacity={filtersScaleAndOpacity} />
     </>
   );
 };
@@ -221,4 +239,6 @@ export const TodoForm: VFC<Props> = ({ listScrollY, scrollAnimatedOffset }) => {
 type Props = {
   listScrollY: Animated.Value;
   scrollAnimatedOffset: number;
+  chosenPriority: ImportantEnum | null;
+  setChosenPriority: (arg: ImportantEnum | null) => void;
 };

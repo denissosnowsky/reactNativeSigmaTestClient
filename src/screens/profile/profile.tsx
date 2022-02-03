@@ -8,7 +8,7 @@ import styles from './profile.style';
 export const Profile: VFC = () => {
   const theme = useContext(ThemeContext);
   return (
-    <Theme>
+    <Theme scaleAndOpacity={1}>
       <View style={[styles.container, { backgroundColor: theme.background }]}>
         <Text>Profile Page</Text>
       </View>

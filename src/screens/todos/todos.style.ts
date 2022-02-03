@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    paddingTop: 80,
   },
   body: {
     width: '100%',

@@ -30,7 +30,7 @@ export const Selector: VFC<Props> = ({ style, data }) => {
 
   return (
     <TouchableWithoutFeedback onPress={onDropdownOpenedHandle}>
-      <>
+      <View style={styles.wrapper}>
         <View style={[styles.selector, { backgroundColor: theme.listItemBG }, style]}>
           <View style={styles.textWrapper}>
             <BlueText fs={globalStyles.MAIN_FS} style={styles.dropdownItemText}>
@@ -60,7 +60,7 @@ export const Selector: VFC<Props> = ({ style, data }) => {
             ))}
           </View>
         )}
-      </>
+      </View>
     </TouchableWithoutFeedback>
   );
 };

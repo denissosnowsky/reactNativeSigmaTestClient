@@ -5,7 +5,9 @@ import globalStyles from '~global/constants.style';
 const styles = StyleSheet.create({
   wrapepr: {
     height: 60,
-    width: '75%',
+    width: '100%',
+    paddingLeft: 20,
+    paddingRight: 20,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -50,6 +52,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     borderColor: globalStyles.LIGHT_BORDER_COLOR,
+  },
+  filter: {
+    height: 40,
+    width: 40,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 5,
   },
 });
 

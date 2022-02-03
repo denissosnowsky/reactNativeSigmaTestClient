@@ -6,12 +6,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-around',
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   filterWrapper: {
     height: 50,
-    width: '80%',
+    width: '100%',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -19,15 +19,15 @@ const styles = StyleSheet.create({
   },
   filter: {
     height: 40,
-    width: '100%',
+    width: 40,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 5,
   },
-  selector: {
-    marginLeft: 15,
+  selectorIcon: {
+    marginRight: 10,
   },
 });
 

@@ -1,4 +1,4 @@
-import React, { useRef, useState, VFC } from 'react';
+import React, { VFC } from 'react';
 import { Animated, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,19 +10,13 @@ import { iconPickerImportantFilter } from '~utils/iconPickerImportantFilter';
 import { CompletenceFilter, ImportantEnum } from '~types/todo.types';
 import { iconPickerCompleteFilter } from '~utils/iconPickerCompleteFilter';
 import { todoActions, todoThunks } from '~store/todo';
-import { animationWithTime } from '~utils/animationWithTime';
 import styles from './list-filter.style';
 
-export const ListFilter: VFC = () => {
-  const [filter, setFilter] = useState(false);
+export const ListFilter: VFC<Props> = ({ scaleAndOpacity, height }) => {
   const completenceFilterMode = useSelector(todosSelectors.completenceFilterMode);
   const importantFilterMode = useSelector(todosSelectors.importantFilterMode);
   const page = useSelector(todosSelectors.page);
   const dispatch = useDispatch();
-  const filtersScaleAndOpacity = useRef(new Animated.Value(0)).current;
-  const filtersEndScale = 1;
-  const filtersHeight = useRef(new Animated.Value(0)).current;
-  const filtersEndHeight = 110;
   const isFirstPage = page === 1;
 
   const completenceFilterData = [
@@ -94,38 +88,15 @@ export const ListFilter: VFC = () => {
     },
   ];
 
-  const onFilterClickHandler = () => {
-    if (!filter) {
-      Animated.sequence([
-        animationWithTime(filtersHeight, filtersEndHeight, 100),
-        animationWithTime(filtersScaleAndOpacity, filtersEndScale, 100),
-      ]).start();
-      setFilter(true);
-    } else {
-      Animated.sequence([
-        animationWithTime(filtersScaleAndOpacity, 0, 100),
-        animationWithTime(filtersHeight, 0, 100),
-      ]).start();
-      setFilter(false);
-    }
-  };
-
   return (
     <>
-      <View style={styles.filter}>
-        <ButtonIcon
-          variant={filter ? 'filter-opened' : 'filter-closed'}
-          size={globalStyles.ICON_SM_SIZE}
-          onPress={onFilterClickHandler}
-        />
-      </View>
       <Animated.View
         style={[
           styles.selectorsWrapper,
           {
             transform: [{ scale: 1 }],
-            opacity: filtersScaleAndOpacity,
-            height: filtersHeight,
+            opacity: scaleAndOpacity,
+            height,
           },
         ]}
       >
@@ -133,17 +104,24 @@ export const ListFilter: VFC = () => {
           <ButtonIcon
             variant={iconPickerCompleteFilter(completenceFilterMode)}
             size={globalStyles.ICON_SM_SIZE}
+            style={styles.selectorIcon}
           />
-          <Selector style={styles.selector} data={completenceFilterData} />
+          <Selector data={completenceFilterData} />
         </View>
         <View style={[styles.filterWrapper, { zIndex: -1 }]}>
           <ButtonIcon
             variant={iconPickerImportantFilter(importantFilterMode)}
             size={globalStyles.ICON_SM_SIZE}
+            style={styles.selectorIcon}
           />
-          <Selector style={styles.selector} data={importanceFilterData} />
+          <Selector data={importanceFilterData} />
         </View>
       </Animated.View>
     </>
   );
+};
+
+type Props = {
+  scaleAndOpacity: Animated.Value;
+  height: Animated.Value;
 };

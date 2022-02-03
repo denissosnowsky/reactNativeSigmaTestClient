@@ -1,12 +1,12 @@
 import React, { useCallback, VFC } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native';
+import { StyleProp, TextStyle, TouchableOpacity } from 'react-native';
 
 import globalStyles from '~global/constants.style';
 import { IconsNames, TodoButtonsNameType } from '~types/todo.types';
 import styles from './button-icon.style';
 
-export const ButtonIcon: VFC<Props> = ({ onPress, variant, size }) => {
+export const ButtonIcon: VFC<Props> = ({ onPress, variant, size, style }) => {
   const iconNamePicker = useCallback(
     (
       btnVariant: typeof variant,
@@ -62,6 +62,7 @@ export const ButtonIcon: VFC<Props> = ({ onPress, variant, size }) => {
         name={iconNamePicker(variant).name}
         size={size ?? globalStyles.ICON_MED_SIZE}
         color={iconNamePicker(variant).color}
+        style={style}
       />
     </TouchableOpacity>
   );
@@ -71,4 +72,5 @@ type Props = {
   onPress?: () => void;
   size?: number;
   variant: IconsNames;
+  style?: StyleProp<TextStyle>;
 };

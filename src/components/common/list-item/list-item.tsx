@@ -24,6 +24,8 @@ export const ListItem: VFC<Props> = ({
   complete,
   editingMode,
   importance,
+  chosenPriority,
+  setChosenPriority,
   onPressCheck,
   onLongPress,
 }) => {
@@ -39,20 +41,30 @@ export const ListItem: VFC<Props> = ({
   const isTodoSelectedOrCompleted =
     (complete && !isMultipleEditing) || (isCurrentItemEditing && isMultipleEditing);
   const isOneNonCompleteEditing = editingTodos.length === 1 && editingTodos[0].completed === false;
-  const inputTextWasChanged = isOneNonCompleteEditing && inputValue !== editingTodos[0].title;
+  const todoPriority = editingTodos[0]?.important;
+  const todoWasChanged =
+    isOneNonCompleteEditing &&
+    (inputValue !== editingTodos[0].title ||
+      (chosenPriority !== null ? chosenPriority !== todoPriority : false));
   const theme = useContext(ThemeContext);
   const todoWrapper: React.LegacyRef<View> = useRef(null);
 
   useEffect(() => {
     inputRef.current?.focus();
   }, [editingMode]);
-
+  /* console.log(chosenPriority); */
+  /* console.log(todoPriority); */
   const onEditingOffHandler = () => {
+    /* console.log(chosenPriority);
+    console.log(todoPriority);
+    console.log(todoWasChanged); */
     onCancelEditingHandle(
       isOneNonCompleteEditing,
-      inputTextWasChanged,
+      todoWasChanged,
       dispatchSelection(dispatch, todoActions.todoEditChangeModalModeOn(true)),
       dispatchSelection(dispatch, todoActions.todoEditModeOff()),
+      setChosenPriority,
+      todoPriority,
     );
   };
 
@@ -166,6 +178,8 @@ type Props = {
   complete: boolean;
   importance: ImportantEnum;
   editingMode?: boolean;
+  chosenPriority: ImportantEnum | null;
+  setChosenPriority: (arg: ImportantEnum | null) => void;
   onPressCheck: () => void;
   onLongPress: () => void;
 };

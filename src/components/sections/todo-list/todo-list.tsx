@@ -3,7 +3,7 @@ import { ActivityIndicator, Animated, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ListItem } from '~components/common/list-item';
-import { TodoDTO } from '~types/todo.types';
+import { ImportantEnum, TodoDTO } from '~types/todo.types';
 import todosSelectors from '~store/todo/todo.selectors';
 import { BlueText } from '~components/common/text';
 import { todoThunks, todoActions } from '~store/todo';
@@ -14,7 +14,7 @@ import styles from './todo-list.style';
 import { fetchNextPage } from './utils/fetchNextPage';
 import { compareIds } from './utils/compareIds';
 
-export const TodoList: VFC<Props> = ({ onScroll }) => {
+export const TodoList: VFC<Props> = ({ onScroll, chosenPriority, setChosenPriority }) => {
   const dispatch = useDispatch();
   const todos = useSelector(todosSelectors.todos);
   const editingTodos = useSelector(todosSelectors.editingTodos);
@@ -45,10 +45,12 @@ export const TodoList: VFC<Props> = ({ onScroll }) => {
           onPressCheck={dispatchSelection(dispatch, todoThunks.todoCompleteThunk(item.id))}
           onLongPress={dispatchSelection(dispatch, todoActions.todoEditModeOn(item.id))}
           editingMode={editingTodos.some(compareIds(item.id)) && editingMode}
+          chosenPriority={chosenPriority}
+          setChosenPriority={setChosenPriority}
         />
       );
     },
-    [dispatch, editingTodos, editingMode],
+    [dispatch, editingTodos, editingMode, chosenPriority, setChosenPriority],
   );
 
   const footerItem = useCallback(
@@ -88,7 +90,7 @@ export const TodoList: VFC<Props> = ({ onScroll }) => {
     <>
       {isTodosEmpty ? (
         <View style={styles.nonListWrapper}>
-          <BlueText fs={globalStyle.BIG_FS}>Add your first Todo</BlueText>
+          <BlueText fs={globalStyle.BIG_FS}>No todos found</BlueText>
         </View>
       ) : (
         <>
@@ -112,4 +114,6 @@ export const TodoList: VFC<Props> = ({ onScroll }) => {
 
 type Props = {
   onScroll: (...args: unknown[]) => void;
+  chosenPriority: ImportantEnum | null;
+  setChosenPriority: (arg: ImportantEnum | null) => void;
 };

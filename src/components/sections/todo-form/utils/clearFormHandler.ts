@@ -4,13 +4,11 @@ import { ImportantEnum } from '~types/todo.types';
 export const clearFormHandler = (
   setFormValue: (arg: string) => void,
   Keyboard: KeyboardStatic,
-  setTemporaryNewPriority: (arg: string) => void,
-  setChosenPriority: (arg: ImportantEnum) => void,
-  priority: ImportantEnum,
+  setChosenPriority: (arg: ImportantEnum | null) => void,
+  priority: ImportantEnum | null,
 ) => {
   return () => {
     setFormValue('');
-    setTemporaryNewPriority('');
     setChosenPriority(priority);
     Keyboard.dismiss();
   };

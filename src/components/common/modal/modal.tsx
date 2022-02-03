@@ -18,7 +18,9 @@ export const ModalFC: VFC<Props> = ({ confirm, decline, showModal, text }) => {
           style={[styles.wrapper, { backgroundColor: theme.modal }]}
         >
           <View style={styles.textWrapper}>
-            <BlueText fs={globalStyles.MAIN_FS}>{text}</BlueText>
+            <BlueText fs={globalStyles.MAIN_FS} style={styles.text}>
+              {text}
+            </BlueText>
           </View>
           <View style={styles.buttonsWrapper}>
             <Button
