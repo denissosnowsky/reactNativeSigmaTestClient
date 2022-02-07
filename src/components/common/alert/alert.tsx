@@ -40,7 +40,7 @@ export const Alert: VFC<Props> = ({ status, text, isShown }) => {
 };
 
 type Props = {
-  status: 'error' | 'info' | 'warning' | 'success';
   text: string;
   isShown: boolean;
+  status: 'error' | 'info' | 'warning' | 'success';
 };

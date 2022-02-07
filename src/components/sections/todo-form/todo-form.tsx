@@ -184,7 +184,7 @@ export const TodoForm: VFC<Props> = ({
               placeholder="Add new todo"
               onChange={setFormValue}
               value={formValue}
-              underlined
+              isUnderlined
               style={styles.input}
             />
             <ButtonIcon onPress={addHandler} variant="add" />

@@ -52,7 +52,8 @@
     "react-hooks/exhaustive-deps": 0,
     "import/no-extraneous-dependencies": 0,
     "react/no-array-index-key": 0,
-    "no-unneeded-ternary": 0
+    "no-unneeded-ternary": 0,
+    "lines-between-class-members": 0
   },
   "overrides": [
     {

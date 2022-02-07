@@ -1,14 +1,14 @@
 import { ImportantEnum } from '~types/todo.types';
 
 export const onCancelEditingHandle = (
-  isOneNonCompleteEditing: boolean,
+  isEditingTodoSoleAndUncompleted: boolean,
   todoWasChanged: boolean,
   openModal: () => void,
   canelClb: () => void,
   setChosenPriority: (arg: ImportantEnum | null) => void,
   todoPriority: ImportantEnum | null,
 ) => {
-  if (isOneNonCompleteEditing && todoWasChanged) {
+  if (isEditingTodoSoleAndUncompleted && todoWasChanged) {
     openModal();
   } else {
     canelClb();

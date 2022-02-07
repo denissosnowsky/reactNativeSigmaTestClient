@@ -1,3 +1,5 @@
+import { Dispatch } from 'react';
+
 export enum SortTypes {
   DEFAULT = 'DEFAULT',
   ID_ASC = 'ID_ASC',

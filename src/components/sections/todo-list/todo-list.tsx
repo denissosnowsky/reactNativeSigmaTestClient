@@ -40,11 +40,10 @@ export const TodoList: VFC<Props> = ({ onScroll, chosenPriority, setChosenPriori
         <ListItem
           id={item.id}
           text={item.title}
-          complete={item.completed}
-          importance={item.important}
+          isCompleted={item.completed}
+          priorityType={item.important}
           onPressCheck={dispatchSelection(dispatch, todoThunks.todoCompleteThunk(item.id))}
           onLongPress={dispatchSelection(dispatch, todoActions.todoEditModeOn(item.id))}
-          editingMode={editingTodos.some(compareIds(item.id)) && editingMode}
           chosenPriority={chosenPriority}
           setChosenPriority={setChosenPriority}
         />
