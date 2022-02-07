@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   selector: {
-    height: 45,
+    height: 40,
     flex: 1,
     borderColor: globalStyles.LIGHT_CANCEL_COLOR,
     borderRadius: 10,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   iconWrapper: {
     display: 'flex',
-    height: 33,
+    height: '100%',
     width: 33,
     alignItems: 'center',
     justifyContent: 'center',
@@ -45,11 +45,13 @@ const styles = StyleSheet.create({
     height: 45,
     padding: 5,
     display: 'flex',
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   dropdownItemText: {
     textAlign: 'center',
+    marginLeft: 15,
   },
 });
 

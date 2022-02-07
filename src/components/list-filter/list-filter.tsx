@@ -21,7 +21,8 @@ export const ListFilter: VFC<Props> = ({ scaleAndOpacity, height }) => {
 
   const completenceFilterData = [
     {
-      name: 'default status',
+      name: 'Default status',
+      icon: 'default-hide',
       action: () => {
         dispatch(todoActions.todoCompletenceFilterRequested(CompletenceFilter.DEFAULT));
         if (isFirstPage) {
@@ -30,7 +31,8 @@ export const ListFilter: VFC<Props> = ({ scaleAndOpacity, height }) => {
       },
     },
     {
-      name: 'completed',
+      name: 'Completed',
+      icon: 'check',
       action: () => {
         dispatch(todoActions.todoCompletenceFilterRequested(CompletenceFilter.COMPLETED));
         if (isFirstPage) {
@@ -39,7 +41,8 @@ export const ListFilter: VFC<Props> = ({ scaleAndOpacity, height }) => {
       },
     },
     {
-      name: 'uncompleted',
+      name: 'Uncompleted',
+      icon: 'circle-outline',
       action: () => {
         dispatch(todoActions.todoCompletenceFilterRequested(CompletenceFilter.UNCOMPLETED));
         if (isFirstPage) {
@@ -51,7 +54,8 @@ export const ListFilter: VFC<Props> = ({ scaleAndOpacity, height }) => {
 
   const importanceFilterData = [
     {
-      name: 'default priority',
+      name: 'Default priority',
+      icon: 'none-priority',
       action: () => {
         dispatch(todoActions.todoImportanceFilterRequested(ImportantEnum.DEFAULT));
         if (isFirstPage) {
@@ -60,7 +64,8 @@ export const ListFilter: VFC<Props> = ({ scaleAndOpacity, height }) => {
       },
     },
     {
-      name: 'high priority',
+      name: 'High priority',
+      icon: 'high-priority',
       action: () => {
         dispatch(todoActions.todoImportanceFilterRequested(ImportantEnum.HIGH));
         if (isFirstPage) {
@@ -69,7 +74,8 @@ export const ListFilter: VFC<Props> = ({ scaleAndOpacity, height }) => {
       },
     },
     {
-      name: 'normal priority',
+      name: 'Normal priority',
+      icon: 'normal-priority',
       action: () => {
         dispatch(todoActions.todoImportanceFilterRequested(ImportantEnum.NORMAL));
         if (isFirstPage) {
@@ -78,7 +84,8 @@ export const ListFilter: VFC<Props> = ({ scaleAndOpacity, height }) => {
       },
     },
     {
-      name: 'low priority',
+      name: 'Low priority',
+      icon: 'low-priority',
       action: () => {
         dispatch(todoActions.todoImportanceFilterRequested(ImportantEnum.LOW));
         if (isFirstPage) {

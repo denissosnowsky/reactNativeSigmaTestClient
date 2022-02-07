@@ -92,7 +92,7 @@ export const TodoForm: VFC<Props> = ({
     addTodoHandler(
       formValue,
       dispatchSelection(dispatch, todoThunks.todoAddThunk({ userId: 1, title: formValue })),
-      clearFormHandler(setFormValue, Keyboard, setChosenPriority, todoPriority),
+      clearFormHandler(setFormValue, Keyboard, setChosenPriority, null),
     );
 
   const changeHandler = () =>
@@ -105,38 +105,40 @@ export const TodoForm: VFC<Props> = ({
           chosenPriority !== null ? chosenPriority : todoPriority,
         ),
       ),
-      clearFormHandler(setFormValue, Keyboard, setChosenPriority, chosenPriority),
+      clearFormHandler(setFormValue, Keyboard, setChosenPriority, null),
     );
 
   const cancelAllHandler = () =>
     cancelHandler(
       dispatchSelection(dispatch, todoActions.todoEditModeOff()),
-      clearFormHandler(setFormValue, Keyboard, setChosenPriority, todoPriority),
+      clearFormHandler(setFormValue, Keyboard, setChosenPriority, null),
       dispatchSelection(dispatch, todoActions.todoEditDeleteModalModeOn(false)),
     );
 
   const deleteHandler = () =>
     deleteTodoHandler(
       dispatchSelection(dispatch, todoThunks.todoDeleteThunk(editingTodos)),
-      clearFormHandler(setFormValue, Keyboard, setChosenPriority, todoPriority),
+      clearFormHandler(setFormValue, Keyboard, setChosenPriority, null),
       dispatchSelection(dispatch, todoActions.todoEditDeleteModalModeOn(false)),
     );
 
   const selectAllHandler = () =>
     selectAllTodosHandler(dispatchSelection(dispatch, todoActions.todoSelectAll()));
 
-  const currentTodoPriority = iconPickerImportantFilter(todoPriority);
+  const currentTodoPriority = isEditingMode ? iconPickerImportantFilter(todoPriority) : undefined;
 
-  const allPriorityButtons: Array<{ name: IconsNames; action: () => void }> = getPriorityButtons(
-    setPriorityDropdown,
-    setChosenPriority,
-  );
+  const allPriorityButtons: Array<{ name: IconsNames; action: () => void }> | undefined =
+    isEditingMode ? getPriorityButtons(setPriorityDropdown, setChosenPriority) : undefined;
 
-  const nonChosenPriorityButtons = allPriorityButtons.filter(
-    (btn) =>
-      btn.name !==
-      (chosenPriority !== null ? iconPickerImportantFilter(chosenPriority) : currentTodoPriority),
-  );
+  const nonChosenPriorityButtons = isEditingMode
+    ? allPriorityButtons!.filter(
+        (btn) =>
+          btn.name !==
+          (chosenPriority !== null
+            ? iconPickerImportantFilter(chosenPriority)
+            : currentTodoPriority),
+      )
+    : undefined;
 
   const onFilterClickHandler = () => {
     if (!filter) {
@@ -159,11 +161,6 @@ export const TodoForm: VFC<Props> = ({
       <View style={styles.wrapepr}>
         {!isEditingMode ? (
           <View style={styles.formWrapper}>
-            <ButtonIcon
-              variant={filter ? 'filter-opened' : 'filter-closed'}
-              size={globalStyles.ICON_SM_SIZE}
-              onPress={onFilterClickHandler}
-            />
             <TouchableWithoutFeedback onPress={setColor} accessibilityRole="button">
               <Animated.View
                 style={[
@@ -178,6 +175,11 @@ export const TodoForm: VFC<Props> = ({
                 <TitleLetterSVG color={color} />
               </Animated.View>
             </TouchableWithoutFeedback>
+            <ButtonIcon
+              variant={filter ? 'filter-opened' : 'filter-closed'}
+              size={globalStyles.ICON_SM_SIZE}
+              onPress={onFilterClickHandler}
+            />
             <Input
               placeholder="Add new todo"
               onChange={setFormValue}
@@ -203,12 +205,12 @@ export const TodoForm: VFC<Props> = ({
                   variant={
                     chosenPriority !== null
                       ? iconPickerImportantFilter(chosenPriority)
-                      : currentTodoPriority
+                      : currentTodoPriority!
                   }
                 />
                 {priorityDropdown && (
                   <View style={[styles.priorityDropdown, { backgroundColor: theme.listItemBG }]}>
-                    {nonChosenPriorityButtons.map((btn, i) => (
+                    {nonChosenPriorityButtons!.map((btn, i) => (
                       <ButtonIcon variant={btn.name} onPress={btn.action} key={i} />
                     ))}
                   </View>
@@ -231,7 +233,9 @@ export const TodoForm: VFC<Props> = ({
         decline={cancelAllHandler}
         text={`Delete ${editingTodos.length} ${isMultipleEditing ? 'todos' : 'todo'}?`}
       />
-      <ListFilter height={filtersHeight} scaleAndOpacity={filtersScaleAndOpacity} />
+      {!isEditingMode && (
+        <ListFilter height={filtersHeight} scaleAndOpacity={filtersScaleAndOpacity} />
+      )}
     </>
   );
 };

@@ -28,6 +28,7 @@ export default {
   ICON_SM_SIZE: 35,
   ICON_EXSM_SIZE: 25,
   ICON_DEF_COLOR: '#000',
+  ICON_ARROW_SIZE: 30,
 
   MAIN_FS: 20,
   ALERT_FS: 23,

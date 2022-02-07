@@ -75,12 +75,12 @@ export const Todos: VFC = () => {
     if (isOneNonCompleteEditing && todoWasChanged) {
       dispatchSelection(dispatch, todoActions.todoEditChangeModalModeOn(true))();
     } else {
-      setChosenPriority(todoPriority);
+      setChosenPriority(null);
       dispatchSelection(dispatch, todoActions.todoEditModeOff())();
     }
   };
 
-  const agreeModalChangeHandler = () =>
+  const agreeModalChangeHandler = () => {
     changeTodoHandler(
       dispatchSelection(
         dispatch,
@@ -92,12 +92,16 @@ export const Todos: VFC = () => {
       ),
       dispatchSelection(dispatch, todoActions.todoEditChangeModalModeOn(false)),
     );
+    setChosenPriority(null);
+  };
 
-  const cancelModalChangeHandler = () =>
+  const cancelModalChangeHandler = () => {
     cancelHandler(
       dispatchSelection(dispatch, todoActions.todoEditModeOff()),
       dispatchSelection(dispatch, todoActions.todoEditChangeModalModeOn(false)),
     );
+    setChosenPriority(null);
+  };
 
   const onScroll = Animated.event(
     [

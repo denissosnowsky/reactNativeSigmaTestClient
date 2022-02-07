@@ -52,19 +52,15 @@ export const ListItem: VFC<Props> = ({
   useEffect(() => {
     inputRef.current?.focus();
   }, [editingMode]);
-  /* console.log(chosenPriority); */
-  /* console.log(todoPriority); */
+
   const onEditingOffHandler = () => {
-    /* console.log(chosenPriority);
-    console.log(todoPriority);
-    console.log(todoWasChanged); */
     onCancelEditingHandle(
       isOneNonCompleteEditing,
       todoWasChanged,
       dispatchSelection(dispatch, todoActions.todoEditChangeModalModeOn(true)),
       dispatchSelection(dispatch, todoActions.todoEditModeOff()),
       setChosenPriority,
-      todoPriority,
+      null,
     );
   };
 

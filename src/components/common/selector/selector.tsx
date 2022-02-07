@@ -9,6 +9,7 @@ import {
 import { ThemeContext } from '~contexts';
 
 import globalStyles from '~global/constants.style';
+import { IconsNames } from '~types/todo.types';
 import { ButtonIcon } from '../button-icon';
 import { BlueText } from '../text';
 import styles from './selector.style';
@@ -40,7 +41,7 @@ export const Selector: VFC<Props> = ({ style, data }) => {
           <View style={styles.iconWrapper}>
             <ButtonIcon
               variant={dropdownOpened ? 'down' : 'up'}
-              size={globalStyles.ICON_SM_SIZE}
+              size={globalStyles.ICON_ARROW_SIZE}
               onPress={onDropdownOpenedHandle}
             />
           </View>
@@ -53,6 +54,7 @@ export const Selector: VFC<Props> = ({ style, data }) => {
                 key={i}
                 onPress={() => onItemPressHandler(item.name, item.action)}
               >
+                <ButtonIcon variant={item.icon} size={globalStyles.ICON_EXSM_SIZE} />
                 <BlueText fs={globalStyles.MAIN_FS} style={styles.dropdownItemText}>
                   {item.name}
                 </BlueText>
@@ -69,6 +71,7 @@ type Props = {
   style?: StyleProp<ViewStyle>;
   data: Array<{
     name: string;
+    icon: IconsNames;
     action: () => void;
   }>;
 };

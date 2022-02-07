@@ -5,8 +5,8 @@ export const onCancelEditingHandle = (
   todoWasChanged: boolean,
   openModal: () => void,
   canelClb: () => void,
-  setChosenPriority: (arg: ImportantEnum) => void,
-  todoPriority: ImportantEnum,
+  setChosenPriority: (arg: ImportantEnum | null) => void,
+  todoPriority: ImportantEnum | null,
 ) => {
   if (isOneNonCompleteEditing && todoWasChanged) {
     openModal();

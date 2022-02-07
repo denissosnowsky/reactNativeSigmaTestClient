@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   filterWrapper: {
-    height: 50,
+    height: 40,
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
