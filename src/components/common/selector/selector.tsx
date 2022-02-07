@@ -1,64 +1,45 @@
 import React, { useContext, useState, VFC } from 'react';
-import {
-  StyleProp,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { ThemeContext } from '~contexts';
+import { StyleProp, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
 
-import globalStyles from '~global/constants.style';
+import { ThemeContext } from '~contexts';
 import { IconsNames } from '~types/todo.types';
-import { ButtonIcon } from '../button-icon';
-import { BlueText } from '../text';
+import { SelectorOption } from './components/selector-option';
+import { SelectorOptionDefault } from './components/selector-option-default';
 import styles from './selector.style';
 
-export const Selector: VFC<Props> = ({ style, data }) => {
+export const Selector: VFC<Props> = ({ style, optionsArray }) => {
   const theme = useContext(ThemeContext);
   const [dropdownOpened, setDropdownOpened] = useState(false);
-  const [chosen, setChosen] = useState(data[0].name);
+  const [chosenOptionName, setChosenOptionName] = useState(optionsArray[0].name);
 
   const onDropdownOpenedHandle = () => {
     setDropdownOpened((dropdownOpened) => !dropdownOpened);
   };
 
-  const onItemPressHandler = (option: string, action: () => void) => {
-    setChosen(option);
+  const onItemPressHandler = (optionName: string, optionAction: () => void) => {
+    setChosenOptionName(optionName);
     setDropdownOpened(false);
-    action();
+    optionAction();
   };
 
   return (
     <TouchableWithoutFeedback onPress={onDropdownOpenedHandle}>
       <View style={styles.wrapper}>
-        <View style={[styles.selector, { backgroundColor: theme.listItemBG }, style]}>
-          <View style={styles.textWrapper}>
-            <BlueText fs={globalStyles.MAIN_FS} style={styles.dropdownItemText}>
-              {chosen}
-            </BlueText>
-          </View>
-          <View style={styles.iconWrapper}>
-            <ButtonIcon
-              variant={dropdownOpened ? 'down' : 'up'}
-              size={globalStyles.ICON_ARROW_SIZE}
-              onPress={onDropdownOpenedHandle}
-            />
-          </View>
-        </View>
+        <SelectorOptionDefault
+          chosenOptionName={chosenOptionName}
+          dropdownOpened={dropdownOpened}
+          onDropdownOpenedHandle={onDropdownOpenedHandle}
+          style={style}
+        />
         {dropdownOpened && (
           <View style={[styles.dropdownMenu, { backgroundColor: theme.listItemBG }]}>
-            {data.map((item, i) => (
-              <TouchableOpacity
-                style={styles.dropdownItem}
+            {optionsArray.map((item, i) => (
+              <SelectorOption
                 key={i}
                 onPress={() => onItemPressHandler(item.name, item.action)}
-              >
-                <ButtonIcon variant={item.icon} size={globalStyles.ICON_EXSM_SIZE} />
-                <BlueText fs={globalStyles.MAIN_FS} style={styles.dropdownItemText}>
-                  {item.name}
-                </BlueText>
-              </TouchableOpacity>
+                iconVariant={item.icon}
+                text={item.name}
+              />
             ))}
           </View>
         )}
@@ -69,7 +50,7 @@ export const Selector: VFC<Props> = ({ style, data }) => {
 
 type Props = {
   style?: StyleProp<ViewStyle>;
-  data: Array<{
+  optionsArray: Array<{
     name: string;
     icon: IconsNames;
     action: () => void;

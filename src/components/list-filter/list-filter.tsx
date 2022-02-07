@@ -113,7 +113,7 @@ export const ListFilter: VFC<Props> = ({ scaleAndOpacity, height }) => {
             size={globalStyles.ICON_SM_SIZE}
             style={styles.selectorIcon}
           />
-          <Selector data={completenceFilterData} />
+          <Selector optionsArray={completenceFilterData} />
         </View>
         <View style={[styles.filterWrapper, { zIndex: -1 }]}>
           <ButtonIcon
@@ -121,7 +121,7 @@ export const ListFilter: VFC<Props> = ({ scaleAndOpacity, height }) => {
             size={globalStyles.ICON_SM_SIZE}
             style={styles.selectorIcon}
           />
-          <Selector data={importanceFilterData} />
+          <Selector optionsArray={importanceFilterData} />
         </View>
       </Animated.View>
     </>
