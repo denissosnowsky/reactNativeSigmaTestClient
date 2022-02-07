@@ -4,14 +4,14 @@ export const onCancelEditingHandle = (
   isEditingTodoSoleAndUncompleted: boolean,
   todoWasChanged: boolean,
   openModal: () => void,
-  canelClb: () => void,
+  cancelEdition: () => void,
   setChosenPriority: (arg: ImportantEnum | null) => void,
   todoPriority: ImportantEnum | null,
 ) => {
   if (isEditingTodoSoleAndUncompleted && todoWasChanged) {
     openModal();
   } else {
-    canelClb();
+    cancelEdition();
     setChosenPriority(todoPriority);
   }
 };

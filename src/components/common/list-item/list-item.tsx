@@ -1,20 +1,16 @@
 import React, { Ref, useContext, useEffect, useMemo, useRef, VFC } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
-import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import globalStyles from '~global/constants.style';
-import { todoActions } from '~store/todo';
 import todosSelectors from '~store/todo/todo.selectors';
 import { ThemeContext } from '~contexts';
 import { ImportantEnum } from '~types/todo.types';
-import { BlueText } from '../text';
 import styles from './list-item.style';
-import { Input } from '../input';
-import { onCheckPressHandle } from './utils/onCheckPressHandle';
-import { LinearSVG } from '../svg/linear-svg';
-import { getPriorityColor } from './utils/getPriorityColor';
 import { ListItemState } from './utils/listItemState';
+import { ListItemId } from './components/list-item-id';
+import { ListItemText } from './components/list-item-text';
+import { ListItemStatus } from './components/list-item-status';
 
 export const ListItem: VFC<Props> = ({
   id,
@@ -23,16 +19,14 @@ export const ListItem: VFC<Props> = ({
   priorityType,
   chosenPriority,
   setChosenPriority,
-  onPressCheck,
-  onLongPress,
 }) => {
   const theme = useContext(ThemeContext);
   const dispatch = useDispatch();
-  const todoWrapper: React.LegacyRef<View> = useRef(null);
   const inputRef: Ref<HTMLInputElement> = useRef(null);
   const inputValue = useSelector(todosSelectors.editingInput);
   const isEdiditngMode = useSelector(todosSelectors.editingMode);
   const editingTodos = useSelector(todosSelectors.editingTodos);
+
   const ItemState = useMemo(() => {
     return new ListItemState(
       isCompleted,
@@ -52,7 +46,7 @@ export const ListItem: VFC<Props> = ({
 
   return (
     <TouchableWithoutFeedback
-      onLongPress={onLongPress}
+      onLongPress={ItemState.onLongPressTodoHandle}
       delayLongPress={globalStyles.DEALY_PRESS}
       onPress={ItemState.onSelectTodoHandler}
       testID="list-item-wrapper"
@@ -63,70 +57,23 @@ export const ListItem: VFC<Props> = ({
           ItemState.isCurrentItemEditing && styles.active,
           { backgroundColor: theme.listItemBG },
         ]}
-        ref={todoWrapper}
       >
-        {ItemState.isIdShouldBeShown && (
-          <View style={styles.id}>
-            <View style={styles.idTextWrapper}>
-              <View style={styles.idText}>
-                <BlueText fs={globalStyles.MAIN_FS}>{`${id}.`}</BlueText>
-              </View>
-              <LinearSVG
-                height="100%"
-                color1={priorityType ? getPriorityColor(priorityType) : theme.listItemBG}
-                color2={theme.listItemBG}
-              />
-            </View>
-          </View>
-        )}
-        <View style={styles.text}>
-          {ItemState.isUncompletedAndSoleEditingMode ? (
-            <Input
-              placeholder="Enter todo"
-              value={inputValue}
-              onChange={(value: string) => dispatch(todoActions.todoEditingInputChange(value))}
-              ref={inputRef}
-            />
-          ) : (
-            <BlueText fs={globalStyles.MAIN_FS} isCrossed={isCompleted}>
-              {text}
-            </BlueText>
-          )}
-        </View>
-        <View style={styles.complete}>
-          {ItemState.isUncompletedAndSoleEditingMode ? (
-            <MaterialCommunityIcons
-              testID="pencil"
-              name="pencil"
-              size={globalStyles.ICON_EXSM_SIZE}
-              color={globalStyles.LIGHT_CANCEL_COLOR}
-            />
-          ) : ItemState.isTodoSelectedOrCompleted ? (
-            <AntDesign
-              name="checkcircle"
-              size={globalStyles.ICON_SM_SIZE}
-              color={globalStyles.SUCCESS_COLOR}
-              testID="check"
-              onPress={
-                ItemState.isMultipleEditingMode
-                  ? ItemState.onSelectTodoHandler
-                  : () => onCheckPressHandle(onPressCheck)
-              }
-            />
-          ) : (
-            <MaterialCommunityIcons
-              name="checkbox-blank-circle-outline"
-              testID="circle-blank"
-              size={globalStyles.ICON_SM_SIZE}
-              color={globalStyles.ICON_DEF_COLOR}
-              onPress={
-                ItemState.isMultipleEditingMode
-                  ? ItemState.onSelectTodoHandler
-                  : () => onCheckPressHandle(onPressCheck)
-              }
-            />
-          )}
-        </View>
+        <ListItemId id={id} priorityType={priorityType} isShown={ItemState.isIdShouldBeShown} />
+        <ListItemText
+          text={text}
+          ref={inputRef}
+          onChange={(value: string) => ItemState.onInputChangeHandler(value)}
+          inputValue={inputValue}
+          isCompleted={isCompleted}
+          isEditing={ItemState.isUncompletedAndSoleEditingMode}
+        />
+        <ListItemStatus
+          isTodoSolelyEditing={ItemState.isUncompletedAndSoleEditingMode}
+          isTodoSelectedOrCompleted={ItemState.isTodoSelectedOrCompleted}
+          isMultipleEditingMode={ItemState.isMultipleEditingMode}
+          onSelectTodoHandler={ItemState.onSelectTodoHandler}
+          onCheckPressTodoHandle={ItemState.onCheckPressTodoHandle}
+        />
       </View>
     </TouchableWithoutFeedback>
   );
@@ -138,7 +85,5 @@ type Props = {
   isCompleted: boolean;
   priorityType: ImportantEnum;
   chosenPriority: ImportantEnum | null;
-  onLongPress: () => void;
-  onPressCheck: () => void;
   setChosenPriority: (arg: ImportantEnum | null) => void;
 };

@@ -46,7 +46,8 @@ export type TodoButtonsNameType =
   | 'filter'
   | 'filter-menu-outline'
   | 'bookmark'
-  | 'bookmark-outline';
+  | 'bookmark-outline'
+  | 'pencil';
 
 export enum CompletenceFilter {
   DEFAULT = '',
@@ -77,4 +78,5 @@ export type IconsNames =
   | 'high-priority'
   | 'normal-priority'
   | 'low-priority'
-  | 'none-priority';
+  | 'none-priority'
+  | 'pencil';

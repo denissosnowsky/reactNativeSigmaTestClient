@@ -10,6 +10,7 @@ import { BlueText } from '../text';
 export const ModalFC: VFC<Props> = ({ confirm, decline, showModal, text }) => {
   const theme = useContext(ThemeContext);
   const isIos = Platform.OS === 'ios';
+
   return (
     <>
       <Modal isOpen={showModal} testID="wrapper">
@@ -43,8 +44,8 @@ export const ModalFC: VFC<Props> = ({ confirm, decline, showModal, text }) => {
 };
 
 type Props = {
-  showModal: boolean;
   text: string;
+  showModal: boolean;
   confirm: () => void;
   decline: () => void;
 };

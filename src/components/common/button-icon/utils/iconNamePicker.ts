@@ -36,6 +36,8 @@ export const iconNamePicker = (buttonVariant: IconsNames): IconNamePickerReturn 
       return { name: 'bookmark', color: globalStyles.LOW_P_COLOR };
     case 'none-priority':
       return { name: 'bookmark-outline', color: globalStyles.ICON_DEF_COLOR };
+    case 'pencil':
+      return { name: 'pencil', color: globalStyles.LIGHT_CANCEL_COLOR };
     case 'cancel':
     default:
       return { name: 'cancel', color: globalStyles.LIGHT_CANCEL_COLOR };

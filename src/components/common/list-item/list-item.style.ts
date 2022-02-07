@@ -25,38 +25,6 @@ const styles = StyleSheet.create({
     shadowColor: globalStyles.LIGHT_MAIN_COLOR,
     elevation: 15,
   },
-  id: {
-    width: 55,
-    display: 'flex',
-    alignItems: 'center',
-    height: '100%',
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
-    overflow: 'hidden',
-  },
-  idTextWrapper: {
-    flex: 1,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-  },
-  text: {
-    flex: 1,
-    padding: 5,
-  },
-  complete: {
-    width: 55,
-    display: 'flex',
-    alignItems: 'center',
-  },
-  idText: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: [{ translateY: -7 }, { translateX: -15 }],
-    zIndex: 1,
-  },
 });
 
 export default styles;

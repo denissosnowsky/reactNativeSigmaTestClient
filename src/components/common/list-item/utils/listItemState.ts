@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 
-import { todoActions } from '~store/todo';
+import { todoThunks, todoActions } from '~store/todo';
 import { ImportantEnum, TodoDTO } from '~types/todo.types';
 import { dispatchSelection } from '~utils/dispatchSelection';
 import { onCancelEditingHandle } from './onCancelEditingHandle';
@@ -26,7 +26,6 @@ export class ListItemState {
     dispatch: Dispatch<unknown>,
     setChosenPriority: (arg: ImportantEnum | null) => void,
   ) {
-    /* super(); */
     this.isCompleted = isCompleted;
     this.chosenPriority = chosenPriority;
     this.inputValue = inputValue;
@@ -95,5 +94,17 @@ export class ListItemState {
       dispatchSelection(this.dispatch, todoActions.todoSelectOn(this.id)),
       this.onEditingOffHandler,
     );
+  };
+
+  onCheckPressTodoHandle = () => {
+    this.dispatch(todoThunks.todoCompleteThunk(this.id));
+  };
+
+  onLongPressTodoHandle = () => {
+    this.dispatch(todoActions.todoEditModeOn(this.id));
+  };
+
+  onInputChangeHandler = (value: string) => {
+    this.dispatch(todoActions.todoEditingInputChange(value));
   };
 }
