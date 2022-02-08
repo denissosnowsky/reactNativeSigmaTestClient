@@ -14,16 +14,13 @@ export class ErrorBoundary extends React.Component<unknown, { hasError: boolean 
   }
 
   render() {
-    const { hasError } = this.state;
-    const { children } = this.props;
-    if (hasError) {
+    if (this.state.hasError)
       return (
         <View style={styles.container}>
           <Text style={styles.text}>Oops, Something went wrong.</Text>
           <Text style={styles.subtext}>Please, reload the app</Text>
         </View>
       );
-    }
-    return children;
+    return this.props.children;
   }
 }

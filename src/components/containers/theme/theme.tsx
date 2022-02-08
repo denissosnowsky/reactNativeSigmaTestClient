@@ -1,21 +1,18 @@
 import React, { FC } from 'react';
 import { Animated, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Ionicons } from '@expo/vector-icons';
 
 import { themeActions } from '~store/theme';
 import themeSelectors from '~store/theme/theme.selectors';
-import { dispatchSelection } from '~utils/dispatchSelection';
-import globalStyles from '~global/constants.style';
 import styles from './theme.styles';
-import { switchThemeHandler } from './utils/switchThemeHandler';
+import { ThemeIcon } from './components/theme-icon';
 
 export const Theme: FC<Props> = ({ children, scaleAndOpacity }) => {
   const dispatch = useDispatch();
   const isLightMode = useSelector(themeSelectors.isLightMode);
 
   const switchHandler = () => {
-    switchThemeHandler(dispatchSelection(dispatch, themeActions.switchThemeOn()));
+    dispatch(themeActions.switchThemeOn());
   };
 
   return (
@@ -28,16 +25,7 @@ export const Theme: FC<Props> = ({ children, scaleAndOpacity }) => {
         ]}
       >
         <TouchableOpacity onPress={switchHandler}>
-          {isLightMode ? (
-            <Ionicons
-              name="md-sunny"
-              size={globalStyles.ICON_MED_SIZE}
-              color="orange"
-              testID="sun"
-            />
-          ) : (
-            <Ionicons name="moon" size={globalStyles.ICON_MED_SIZE} color="#fff" testID="moon" />
-          )}
+          <ThemeIcon isLightMode={isLightMode} />
         </TouchableOpacity>
       </Animated.View>
     </>

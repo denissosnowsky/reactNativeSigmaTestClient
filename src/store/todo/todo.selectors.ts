@@ -45,7 +45,7 @@ const isDeleteModalOpened = (state: AppState): boolean => state.todo.isDeleteMod
 const isChangeModalOpened = (state: AppState): boolean => state.todo.isChangeModalOpened;
 const completenceFilterMode = (state: AppState): CompletenceFilter =>
   state.todo.completenceFilterMode;
-const importantFilterMode = (state: AppState): ImportantEnum => state.todo.importantFilterMode;
+const priorityFilterMode = (state: AppState): ImportantEnum => state.todo.importantFilterMode;
 
 export default {
   loading,
@@ -62,5 +62,5 @@ export default {
   isDeleteModalOpened,
   isChangeModalOpened,
   completenceFilterMode,
-  importantFilterMode,
+  priorityFilterMode,
 };
