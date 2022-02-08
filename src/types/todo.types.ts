@@ -1,4 +1,5 @@
 import { Dispatch } from 'react';
+import { Animated } from 'react-native';
 
 export enum SortTypes {
   DEFAULT = 'DEFAULT',
@@ -80,3 +81,14 @@ export type IconsNames =
   | 'low-priority'
   | 'none-priority'
   | 'pencil';
+
+export type PriorirtIconsType =
+  | 'none-priority'
+  | 'high-priority'
+  | 'normal-priority'
+  | 'low-priority';
+
+export type DropdownFilterType = {
+  name: IconsNames;
+  action: () => void;
+}[];

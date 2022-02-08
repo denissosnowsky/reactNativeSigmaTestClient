@@ -1,4 +1,4 @@
-export const changeTodoHandler = (dispatchClb: () => void, clearFormHandler: () => void) => {
-  dispatchClb();
+export const changeTodoHandler = (dispatch: () => void, clearFormHandler: () => void) => {
+  dispatch();
   clearFormHandler();
 };

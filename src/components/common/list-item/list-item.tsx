@@ -14,9 +14,9 @@ import { ListItemStatus } from './components/list-item-status';
 
 export const ListItem: VFC<Props> = ({
   id,
-  text,
-  isCompleted,
-  priorityType,
+  title,
+  completed,
+  important,
   chosenPriority,
   setChosenPriority,
 }) => {
@@ -29,7 +29,7 @@ export const ListItem: VFC<Props> = ({
 
   const ItemState = useMemo(() => {
     return new ListItemState(
-      isCompleted,
+      completed,
       chosenPriority,
       inputValue,
       isEdiditngMode,
@@ -38,7 +38,7 @@ export const ListItem: VFC<Props> = ({
       dispatch,
       setChosenPriority,
     );
-  }, [isCompleted, chosenPriority, inputValue, isEdiditngMode, editingTodos, id]);
+  }, [completed, chosenPriority, inputValue, isEdiditngMode, editingTodos, id]);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -58,13 +58,13 @@ export const ListItem: VFC<Props> = ({
           { backgroundColor: theme.listItemBG },
         ]}
       >
-        <ListItemId id={id} priorityType={priorityType} isShown={ItemState.isIdShouldBeShown} />
+        <ListItemId id={id} priorityType={important} isShown={ItemState.isIdShouldBeShown} />
         <ListItemText
-          text={text}
+          text={title}
           ref={inputRef}
           onChange={(value: string) => ItemState.onInputChangeHandler(value)}
           inputValue={inputValue}
-          isCompleted={isCompleted}
+          isCompleted={completed}
           isEditing={ItemState.isUncompletedAndSoleEditingMode}
         />
         <ListItemStatus
@@ -81,9 +81,9 @@ export const ListItem: VFC<Props> = ({
 
 type Props = {
   id: number;
-  text: string;
-  isCompleted: boolean;
-  priorityType: ImportantEnum;
+  title: string;
+  completed: boolean;
+  important: ImportantEnum;
   chosenPriority: ImportantEnum | null;
   setChosenPriority: (arg: ImportantEnum | null) => void;
 };

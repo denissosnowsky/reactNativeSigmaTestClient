@@ -1,9 +1,9 @@
 export const cancelHandler = (
-  dispatchClb: () => void,
+  dispatch: () => void,
   clearFormHandler: () => void,
   closeModal: () => void,
 ) => {
-  dispatchClb();
+  dispatch();
   clearFormHandler();
   closeModal();
 };

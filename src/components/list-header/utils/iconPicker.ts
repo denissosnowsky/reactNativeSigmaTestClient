@@ -1,4 +1,8 @@
 import { SortTypes, TodosColumns } from '~types/todo.types';
+import { sortingByIdColumn } from './sortingByIdColumn';
+import { sortingByNameColumn } from './sortingByNameColumn';
+import { sortingBySelectedColumn } from './sortingBySelectedColumn';
+import { sortingByStatusColumn } from './sortingByStatusColumn';
 
 export const iconPicker = (
   columnType: TodosColumns,
@@ -6,41 +10,13 @@ export const iconPicker = (
 ): 'sort' | 'sort-asc' | 'sort-desc' => {
   switch (columnType) {
     case TodosColumns.ID:
-      switch (filterMode) {
-        case SortTypes.ID_ASC:
-          return 'sort-asc';
-        case SortTypes.ID_DESC:
-          return 'sort-desc';
-        default:
-          return 'sort';
-      }
+      return sortingByIdColumn(filterMode);
     case TodosColumns.NAME:
-      switch (filterMode) {
-        case SortTypes.NAME_ASC:
-          return 'sort-asc';
-        case SortTypes.NAME_DESC:
-          return 'sort-desc';
-        default:
-          return 'sort';
-      }
+      return sortingByNameColumn(filterMode);
     case TodosColumns.STATUS:
-      switch (filterMode) {
-        case SortTypes.STATUS_ASC:
-          return 'sort-asc';
-        case SortTypes.STATUS_DESC:
-          return 'sort-desc';
-        default:
-          return 'sort';
-      }
+      return sortingByStatusColumn(filterMode);
     case TodosColumns.SELECT:
-      switch (filterMode) {
-        case SortTypes.SELECT_ASC:
-          return 'sort-asc';
-        case SortTypes.SELECT_DESC:
-          return 'sort-desc';
-        default:
-          return 'sort';
-      }
+      return sortingBySelectedColumn(filterMode);
     default:
       return 'sort';
   }

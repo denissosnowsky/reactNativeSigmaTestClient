@@ -55,7 +55,8 @@
     "no-unneeded-ternary": 0,
     "lines-between-class-members": 0,
     "@typescript-eslint/no-unused-vars": 0,
-    "react/destructuring-assignment": 0
+    "react/destructuring-assignment": 0,
+    "react/jsx-props-no-spreading": 0
   },
   "overrides": [
     {

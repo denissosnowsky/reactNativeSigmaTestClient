@@ -1,10 +1,10 @@
 export const addTodoHandler = (
   formValue: string,
-  dispatchClb: () => void,
+  dispatch: () => void,
   clearFormHandler: () => void,
 ) => {
   if (formValue) {
-    dispatchClb();
+    dispatch();
     clearFormHandler();
   }
 };
