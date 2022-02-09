@@ -52,5 +52,5 @@ type Props = {
   setTitleColor: () => void;
   addOnChange: () => void;
   filterOnChange: () => void;
-  setFormValue: React.Dispatch<React.SetStateAction<string>>;
+  setFormValue: (value: string) => void;
 };

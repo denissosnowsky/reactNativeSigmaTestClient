@@ -80,6 +80,7 @@ export class TodosState {
     } else {
       this.setChosenPriority(null);
       this.dispatch(todoActions.todoEditModeOff());
+      this.changeFormInput('');
     }
   };
 
@@ -93,11 +94,17 @@ export class TodosState {
     );
     this.dispatch(todoActions.todoEditChangeModalModeOn(false));
     this.setChosenPriority(null);
+    this.changeFormInput('');
   };
 
   cancelModalChangeHandler = () => {
     this.dispatch(todoActions.todoEditModeOff());
     this.dispatch(todoActions.todoEditChangeModalModeOn(false));
     this.setChosenPriority(null);
+    this.changeFormInput('');
+  };
+
+  changeFormInput = (value: string) => {
+    this.dispatch(todoActions.todoFormInputChange(value));
   };
 }

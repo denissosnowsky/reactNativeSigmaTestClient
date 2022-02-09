@@ -7,11 +7,13 @@ export const onCancelEditingHandle = (
   cancelEdition: () => void,
   setChosenPriority: (arg: ImportantEnum | null) => void,
   todoPriority: ImportantEnum | null,
+  resetFormInput: (arg: string) => void,
 ) => {
   if (isEditingTodoSoleAndUncompleted && todoWasChanged) {
     openModal();
   } else {
     cancelEdition();
     setChosenPriority(todoPriority);
+    resetFormInput('');
   }
 };

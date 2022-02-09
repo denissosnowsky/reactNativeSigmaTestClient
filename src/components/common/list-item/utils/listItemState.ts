@@ -83,6 +83,7 @@ export class ListItemState {
       dispatchSelection(this.dispatch, todoActions.todoEditModeOff()),
       this.setChosenPriority,
       null,
+      this.changeFormInput,
     );
   };
 
@@ -106,5 +107,9 @@ export class ListItemState {
 
   onInputChangeHandler = (value: string) => {
     this.dispatch(todoActions.todoEditingInputChange(value));
+  };
+
+  changeFormInput = (value: string) => {
+    this.dispatch(todoActions.todoFormInputChange(value));
   };
 }

@@ -23,7 +23,6 @@ export const TodoForm: VFC<Props> = ({
   const dispatch = useDispatch();
 
   const [filter, setFilter] = useState(false);
-  const [formValue, setFormValue] = React.useState('');
   const [priorityDropdown, setPriorityDropdown] = useState(false);
   const [titleColor, setTitleColor] = useChangeColor();
 
@@ -36,10 +35,11 @@ export const TodoForm: VFC<Props> = ({
   const editingTodos = useSelector(todoSelectors.editingTodos);
   const editingInput = useSelector(todoSelectors.editingInput);
   const isDeleteModalOpened = useSelector(todoSelectors.isDeleteModalOpened);
+  const formInput = useSelector(todoSelectors.formInput);
 
   const ItemStateClassParams = {
     filter,
-    formValue,
+    formInput,
     titleColor,
     editingInput,
     editingTodos,
@@ -56,7 +56,6 @@ export const TodoForm: VFC<Props> = ({
     dispatch,
     setFilter,
     setTitleColor,
-    setFormValue,
     setChosenPriority,
     setPriorityDropdown,
   };
@@ -85,8 +84,8 @@ export const TodoForm: VFC<Props> = ({
             letterWidth={ItemState.letterWidth}
             titleColor={ItemState.titleColor}
             filter={ItemState.filter}
-            formValue={ItemState.formValue}
-            setFormValue={ItemState.setFormValue}
+            formValue={ItemState.formInput}
+            setFormValue={ItemState.changeFormInput}
             filterOnChange={ItemState.onFilterClickHandler}
             addOnChange={ItemState.addHandler}
             setTitleColor={ItemState.setTitleColor}

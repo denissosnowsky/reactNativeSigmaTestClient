@@ -14,7 +14,7 @@ export class TodoFormState {
   public filtersEndHeight = 110;
 
   filter: boolean;
-  formValue: string;
+  formInput: string;
   titleColor: string;
   editingInput: string;
   editingTodos: TodoDTO[];
@@ -32,12 +32,11 @@ export class TodoFormState {
   setTitleColor: () => void;
   setFilter: (arg: SetStateAction<boolean>) => void;
   setChosenPriority: (arg: ImportantEnum | null) => void;
-  setFormValue: React.Dispatch<React.SetStateAction<string>>;
   setPriorityDropdown: React.Dispatch<React.SetStateAction<boolean>>;
 
   constructor(params: Record<string, any>) {
     this.filter = params.filter;
-    this.formValue = params.formValue;
+    this.formInput = params.formInput;
     this.titleColor = params.titleColor;
     this.editingInput = params.editingInput;
     this.letterWidth = params.letterWidth;
@@ -54,7 +53,6 @@ export class TodoFormState {
     this.dispatch = params.dispatch;
     this.setFilter = params.setFilter;
     this.setTitleColor = params.setTitleColor;
-    this.setFormValue = params.setFormValue;
     this.setChosenPriority = params.setChosenPriority;
     this.setPriorityDropdown = params.setPriorityDropdown;
   }
@@ -100,9 +98,9 @@ export class TodoFormState {
   }
 
   addHandler = () => {
-    if (this.formValue) {
-      this.dispatch(todoThunks.todoAddThunk({ userId: 1, title: this.formValue }));
-      clearFormHandler(this.setFormValue, this.setChosenPriority, null);
+    if (this.formInput) {
+      this.dispatch(todoThunks.todoAddThunk({ userId: 1, title: this.formInput }));
+      clearFormHandler(this.changeFormInput, this.setChosenPriority, null);
     }
   };
 
@@ -114,19 +112,19 @@ export class TodoFormState {
         this.chosenPriority !== null ? this.chosenPriority : this.todoPriority,
       ),
     );
-    clearFormHandler(this.setFormValue, this.setChosenPriority, null);
+    clearFormHandler(this.changeFormInput, this.setChosenPriority, null);
   };
 
   cancelAllHandler = () => {
     this.dispatch(todoActions.todoEditModeOff());
     this.dispatch(todoActions.todoEditDeleteModalModeOn(false));
-    clearFormHandler(this.setFormValue, this.setChosenPriority, null);
+    clearFormHandler(this.changeFormInput, this.setChosenPriority, null);
   };
 
   deleteHandler = () => {
     this.dispatch(todoThunks.todoDeleteThunk(this.editingTodos));
     this.dispatch(todoActions.todoEditDeleteModalModeOn(false));
-    clearFormHandler(this.setFormValue, this.setChosenPriority, null);
+    clearFormHandler(this.changeFormInput, this.setChosenPriority, null);
   };
 
   selectAllHandler = () => {
@@ -146,5 +144,9 @@ export class TodoFormState {
 
   todoEditDeleteModalModeOn = () => {
     this.dispatch(todoActions.todoEditDeleteModalModeOn(true));
+  };
+
+  changeFormInput = (value: string) => {
+    this.dispatch(todoActions.todoFormInputChange(value));
   };
 }

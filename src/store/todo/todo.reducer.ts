@@ -19,6 +19,7 @@ import {
   todoEditDeleteModalModeReducer,
   todoCompletenceFilterReducer,
   todoImportanceFilterReducer,
+  todoFormInputReducer,
 } from './reducers';
 
 export type TodoState = {
@@ -28,6 +29,7 @@ export type TodoState = {
   cursor: number;
   loading: boolean;
   todos: Array<TodoDTO>;
+  formInput: string;
   editingMode: boolean;
   editingInput: string;
   filterMode: SortTypes;
@@ -46,6 +48,7 @@ const initialState: TodoState = {
   cursor: 0,
   todos: [],
   error: '',
+  formInput: '',
   loading: false,
   editingTodos: [],
   editingInput: '',
@@ -80,6 +83,7 @@ export const counterSlice = createSlice({
     ...todoEditDeleteModalModeReducer,
     ...todoCompletenceFilterReducer,
     ...todoImportanceFilterReducer,
+    ...todoFormInputReducer,
   },
 });
 
