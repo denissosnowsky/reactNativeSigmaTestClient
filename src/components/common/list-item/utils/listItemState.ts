@@ -82,7 +82,6 @@ export class ListItemState {
       dispatchSelection(this.dispatch, todoActions.todoEditChangeModalModeOn(true)),
       dispatchSelection(this.dispatch, todoActions.todoEditModeOff()),
       this.setChosenPriority,
-      null,
       this.changeFormInput,
     );
   };
@@ -94,6 +93,7 @@ export class ListItemState {
       dispatchSelection(this.dispatch, todoActions.todoDeselectOn(this.id)),
       dispatchSelection(this.dispatch, todoActions.todoSelectOn(this.id)),
       this.onEditingOffHandler,
+      this.setChosenPriority,
     );
   };
 
