@@ -10,6 +10,7 @@ let maxIdFromDeletedTodos: number;
 const isLastIdDeletedHandle = (prevLastId: number, deletedIds: Array<number>) => {
   let isLastDeleted: boolean;
   const maxIdFromDeletedIds = Math.max(...deletedIds);
+
   maxIdFromDeletedTodos = maxIdFromDeletedIds;
   if (maxIdFromDeletedIds === prevLastId) {
     isLastDeleted = true;

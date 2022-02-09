@@ -1,12 +1,13 @@
 import React, { useContext, VFC } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
 
 import { Todos } from '~screens/todos';
 import { Profile } from '~screens/profile';
-import globalStyles from '~global/constants.style';
 import { ThemeContext } from '~contexts';
 import * as TabNavigationKeys from './tab-navigation.keys';
+import { todosScreenOptions } from './utils/todos-screen-options';
+import { profileScreenOptions } from './utils/profile-screen-options';
+import { allScreensOptions } from './utils/all-screens-options';
 
 export type RootTabParamList = {
   [TabNavigationKeys.List]: undefined;
@@ -19,36 +20,12 @@ export const TabNavigation: VFC = () => {
   const theme = useContext(ThemeContext);
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarActiveTintColor: theme.textColor,
-        tabBarInactiveTintColor: theme.shadowedColor,
-        tabBarStyle: { backgroundColor: theme.tabBarBG },
-        tabBarLabelStyle: { fontSize: globalStyles.TAB_BAR_FS },
-        headerShown: false,
-        tabBarHideOnKeyboard: true,
-      }}
-    >
-      <Tab.Screen
-        name={TabNavigationKeys.List}
-        component={Todos}
-        options={{
-          tabBarIcon: ({ focused, color }) => {
-            const iconName = focused ? 'list' : 'list';
-            return <Ionicons name={iconName} size={30} color={color} />;
-          },
-        }}
-      />
+    <Tab.Navigator screenOptions={allScreensOptions(theme)}>
+      <Tab.Screen name={TabNavigationKeys.List} component={Todos} options={todosScreenOptions()} />
       <Tab.Screen
         name={TabNavigationKeys.Profile}
         component={Profile}
-        options={{
-          tabBarIcon: ({ focused, color }) => {
-            const iconName = focused ? 'person' : 'person-outline';
-
-            return <Ionicons name={iconName} size={30} color={color} />;
-          },
-        }}
+        options={profileScreenOptions()}
       />
     </Tab.Navigator>
   );

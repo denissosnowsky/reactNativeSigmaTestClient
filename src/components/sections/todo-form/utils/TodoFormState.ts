@@ -95,8 +95,8 @@ export class TodoFormState {
     return this.isEditingMode ? this.filteredPriorityButtonsInEditMode : undefined;
   }
 
-  setPriorityDropdownToggle() {
-    this.setPriorityDropdown(!this.priorityDropdown);
+  get setPriorityDropdownToggle() {
+    return () => this.setPriorityDropdown(!this.priorityDropdown);
   }
 
   addHandler = () => {

@@ -22,41 +22,41 @@ import {
 } from './reducers';
 
 export type TodoState = {
-  loading: boolean;
   error: string;
+  limit: number;
+  skip: number;
   cursor: number;
+  loading: boolean;
   todos: Array<TodoDTO>;
   editingMode: boolean;
-  editingTodos: Array<TodoDTO>;
   editingInput: string;
   filterMode: SortTypes;
   allTodosCount: number;
-  limit: number;
-  skip: number;
-  deletedTodosBeforeNewPage: number;
+  editingTodos: Array<TodoDTO>;
   isDeleteModalOpened: boolean;
   isChangeModalOpened: boolean;
-  completenceFilterMode: CompletenceFilter;
+  deletedTodosBeforeNewPage: number;
   importantFilterMode: ImportantEnum;
+  completenceFilterMode: CompletenceFilter;
 };
 
 const initialState: TodoState = {
-  loading: false,
-  error: '',
+  skip: 0,
+  limit: 30,
   cursor: 0,
   todos: [],
-  editingMode: false,
+  error: '',
+  loading: false,
   editingTodos: [],
   editingInput: '',
-  filterMode: SortTypes.DEFAULT,
   allTodosCount: 0,
-  limit: 30,
-  skip: 0,
-  deletedTodosBeforeNewPage: 0,
+  editingMode: false,
   isDeleteModalOpened: false,
   isChangeModalOpened: false,
-  completenceFilterMode: CompletenceFilter.DEFAULT,
+  deletedTodosBeforeNewPage: 0,
+  filterMode: SortTypes.DEFAULT,
   importantFilterMode: ImportantEnum.DEFAULT,
+  completenceFilterMode: CompletenceFilter.DEFAULT,
 };
 
 export const counterSlice = createSlice({

@@ -57,8 +57,8 @@ export const TodoForm: VFC<Props> = ({
     setFilter,
     setTitleColor,
     setFormValue,
-    setPriorityDropdown,
     setChosenPriority,
+    setPriorityDropdown,
   };
 
   const ItemState = useMemo(

@@ -1,6 +1,6 @@
 import { AnyAction, ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
 
-import { TodoDAO, TodoDTO } from '~types/todo.types';
+import { ImportantEnum, TodoDAO, TodoDTO } from '~types/todo.types';
 import { AppState } from '~store';
 import apiService from '~services/api.service';
 import { todoActions } from '../actions';
@@ -13,7 +13,14 @@ export const todoAddThunk =
   ): Promise<void> => {
     const newId = getState().todo.cursor + 1;
     try {
-      dispatch(todoActions.todoAddRequested({ ...todo, id: newId, completed: false }));
+      dispatch(
+        todoActions.todoAddRequested({
+          ...todo,
+          id: newId,
+          completed: false,
+          important: ImportantEnum.DEFAULT,
+        }),
+      );
 
       const newTodo = await apiService.post<TodoDTO>('/todos', {
         ...todo,
