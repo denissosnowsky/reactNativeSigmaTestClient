@@ -16,3 +16,5 @@ export * from './todoEditChangeModalMode.reducer';
 export * from './todoCompletenceFilter.reducer';
 export * from './todoImportanceFilter.reducer';
 export * from './todoFormInput.reducer';
+export * from './todoResetAll.reducer';
+export * from './todoTestsAdd.reducer';

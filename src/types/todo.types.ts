@@ -21,12 +21,12 @@ export enum TodosColumns {
 }
 
 export type TodoDAO = {
-  userId: number;
+  userId: number | string;
   title: string;
 };
 
 export type TodoDTO = {
-  userId: number;
+  userId: number | string;
   id: number;
   title: string;
   completed: boolean;

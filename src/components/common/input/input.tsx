@@ -1,13 +1,16 @@
 import React, { FC, useState, Ref, forwardRef, useContext } from 'react';
 import { Input as InputNB } from 'native-base';
-import { StyleProp, TextStyle } from 'react-native';
+import { NativeSyntheticEvent, StyleProp, TextInputFocusEventData, TextStyle } from 'react-native';
 
 import globalStyles from '~global/constants.style';
 import { ThemeContext } from '~contexts';
 import styles from './input.style';
 
 export const Input: FC<Props> = forwardRef(
-  ({ placeholder, value, isUnderlined, style, onChange }, ref: Ref<HTMLInputElement>) => {
+  (
+    { placeholder, value, isUnderlined, style, onChange, onFocus, onBlur },
+    ref: Ref<HTMLInputElement>,
+  ) => {
     const [text, setText] = useState('');
     const theme = useContext(ThemeContext);
 
@@ -32,6 +35,8 @@ export const Input: FC<Props> = forwardRef(
         value={value ?? text}
         onChangeText={(targetValue) => onChangeHandler(targetValue)}
         ref={ref}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
     );
   },
@@ -44,4 +49,6 @@ type Props = {
   style?: StyleProp<TextStyle>;
   isUnderlined?: boolean;
   onChange?: (value: string) => void;
+  onFocus?: ((e: NativeSyntheticEvent<TextInputFocusEventData>) => void) | undefined;
+  onBlur?: ((e: NativeSyntheticEvent<TextInputFocusEventData>) => void) | undefined;
 };

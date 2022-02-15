@@ -13,6 +13,7 @@ export class TodoFormState {
   public filtersEndScale = 1;
   public filtersEndHeight = 110;
 
+  userId: string;
   filter: boolean;
   formInput: string;
   titleColor: string;
@@ -35,6 +36,7 @@ export class TodoFormState {
   setPriorityDropdown: React.Dispatch<React.SetStateAction<boolean>>;
 
   constructor(params: Record<string, any>) {
+    this.userId = params.userId;
     this.filter = params.filter;
     this.formInput = params.formInput;
     this.titleColor = params.titleColor;
@@ -99,7 +101,7 @@ export class TodoFormState {
 
   addHandler = () => {
     if (this.formInput) {
-      this.dispatch(todoThunks.todoAddThunk({ userId: 1, title: this.formInput }));
+      this.dispatch(todoThunks.todoAddThunk({ userId: this.userId, title: this.formInput }));
       clearFormHandler(this.changeFormInput, this.setChosenPriority, null);
     }
   };

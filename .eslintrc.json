@@ -90,6 +90,12 @@
       "rules": {
         "react/no-unstable-nested-components": "off"
       }
+    },
+    {
+      "files": ["src/screens/auth/components/**/*"],
+      "rules": {
+        "quotes": "off"
+      }
     }
   ],
   "settings": {

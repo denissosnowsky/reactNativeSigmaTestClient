@@ -39,8 +39,11 @@ export const TodoList: VFC<Props> = ({ onScroll, chosenPriority, setChosenPriori
     dispatch,
   );
 
-  const renderItem = ({ item }: { item: TodoDTO }) =>
-    connectComponentWithPropsCallback({ ...item, chosenPriority, setChosenPriority }, ListItem);
+  const renderItem = useCallback(
+    ({ item }: { item: TodoDTO }) =>
+      connectComponentWithPropsCallback({ ...item, chosenPriority, setChosenPriority }, ListItem),
+    [chosenPriority, setChosenPriority],
+  );
 
   const footerItem = () => connectComponentWithPropsCallback({ isLoading }, TodoListFooter);
 

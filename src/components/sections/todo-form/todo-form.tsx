@@ -3,6 +3,7 @@ import { Animated, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import todoSelectors from '~store/todo/todo.selectors';
+import authSelectors from '~store/auth/auth.selectors';
 import { ModalFC } from '~components/common/modal';
 import { useChangeColor } from '~hooks/useChangeColor';
 import { ListFilter } from '~components/list-filter';
@@ -36,8 +37,11 @@ export const TodoForm: VFC<Props> = ({
   const editingInput = useSelector(todoSelectors.editingInput);
   const isDeleteModalOpened = useSelector(todoSelectors.isDeleteModalOpened);
   const formInput = useSelector(todoSelectors.formInput);
+  const userId = useSelector(authSelectors.userId);
+  const testMode = useSelector(authSelectors.testMode);
 
   const ItemStateClassParams = {
+    userId,
     filter,
     formInput,
     titleColor,
@@ -112,7 +116,7 @@ export const TodoForm: VFC<Props> = ({
         decline={ItemState.cancelAllHandler}
         text={`Delete ${editingTodos.length} ${ItemState.isMultipleEditing ? 'todos' : 'todo'}?`}
       />
-      {!isEditingMode && (
+      {!isEditingMode && !testMode && (
         <ListFilter height={filtersHeight} scaleAndOpacity={filtersScaleAndOpacity} />
       )}
     </>

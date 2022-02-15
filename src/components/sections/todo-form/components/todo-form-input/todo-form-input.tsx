@@ -1,9 +1,11 @@
 import React, { VFC } from 'react';
 
 import { Animated, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import { ButtonIcon } from '~components/common/button-icon';
 import { Input } from '~components/common/input';
 import globalStyles from '~global/constants.style';
+import authSelectors from '~store/auth/auth.selectors';
 import { TodoFormLetter } from '../todo-form-letter';
 import styles from './todo-form-input.style';
 
@@ -18,6 +20,8 @@ export const TodoFormInput: VFC<Props> = ({
   filterOnChange,
   addOnChange,
 }) => {
+  const testMode = useSelector(authSelectors.testMode);
+
   return (
     <View style={styles.formWrapper}>
       <TodoFormLetter
@@ -26,11 +30,13 @@ export const TodoFormInput: VFC<Props> = ({
         titleColor={titleColor}
         setTitleColor={setTitleColor}
       />
-      <ButtonIcon
-        variant={filter ? 'filter-opened' : 'filter-closed'}
-        size={globalStyles.ICON_SM_SIZE}
-        onPress={filterOnChange}
-      />
+      {!testMode && (
+        <ButtonIcon
+          variant={filter ? 'filter-opened' : 'filter-closed'}
+          size={globalStyles.ICON_SM_SIZE}
+          onPress={filterOnChange}
+        />
+      )}
       <Input
         placeholder="Add new todo"
         onChange={setFormValue}

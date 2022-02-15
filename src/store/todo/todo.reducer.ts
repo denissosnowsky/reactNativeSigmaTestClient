@@ -20,6 +20,8 @@ import {
   todoCompletenceFilterReducer,
   todoImportanceFilterReducer,
   todoFormInputReducer,
+  todoResetAllReducer,
+  todoTestsAddReducer,
 } from './reducers';
 
 export type TodoState = {
@@ -84,6 +86,8 @@ export const counterSlice = createSlice({
     ...todoCompletenceFilterReducer,
     ...todoImportanceFilterReducer,
     ...todoFormInputReducer,
+    ...todoResetAllReducer,
+    ...todoTestsAddReducer,
   },
 });
 
