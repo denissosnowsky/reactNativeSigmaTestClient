@@ -1,17 +1,16 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  dropdownItem: {
-    height: 45,
-    padding: 5,
+  filterWrapper: {
+    height: 40,
+    width: '100%',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
   },
-  dropdownItemText: {
-    textAlign: 'center',
-    marginLeft: 15,
+  selectorIcon: {
+    marginRight: 10,
   },
 });
 

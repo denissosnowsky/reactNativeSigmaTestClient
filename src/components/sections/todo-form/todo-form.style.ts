@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   wrapepr: {
-    height: 60,
+    height: 'auto',
     width: '100%',
     paddingLeft: 20,
     paddingRight: 20,
@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: 10,
-    zIndex: 999,
   },
   filter: {
     height: 40,

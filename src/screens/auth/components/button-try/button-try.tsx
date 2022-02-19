@@ -11,7 +11,7 @@ export const ButtonTry: VFC<Props> = ({ isHide, onPress }) => {
     <>
       {!isHide && (
         <Button
-          variant="unstyled"
+          variant="link"
           _text={{
             color: '#ff0000',
           }}

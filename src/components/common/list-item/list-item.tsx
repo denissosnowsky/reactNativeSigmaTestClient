@@ -55,7 +55,7 @@ export const ListItem: VFC<Props> = ({
         style={[
           styles.wrapper,
           ItemState.isCurrentItemEditing && styles.active,
-          { backgroundColor: theme.listItemBG },
+          { backgroundColor: theme.listItemBG, elevation: -999 },
         ]}
       >
         <ListItemId id={id} priorityType={important} isShown={ItemState.isIdShouldBeShown} />

@@ -3,14 +3,14 @@ import { StyleSheet } from 'react-native';
 import globalStyles from '~global/constants.style';
 
 const styles = StyleSheet.create({
-  priorityDropdown: {
-    position: 'absolute',
-    width: '100%',
-    top: '100%',
-    display: 'flex',
+  button: {
+    height: 50,
+    fontSize: 20,
+    borderColor: globalStyles.LIGHT_CANCEL_COLOR,
     borderWidth: 1,
-    borderRadius: 10,
-    borderColor: globalStyles.LIGHT_BORDER_COLOR,
+  },
+  buttonText: {
+    fontSize: 20,
   },
 });
 

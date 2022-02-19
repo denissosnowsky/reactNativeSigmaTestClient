@@ -51,7 +51,7 @@ const initialState: TodoState = {
   todos: [],
   error: '',
   formInput: '',
-  loading: false,
+  loading: true,
   editingTodos: [],
   editingInput: '',
   allTodosCount: 0,

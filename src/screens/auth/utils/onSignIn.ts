@@ -12,7 +12,7 @@ export const onSignIn = (email: string, password: string, dispatch: Dispatch<any
       }),
     );
   } else {
-    dispatch(authActions.authAddError('Enter all fields'));
+    dispatch(authActions.authAddError('Fill in the fields correctly'));
     setTimeout(() => dispatch(authActions.authEmptifyError()), 2000);
   }
 };

@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     left: '50%',
     transform: [{ translateY: -7 }, { translateX: -15 }],
     zIndex: 1,
+    elevation: 2,
   },
   id: {
     width: 55,

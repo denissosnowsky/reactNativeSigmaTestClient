@@ -9,7 +9,7 @@ import styles from './list-item-text.style';
 export const ListItemText: VFC<Props> = forwardRef(
   ({ isEditing, text, inputValue, isCompleted, onChange }, ref: Ref<HTMLInputElement>) => {
     return (
-      <View style={styles.text}>
+      <View style={[styles.text]}>
         {isEditing ? (
           <Input placeholder="Enter todo" value={inputValue} onChange={onChange} ref={ref} />
         ) : (

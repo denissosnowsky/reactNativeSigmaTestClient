@@ -8,26 +8,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingLeft: 20,
     paddingRight: 20,
-  },
-  filterWrapper: {
-    height: 40,
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  filter: {
-    height: 40,
-    width: 40,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 5,
-  },
-  selectorIcon: {
-    marginRight: 10,
+    zIndex: 1,
+    elevation: 1,
   },
 });
 

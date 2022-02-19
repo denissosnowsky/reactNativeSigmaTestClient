@@ -7,6 +7,8 @@ import {
   authOutUserReducer,
   authTestModeOnReducer,
   authTestModeOffReducer,
+  userNameChangeReducer,
+  userPhotoChangeReducer,
 } from './reducers';
 
 export type AuthState = {
@@ -15,6 +17,9 @@ export type AuthState = {
     photo: string;
     id: string;
   };
+  tempUserPhoto: string;
+  userNameEditing: string;
+  userPhotoEditing: string;
   isLogged: boolean;
   isLoading: boolean;
   isInitializing: boolean;
@@ -28,6 +33,9 @@ const initialState: AuthState = {
     photo: '',
     id: '',
   },
+  tempUserPhoto: '',
+  userNameEditing: '',
+  userPhotoEditing: '',
   isLogged: false,
   isLoading: false,
   isInitializing: true,
@@ -36,7 +44,7 @@ const initialState: AuthState = {
 };
 
 export const counterSlice = createSlice({
-  name: 'theme',
+  name: 'auth',
   initialState,
   reducers: {
     ...authUserReducer,
@@ -45,6 +53,8 @@ export const counterSlice = createSlice({
     ...authOutUserReducer,
     ...authTestModeOnReducer,
     ...authTestModeOffReducer,
+    ...userNameChangeReducer,
+    ...userPhotoChangeReducer,
   },
 });
 

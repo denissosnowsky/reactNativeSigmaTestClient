@@ -5,14 +5,16 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingLeft: 10,
     paddingRight: 10,
-    zIndex: -1,
+    zIndex: -2,
+    elevation: -1,
   },
   nonListWrapper: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     height: '50%',
-    zIndex: -1,
+    zIndex: -2,
+    elevation: -1,
   },
   loadingWrapper: {
     display: 'flex',

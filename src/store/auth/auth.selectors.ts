@@ -8,6 +8,7 @@ const isLoading = (state: AppState): boolean => state.auth.isLoading;
 const isInitializing = (state: AppState): boolean => state.auth.isInitializing;
 const error = (state: AppState): string => state.auth.error;
 const testMode = (state: AppState): boolean => state.auth.testMode;
+const tempPhoto = (state: AppState): string => state.auth.tempUserPhoto;
 
 export default {
   user,
@@ -16,5 +17,6 @@ export default {
   isLogged,
   testMode,
   isLoading,
+  tempPhoto,
   isInitializing,
 };

@@ -20,7 +20,6 @@ export class TodoFormState {
   editingInput: string;
   editingTodos: TodoDTO[];
   isEditingMode: boolean;
-  priorityDropdown: boolean;
   listScrollY: Animated.Value;
   letterWidth: Animated.Value;
   isDeleteModalOpened: boolean;
@@ -33,7 +32,6 @@ export class TodoFormState {
   setTitleColor: () => void;
   setFilter: (arg: SetStateAction<boolean>) => void;
   setChosenPriority: (arg: ImportantEnum | null) => void;
-  setPriorityDropdown: React.Dispatch<React.SetStateAction<boolean>>;
 
   constructor(params: Record<string, any>) {
     this.userId = params.userId;
@@ -47,7 +45,6 @@ export class TodoFormState {
     this.filtersHeight = params.filtersHeight;
     this.isEditingMode = params.isEditingMode;
     this.chosenPriority = params.chosenPriority;
-    this.priorityDropdown = params.priorityDropdown;
     this.isDeleteModalOpened = params.isDeleteModalOpened;
     this.scrollAnimatedOffset = params.scrollAnimatedOffset;
     this.letterScaleAndOpacity = params.letterScaleAndOpacity;
@@ -56,7 +53,6 @@ export class TodoFormState {
     this.setFilter = params.setFilter;
     this.setTitleColor = params.setTitleColor;
     this.setChosenPriority = params.setChosenPriority;
-    this.setPriorityDropdown = params.setPriorityDropdown;
   }
 
   get isMultipleEditing() {
@@ -76,9 +72,7 @@ export class TodoFormState {
   }
 
   get allPriorityButtons() {
-    return this.isEditingMode
-      ? getPriorityButtons(this.setPriorityDropdown, this.setChosenPriority)
-      : undefined;
+    return this.isEditingMode ? getPriorityButtons(this.setChosenPriority) : undefined;
   }
 
   get filteredPriorityButtonsInEditMode() {
@@ -93,10 +87,6 @@ export class TodoFormState {
 
   get nonChosenPriorityButtons() {
     return this.isEditingMode ? this.filteredPriorityButtonsInEditMode : undefined;
-  }
-
-  get setPriorityDropdownToggle() {
-    return () => this.setPriorityDropdown(!this.priorityDropdown);
   }
 
   addHandler = () => {

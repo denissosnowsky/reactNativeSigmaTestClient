@@ -17,6 +17,8 @@ const styles = StyleSheet.create({
   },
   priorityWrapper: {
     position: 'relative',
+    marginTop: 5,
+    width: '80%',
   },
 });
 

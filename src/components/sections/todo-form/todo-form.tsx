@@ -9,7 +9,6 @@ import { useChangeColor } from '~hooks/useChangeColor';
 import { ListFilter } from '~components/list-filter';
 import { ImportantEnum } from '~types/todo.types';
 import { useAnimation } from './hooks/useAnimation';
-import { useResetDropdown } from './hooks/useResetDropdown';
 import { TodoFormState } from './utils/TodoFormState';
 import { TodoFormInput } from './components/todo-form-input';
 import { TodoFormButtons } from './components/todo-form-buttons';
@@ -24,7 +23,6 @@ export const TodoForm: VFC<Props> = ({
   const dispatch = useDispatch();
 
   const [filter, setFilter] = useState(false);
-  const [priorityDropdown, setPriorityDropdown] = useState(false);
   const [titleColor, setTitleColor] = useChangeColor();
 
   const letterWidth = useRef(new Animated.Value(0)).current;
@@ -48,7 +46,6 @@ export const TodoForm: VFC<Props> = ({
     editingInput,
     editingTodos,
     isEditingMode,
-    priorityDropdown,
     listScrollY,
     letterWidth,
     isDeleteModalOpened,
@@ -61,15 +58,12 @@ export const TodoForm: VFC<Props> = ({
     setFilter,
     setTitleColor,
     setChosenPriority,
-    setPriorityDropdown,
   };
 
   const ItemState = useMemo(
     () => new TodoFormState(ItemStateClassParams),
     Object.values(ItemStateClassParams),
   );
-
-  useResetDropdown(isEditingMode, setPriorityDropdown, setChosenPriority);
 
   useAnimation(
     listScrollY,
@@ -97,7 +91,6 @@ export const TodoForm: VFC<Props> = ({
         ) : (
           <TodoFormButtons
             isMultipleEditing={ItemState.isMultipleEditing}
-            priorityDropdown={ItemState.priorityDropdown}
             chosenPriority={ItemState.chosenPriority}
             currentTodoPriority={ItemState.currentTodoPriority}
             nonChosenPriorityButtons={ItemState.nonChosenPriorityButtons}
@@ -105,7 +98,6 @@ export const TodoForm: VFC<Props> = ({
             changeHandler={ItemState.changeHandler}
             selectAllHandler={ItemState.selectAllHandler}
             cancelAllHandler={ItemState.cancelAllHandler}
-            setPriorityDropdown={ItemState.setPriorityDropdownToggle}
             todoEditDeleteModalModeOn={ItemState.todoEditDeleteModalModeOn}
           />
         )}

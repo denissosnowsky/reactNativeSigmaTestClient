@@ -1,6 +1,12 @@
 import { Button } from 'native-base';
 import React, { useContext, useState, VFC } from 'react';
-import { Keyboard, TouchableWithoutFeedback, View } from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Input } from '~components/common/input';
@@ -17,6 +23,7 @@ import { onSignIn } from './utils/onSignIn';
 import { onSignUp } from './utils/onSignUp';
 import { ButtonTry } from './components/button-try/button-try';
 import { onTestMode } from './utils/onTestMode';
+import { ButtonSubmit } from './components/button-submit/button-submit';
 
 export const Auth: VFC = () => {
   const theme = useContext(ThemeContext);
@@ -24,6 +31,7 @@ export const Auth: VFC = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
   const [isInputsFocused, setIsInputsFocused] = useState(false);
   const [haveAccount, setHaveAccount] = useState(true);
@@ -33,7 +41,7 @@ export const Auth: VFC = () => {
 
   const onPressChangeAuth = () => {
     setHaveAccount(!haveAccount);
-    onEraseAll(setEmail, setPassword, setName);
+    onEraseAll(setEmail, setPassword, setName, setConfirmPassword);
   };
 
   const onSignInHandler = () => {
@@ -41,7 +49,7 @@ export const Auth: VFC = () => {
   };
 
   const onSignUpHandler = () => {
-    onSignUp(name, email, password, dispatch);
+    onSignUp(name, email, password, confirmPassword, dispatch);
   };
 
   const onTestModeHandler = () => {
@@ -79,19 +87,25 @@ export const Auth: VFC = () => {
               isUnderlined
               style={styles.input}
               onFocus={() => setIsInputsFocused(true)}
+              secureTextEntry
             />
-            <Button
-              size="lg"
-              variant="unstyled"
-              _text={{
-                fontSize: globalStyles.MAIN_FS,
-              }}
-              onPress={haveAccount ? onSignInHandler : onSignUpHandler}
+            {!haveAccount && (
+              <Input
+                value={confirmPassword}
+                onChange={setConfirmPassword}
+                placeholder="Confirms password"
+                isUnderlined
+                style={styles.input}
+                onFocus={() => setIsInputsFocused(true)}
+                secureTextEntry
+              />
+            )}
+            <ButtonSubmit
               isLoading={isLoading}
-              disabled={isLoading}
-            >
-              {haveAccount ? 'Sign In' : 'Sign Up'}
-            </Button>
+              haveAccount={haveAccount}
+              onSignInHandler={onSignInHandler}
+              onSignUpHandler={onSignUpHandler}
+            />
           </View>
           <ButtonTry onPress={onTestModeHandler} isHide={isKeyBoardOpened || isInputsFocused} />
           <ButtonQuestion

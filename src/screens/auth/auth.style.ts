@@ -2,11 +2,11 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   logo: {
-    marginTop: '50%',
+    marginTop: 100,
     marginBottom: 60,
   },
   container: {
-    flex: 1,
+    height: '100%',
     alignItems: 'center',
     position: 'relative',
   },
@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 20,
+    fontSize: 15,
   },
   button: {
     fontSize: 20,

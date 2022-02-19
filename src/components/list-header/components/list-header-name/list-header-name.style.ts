@@ -4,7 +4,7 @@ import globalStyles from '~global/constants.style';
 
 const styles = StyleSheet.create({
   headerText: {
-    fontSize: globalStyles.MAIN_FS,
+    fontSize: globalStyles.SM_FS,
     fontWeight: 'bold',
   },
   text: {

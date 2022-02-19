@@ -30,6 +30,7 @@ export default {
   ICON_DEF_COLOR: '#000',
   ICON_ARROW_SIZE: 30,
 
+  SM_FS: 17,
   MAIN_FS: 20,
   ALERT_FS: 23,
   BIG_FS: 35,

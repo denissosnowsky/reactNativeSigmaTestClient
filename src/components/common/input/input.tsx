@@ -8,7 +8,17 @@ import styles from './input.style';
 
 export const Input: FC<Props> = forwardRef(
   (
-    { placeholder, value, isUnderlined, style, onChange, onFocus, onBlur },
+    {
+      placeholder,
+      value,
+      isUnderlined,
+      style,
+      secureTextEntry,
+      onChange,
+      onFocus,
+      onBlur,
+      onChangeNative,
+    },
     ref: Ref<HTMLInputElement>,
   ) => {
     const [text, setText] = useState('');
@@ -34,9 +44,11 @@ export const Input: FC<Props> = forwardRef(
         placeholderTextColor={theme.placeholder}
         value={value ?? text}
         onChangeText={(targetValue) => onChangeHandler(targetValue)}
+        onChange={(e) => onChangeNative && onChangeNative(e.nativeEvent.text)}
         ref={ref}
         onFocus={onFocus}
         onBlur={onBlur}
+        secureTextEntry={secureTextEntry}
       />
     );
   },
@@ -48,7 +60,9 @@ type Props = {
   value?: string;
   style?: StyleProp<TextStyle>;
   isUnderlined?: boolean;
+  secureTextEntry?: boolean;
   onChange?: (value: string) => void;
+  onChangeNative?: (e: string) => void;
   onFocus?: ((e: NativeSyntheticEvent<TextInputFocusEventData>) => void) | undefined;
   onBlur?: ((e: NativeSyntheticEvent<TextInputFocusEventData>) => void) | undefined;
 };

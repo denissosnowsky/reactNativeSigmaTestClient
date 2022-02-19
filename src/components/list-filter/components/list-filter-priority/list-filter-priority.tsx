@@ -12,7 +12,7 @@ import styles from './list-filter-priority.style';
 
 export const ListFilterPriority: VFC<Props> = ({ priorityFilterMode, page, dispatch }) => {
   return (
-    <View style={[styles.filterWrapper, { zIndex: -1 }]}>
+    <View style={[styles.filterWrapper, { zIndex: -1, elevation: -1 }]}>
       <ButtonIcon
         variant={iconPickerImportantFilter(priorityFilterMode)}
         size={globalStyles.ICON_SM_SIZE}
