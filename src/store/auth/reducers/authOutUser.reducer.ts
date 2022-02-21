@@ -8,6 +8,9 @@ export const authOutUserReducer = {
       name: '',
       photo: '',
       id: '',
+      email: '',
+      isActivated: false,
+      activationLink: '',
     };
   },
 };

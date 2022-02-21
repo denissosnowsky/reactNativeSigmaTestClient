@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 45,
     left: 25,
-    zIndex: 10,
-    elevation: 11,
+    zIndex: 999,
+    elevation: 999,
   },
   wrapper: {
     position: 'relative',
@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     marginBottom: 30,
+    zIndex: -1,
   },
 });
 

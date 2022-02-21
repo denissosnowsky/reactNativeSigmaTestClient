@@ -12,6 +12,9 @@ export const authUserReducer = {
       name: action.payload.name,
       id: action.payload.id,
       photo: action.payload.photo,
+      email: action.payload.email,
+      isActivated: action.payload.isActivated,
+      activationLink: action.payload.activationLink,
     };
     state.isLoading = false;
     state.isInitializing = false;

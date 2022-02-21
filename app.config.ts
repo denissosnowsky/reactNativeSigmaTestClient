@@ -29,8 +29,7 @@ export default {
     },
     extra: {
       prod_url: 'http://31.184.253.38',
-      dev_url:
-        /* 'http://192.168.0.103:3000' */ /* 'http://172.20.10.2:3000' */ 'http://192.168.1.10:3000',
+      dev_url: 'http://192.168.0.103:3000' /* 'http://172.20.10.2:3000' */,
       token: 'token',
       storage_url: 'https://storage.googleapis.com/expo-13.appspot.com/',
       firebaseConfig: {

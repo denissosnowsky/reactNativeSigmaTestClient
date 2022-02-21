@@ -34,8 +34,7 @@ export const userUploadPhotoThunk =
       if (oldPhotoName) {
         await deleteObject(ref(getFirebaseStorage(), oldPhotoName));
       }
-
-      dispatch(authActions.userPhotoChangeSuccess());
+      dispatch(authActions.userPhotoChangeSuccess(newPhotoName));
     } catch {
       if (photoWasLoaded && !photoWasWritten) {
         await deleteObject(ref(getFirebaseStorage(), newPhotoName));
@@ -47,7 +46,7 @@ export const userUploadPhotoThunk =
         setTimeout(() => dispatch(authActions.authEmptifyError()), 2000);
       }
       if (photoWasLoaded && photoWasWritten) {
-        dispatch(authActions.userPhotoChangeSuccess());
+        dispatch(authActions.userPhotoChangeSuccess(newPhotoName));
       }
     }
   };

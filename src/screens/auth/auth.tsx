@@ -1,5 +1,5 @@
 import { Button } from 'native-base';
-import React, { useContext, useState, VFC } from 'react';
+import React, { useContext, useEffect, useState, VFC } from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -13,7 +13,7 @@ import { Input } from '~components/common/input';
 import { Theme } from '~components/containers/theme';
 import { Header } from '~components/header';
 import { ThemeContext } from '~contexts';
-import globalStyles from '~global/constants.style';
+import { Confirm } from '~screens/confirm';
 import authSelectors from '~store/auth/auth.selectors';
 import { useKeybord } from '~hooks/useKeybord';
 import styles from './auth.style';
@@ -35,7 +35,11 @@ export const Auth: VFC = () => {
   const [name, setName] = useState('');
   const [isInputsFocused, setIsInputsFocused] = useState(false);
   const [haveAccount, setHaveAccount] = useState(true);
+  const [isConfirmPageShown, setIsConfirmPageShown] = useState(false);
+
   const isLoading = useSelector(authSelectors.isLoading);
+  const isUserActivated = useSelector(authSelectors.user).isActivated;
+  const isUserLogged = useSelector(authSelectors.isLogged);
 
   const isKeyBoardOpened = useKeybord(setIsInputsFocused);
 
@@ -55,6 +59,17 @@ export const Auth: VFC = () => {
   const onTestModeHandler = () => {
     onTestMode(dispatch);
   };
+
+  useEffect(() => {
+    if (!isUserActivated && isUserLogged && !isLoading) {
+      setIsConfirmPageShown(true);
+      setHaveAccount(true);
+    }
+  }, [isUserActivated, isUserLogged, isLoading]);
+
+  if (isConfirmPageShown) {
+    return <Confirm onPress={() => setIsConfirmPageShown(false)} />;
+  }
 
   return (
     <Theme scaleAndOpacity={1}>

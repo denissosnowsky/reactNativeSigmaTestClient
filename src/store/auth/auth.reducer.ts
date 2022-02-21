@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { UserDAO } from '~types/auth.types';
+
 import {
   authErrorReducer,
   authUserReducer,
@@ -9,14 +11,11 @@ import {
   authTestModeOffReducer,
   userNameChangeReducer,
   userPhotoChangeReducer,
+  authActivateLinkReducer,
 } from './reducers';
 
 export type AuthState = {
-  user: {
-    name: string;
-    photo: string;
-    id: string;
-  };
+  user: Omit<UserDAO, 'token'>;
   tempUserPhoto: string;
   userNameEditing: string;
   userPhotoEditing: string;
@@ -25,6 +24,7 @@ export type AuthState = {
   isInitializing: boolean;
   error: string;
   testMode: boolean;
+  isActivationLinkLoading: boolean;
 };
 
 const initialState: AuthState = {
@@ -32,6 +32,9 @@ const initialState: AuthState = {
     name: '',
     photo: '',
     id: '',
+    email: '',
+    isActivated: false,
+    activationLink: '',
   },
   tempUserPhoto: '',
   userNameEditing: '',
@@ -41,6 +44,7 @@ const initialState: AuthState = {
   isInitializing: true,
   error: '',
   testMode: false,
+  isActivationLinkLoading: false,
 };
 
 export const counterSlice = createSlice({
@@ -55,6 +59,7 @@ export const counterSlice = createSlice({
     ...authTestModeOffReducer,
     ...userNameChangeReducer,
     ...userPhotoChangeReducer,
+    ...authActivateLinkReducer,
   },
 });
 

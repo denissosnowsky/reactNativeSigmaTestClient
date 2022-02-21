@@ -8,7 +8,7 @@ const URL_SIGNIN = 'auth/signin';
 const URL_SIGNUP = 'auth/signup';
 
 export const axiosInstance = axios.create({
-  baseURL: Constants.manifest?.extra?.prod_url || '',
+  baseURL: Constants.manifest?.extra?.dev_url || '',
 });
 
 axiosInstance.interceptors.request.use(async (config: AxiosRequestConfig) => {

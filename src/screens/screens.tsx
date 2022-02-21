@@ -22,6 +22,7 @@ export const Screens: VFC = () => {
   const isLogged = useSelector(authSelectors.isLogged);
   const isInitializing = useSelector(authSelectors.isInitializing);
   const testMode = useSelector(authSelectors.testMode);
+  const isUserActivated = useSelector(authSelectors.user).isActivated;
 
   useEffect(() => {
     dispatch(authThunks.authVerifyThunk());
@@ -38,7 +39,7 @@ export const Screens: VFC = () => {
   return (
     <ThemeContext.Provider value={isLightMode ? themes.light : themes.dark}>
       <View style={styles.container}>
-        {isLogged || testMode ? <TabNavigation /> : <Auth />}
+        {(isLogged && isUserActivated) || testMode ? <TabNavigation /> : <Auth />}
         <Alert
           text={todoError ? 'Some error happened' : authError}
           status="error"

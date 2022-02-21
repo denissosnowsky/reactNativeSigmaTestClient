@@ -8,8 +8,9 @@ export const userPhotoChangeReducer = {
     state.tempUserPhoto = action.payload;
     state.user = { ...state.user, photo: '' };
   },
-  userPhotoChangeSuccess(state: AuthState) {
+  userPhotoChangeSuccess(state: AuthState, action: PayloadAction<string>) {
     state.userPhotoEditing = '';
+    state.user = { ...state.user, photo: action.payload };
   },
   userPhotoChangeFailed(state: AuthState, action: PayloadAction<string>) {
     state.error = action.payload;

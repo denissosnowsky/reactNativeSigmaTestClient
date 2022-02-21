@@ -4,6 +4,7 @@ import { authSignOutThunk } from './authSignOut.thunk';
 import { authVerifyThunk } from './authVerify.thunk';
 import { userChangeNameThunk } from './userChangeName.thunk';
 import { userUploadPhotoThunk } from './userUploadPhoto.thunk';
+import { authSendActivationLinkThunk } from './authSendActivationLink.thunk';
 
 export const authThunks = {
   authSignInThunk,
@@ -12,4 +13,5 @@ export const authThunks = {
   authVerifyThunk,
   userChangeNameThunk,
   userUploadPhotoThunk,
+  authSendActivationLinkThunk,
 };

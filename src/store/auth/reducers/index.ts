@@ -6,3 +6,4 @@ export * from './authTestModeOn.reducer';
 export * from './authTestModeOff.reducer';
 export * from './userNameChange.reducer';
 export * from './userPhotoChange.reducer';
+export * from './authActivateLink.reducer';
