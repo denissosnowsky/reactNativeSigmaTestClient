@@ -36,6 +36,7 @@ export const userUploadPhotoThunk =
       }
       dispatch(authActions.userPhotoChangeSuccess(newPhotoName));
     } catch {
+      alert('vbbbb');
       if (photoWasLoaded && !photoWasWritten) {
         await deleteObject(ref(getFirebaseStorage(), newPhotoName));
         dispatch(authActions.userPhotoChangeFailed('Some error happend'));

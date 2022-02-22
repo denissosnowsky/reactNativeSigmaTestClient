@@ -1,15 +1,14 @@
 import React, { useState, VFC } from 'react';
-import { Image, TouchableWithoutFeedback, View } from 'react-native';
+import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import Constants from 'expo-constants';
 
-import { ButtonIcon } from '~components/common/button-icon';
 import { ModalWrapper } from '~components/common/modal-wrapper';
-import { BlueText } from '~components/common/text';
 import authSelectors from '~store/auth/auth.selectors';
 import { authThunks } from '~store/auth/thunks';
 import { ModalPhotoInner } from '../modal-photo-inner/modal-photo-inner';
 import styles from './profile-photo.style';
+import { AddPhoto } from './components/addPhoto/addPhoto';
+import { Photo } from './components/photo/photo';
 
 export const ProfilePhoto: VFC = () => {
   const dispatch = useDispatch();
@@ -40,29 +39,9 @@ export const ProfilePhoto: VFC = () => {
       <View style={styles.photoWrapper}>
         <View style={styles.photo}>
           {avatar || tempPhoto ? (
-            <Image
-              style={styles.image}
-              source={{
-                uri: avatar
-                  ? `${Constants.manifest?.extra?.storage_url}${avatar}`
-                  : tempPhoto
-                  ? tempPhoto
-                  : '',
-              }}
-            />
+            <Photo avatar={avatar} tempPhoto={tempPhoto} onModalOpen={onModalOpen} />
           ) : (
-            <TouchableWithoutFeedback onPress={onModalOpen}>
-              <View style={styles.addAvatar}>
-                <BlueText fs={30}>Add avatar</BlueText>
-                <ButtonIcon
-                  variant="add"
-                  style={styles.addButton}
-                  size={55}
-                  hasOpacity={false}
-                  onPress={onModalOpen}
-                />
-              </View>
-            </TouchableWithoutFeedback>
+            <AddPhoto onModalOpen={onModalOpen} />
           )}
         </View>
       </View>

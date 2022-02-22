@@ -22,7 +22,9 @@ export const authSendActivationLinkThunk =
       });
 
       dispatch(authActions.authActivateLinkSuccess());
+      setTimeout(() => dispatch(authActions.authEmptifySuccess()), 2000);
     } catch {
       dispatch(authActions.authActivateLinkFailed());
+      setTimeout(() => dispatch(authActions.authEmptifyError()), 2000);
     }
   };

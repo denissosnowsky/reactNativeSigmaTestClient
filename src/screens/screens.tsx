@@ -23,6 +23,7 @@ export const Screens: VFC = () => {
   const isInitializing = useSelector(authSelectors.isInitializing);
   const testMode = useSelector(authSelectors.testMode);
   const isUserActivated = useSelector(authSelectors.user).isActivated;
+  const authSuccessAlert = useSelector(authSelectors.successAlert);
 
   useEffect(() => {
     dispatch(authThunks.authVerifyThunk());
@@ -44,6 +45,11 @@ export const Screens: VFC = () => {
           text={todoError ? 'Some error happened' : authError}
           status="error"
           isShown={Boolean(todoError || authError)}
+        />
+        <Alert
+          text={authSuccessAlert ? authSuccessAlert : 'Success'}
+          status="success"
+          isShown={Boolean(authSuccessAlert)}
         />
       </View>
     </ThemeContext.Provider>

@@ -6,8 +6,10 @@ export const authActivateLinkReducer = {
   },
   authActivateLinkSuccess(state: AuthState) {
     state.isActivationLinkLoading = false;
+    state.successAlert = 'Link was sent';
   },
   authActivateLinkFailed(state: AuthState) {
     state.isActivationLinkLoading = false;
+    state.error = "Error: link wasn't sent";
   },
 };

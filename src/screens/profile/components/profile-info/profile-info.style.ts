@@ -6,18 +6,26 @@ const styles = StyleSheet.create({
   infoWrapper: {
     flex: 3,
     width: '100%',
-    alignItems: 'center',
   },
-  name: {
-    fontSize: globalStyles.BIG_FS,
+  text: {
+    fontSize: globalStyles.MAIN_FS,
+    flex: 4,
+  },
+  textWrapper: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
     marginTop: 10,
-    marginBottom: 40,
   },
   buttons: {
     flex: 1,
   },
   button: {
     marginBottom: 20,
+  },
+  icon: {
+    justifyContent: 'center',
   },
 });
 

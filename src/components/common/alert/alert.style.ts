@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
     fontSize: globalStyle.ALERT_FS,
   },
   wrapper: {
-    backgroundColor: globalStyle.LIGHT_SUCCESS_ALERT_BG,
     position: 'absolute',
     top: 70,
     width: 300,

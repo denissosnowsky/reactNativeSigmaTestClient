@@ -7,24 +7,36 @@ import { BlueText } from '~components/common/text';
 import authSelectors from '~store/auth/auth.selectors';
 import { authThunks } from '~store/auth/thunks';
 import { ModalWrapper } from '~components/common/modal-wrapper';
+import { authActions } from '~store/auth';
+import { UserDAO } from '~types/auth.types';
+import { ButtonIcon } from '~components/common/button-icon';
+import globalStyles from '~global/constants.style';
 import styles from './profile-info.style';
 import { ModalNameInner } from '../modal-name-inner/modal-name-inner';
-import { ModalPhotoInner } from '../modal-photo-inner/modal-photo-inner';
+import { ModalPassInner } from '../modal-pass-inner/modal-pass-inner';
+import { ModalEmailInner } from '../modal-email-inner/modal-email-inner';
 
 export const ProflieInfo: VFC = () => {
   const dispatch = useDispatch();
 
-  const name: string = useSelector(authSelectors.user).name;
+  const user: Omit<UserDAO, 'token'> = useSelector(authSelectors.user);
 
-  const [newName, setNewName] = useState<string>(name);
-  const [newPhoto, setNewPhoto] = useState<string>('');
+  const [newName, setNewName] = useState<string>(user.name);
+  const [newEmail, setNewEmail] = useState<string>(user.email);
+  const [oldPass, setOldPass] = useState<string>('');
+  const [newPass, setNewPass] = useState<string>('');
+  const [confirmPass, setConfirmPass] = useState<string>('');
   const [isNameModalOpened, setIsNameModalOpened] = useState(false);
-  const [isPhotoModalOpened, setIsPhotoModalOpened] = useState(false);
+  const [isEmailModalOpened, setIsEmailModalOpened] = useState(false);
   const [isPasswordModalOpened, setIsPasswordModalOpened] = useState(false);
 
   useEffect(() => {
-    setNewName(name);
-  }, [name]);
+    setNewName(user.name);
+  }, [user.name]);
+
+  useEffect(() => {
+    setNewEmail(user.email);
+  }, [user.email]);
 
   const openNameModal = () => {
     setIsNameModalOpened(true);
@@ -32,16 +44,16 @@ export const ProflieInfo: VFC = () => {
 
   const closeNameModal = () => {
     setIsNameModalOpened(false);
-    setNewName(name);
+    setNewName(user.name);
   };
 
-  const openPhotoModal = () => {
-    setIsPhotoModalOpened(true);
+  const openEmailModal = () => {
+    setIsEmailModalOpened(true);
   };
 
-  const closePhotoModal = () => {
-    setIsPhotoModalOpened(false);
-    setNewPhoto('');
+  const closeEmailModal = () => {
+    setIsEmailModalOpened(false);
+    setNewEmail(user.email);
   };
 
   const openPasswordModal = () => {
@@ -50,30 +62,64 @@ export const ProflieInfo: VFC = () => {
 
   const closePasswordModal = () => {
     setIsPasswordModalOpened(false);
+    setOldPass('');
+    setNewName('');
+    setConfirmPass('');
   };
 
   const onNameModalConfirm = () => {
-    if (name !== newName) {
+    if (user.name !== newName && newName.trim()) {
       dispatch(authThunks.userChangeNameThunk(newName));
     }
     closeNameModal();
   };
 
-  const onPhotoModalConfirm = () => {
-    if (newPhoto) {
-      dispatch(authThunks.userUploadPhotoThunk(newPhoto));
+  const onEmailModalConfirm = () => {
+    if (user.email !== newEmail && newEmail.trim()) {
+      dispatch(authThunks.userChangeEmailThunk(newEmail));
     }
-    closePhotoModal();
+    closeEmailModal();
+  };
+
+  const onPassModalConfirm = () => {
+    if (newPass !== confirmPass) {
+      dispatch(authActions.authAddError('Password mismatch'));
+      setTimeout(() => dispatch(authActions.authEmptifyError()), 2000);
+      return;
+    }
+    if (newPass.length < 6) {
+      dispatch(authActions.authAddError('Minimum password length - 6 symbols'));
+      setTimeout(() => dispatch(authActions.authEmptifyError()), 2000);
+      return;
+    }
+    if (newPass.trim()) {
+      dispatch(authThunks.userChangePassThunk(oldPass, newPass));
+    }
   };
 
   return (
     <>
       <View style={styles.infoWrapper}>
-        <BlueText style={styles.name}>{name ?? 'User'}</BlueText>
         <View style={styles.buttons}>
-          <Button name="Change name" style={styles.button} onPress={openNameModal} />
-          <Button name="Change photo" style={styles.button} onPress={openPhotoModal} />
-          <Button name="Change password" style={styles.button} />
+          <View style={styles.textWrapper}>
+            <BlueText style={styles.text}>Name: {user.name ?? 'User'}</BlueText>
+            <ButtonIcon
+              variant="pencil"
+              onPress={openNameModal}
+              size={globalStyles.ICON_EXSM_SIZE}
+              style={styles.icon}
+            />
+          </View>
+          <View style={styles.textWrapper}>
+            <BlueText style={styles.text}>Email: {user.email ?? 'Email'}</BlueText>
+            <ButtonIcon
+              variant="pencil"
+              onPress={openEmailModal}
+              size={globalStyles.ICON_EXSM_SIZE}
+              style={styles.icon}
+            />
+          </View>
+          <Button name="Change password" style={styles.button} onPress={openPasswordModal} />
         </View>
       </View>
       <ModalWrapper
@@ -85,12 +131,27 @@ export const ProflieInfo: VFC = () => {
         <ModalNameInner name={newName} onChange={setNewName} />
       </ModalWrapper>
       <ModalWrapper
-        showModal={isPhotoModalOpened}
-        confirm={onPhotoModalConfirm}
-        decline={closePhotoModal}
-        text="Changing photo"
+        showModal={isEmailModalOpened}
+        confirm={onEmailModalConfirm}
+        decline={closeEmailModal}
+        text="Changing email"
       >
-        <ModalPhotoInner setNewPhoto={setNewPhoto} />
+        <ModalEmailInner name={newEmail} onChange={setNewEmail} />
+      </ModalWrapper>
+      <ModalWrapper
+        showModal={isPasswordModalOpened}
+        confirm={onPassModalConfirm}
+        decline={closePasswordModal}
+        text="Changing password"
+      >
+        <ModalPassInner
+          newPass={newPass}
+          oldPass={oldPass}
+          confirmPass={confirmPass}
+          onChangeNewPass={setNewPass}
+          onChangeOldPass={setOldPass}
+          onChangeConfirmPass={setConfirmPass}
+        />
       </ModalWrapper>
     </>
   );

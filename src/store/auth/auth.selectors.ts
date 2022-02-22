@@ -7,6 +7,7 @@ const isLogged = (state: AppState): boolean => state.auth.isLogged;
 const isLoading = (state: AppState): boolean => state.auth.isLoading;
 const isInitializing = (state: AppState): boolean => state.auth.isInitializing;
 const error = (state: AppState): string => state.auth.error;
+const successAlert = (state: AppState) => state.auth.successAlert;
 const testMode = (state: AppState): boolean => state.auth.testMode;
 const tempPhoto = (state: AppState): string => state.auth.tempUserPhoto;
 const isActivationLinkLoading = (state: AppState) => state.auth.isActivationLinkLoading;
@@ -19,6 +20,7 @@ export default {
   testMode,
   isLoading,
   tempPhoto,
+  successAlert,
   isInitializing,
   isActivationLinkLoading,
 };

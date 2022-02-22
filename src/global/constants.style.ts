@@ -4,7 +4,8 @@ export default {
   WHITE_COLOR: '#fff',
 
   LIGHT_BACKGROUND_COLOR: '#FFF69C',
-  LIGHT_SUCCESS_ALERT_BG: 'rgba(255, 117, 120, 0.9)',
+  LIGHT_ERROR_ALERT_BG: 'rgba(255, 117, 120, 0.9)',
+  LIGHT_SUCCESS_ALERT_BG: 'rgba(117, 255, 179, 0.9)',
   LIGHT_MAIN_COLOR: '#362EFF',
   LIGHT_NB_GREY_COLOR: 'coolGray.800',
   LIGHT_PLACEHOLDER_COLOR: '#618EFF',
@@ -34,6 +35,7 @@ export default {
   MAIN_FS: 20,
   ALERT_FS: 23,
   BIG_FS: 35,
+  MID_FS: 25,
 
   CONTAINER_WD: '75%',
   FULL_WD: '100%',

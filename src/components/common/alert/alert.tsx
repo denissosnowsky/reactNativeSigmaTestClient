@@ -12,7 +12,15 @@ export const Alert: VFC<Props> = ({ status, text, isShown }) => {
           testID="alert-wrapper"
           w={globalStyles.CONTAINER_WD}
           status={status}
-          style={[styles.wrapper]}
+          style={[
+            styles.wrapper,
+            {
+              backgroundColor:
+                status === 'error'
+                  ? globalStyles.LIGHT_ERROR_ALERT_BG
+                  : globalStyles.LIGHT_SUCCESS_ALERT_BG,
+            },
+          ]}
         >
           <VStack
             space={globalStyles.SPACE}

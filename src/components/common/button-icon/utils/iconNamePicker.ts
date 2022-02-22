@@ -40,6 +40,8 @@ export const iconNamePicker = (buttonVariant: IconsNames): IconNamePickerReturn 
       return { name: 'pencil', color: globalStyles.LIGHT_CANCEL_COLOR };
     case 'logout':
       return { name: 'exit-run', color: globalStyles.ICON_DEF_COLOR };
+    case 'name':
+      return { name: 'badge-account-horizontal-outline', color: globalStyles.ICON_DEF_COLOR };
     case 'cancel':
     default:
       return { name: 'cancel', color: globalStyles.LIGHT_CANCEL_COLOR };

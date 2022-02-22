@@ -12,17 +12,22 @@ import {
   userNameChangeReducer,
   userPhotoChangeReducer,
   authActivateLinkReducer,
+  authEmptifySuccessReducer,
+  userPassChangeReducer,
 } from './reducers';
+import { userEmailChangeReducer } from './reducers/userEmailChange.reducer';
 
 export type AuthState = {
   user: Omit<UserDAO, 'token'>;
   tempUserPhoto: string;
   userNameEditing: string;
+  userEmailEditing: string;
   userPhotoEditing: string;
   isLogged: boolean;
   isLoading: boolean;
   isInitializing: boolean;
   error: string;
+  successAlert: string;
   testMode: boolean;
   isActivationLinkLoading: boolean;
 };
@@ -38,11 +43,13 @@ const initialState: AuthState = {
   },
   tempUserPhoto: '',
   userNameEditing: '',
+  userEmailEditing: '',
   userPhotoEditing: '',
   isLogged: false,
   isLoading: false,
   isInitializing: true,
   error: '',
+  successAlert: '',
   testMode: false,
   isActivationLinkLoading: false,
 };
@@ -60,6 +67,9 @@ export const counterSlice = createSlice({
     ...userNameChangeReducer,
     ...userPhotoChangeReducer,
     ...authActivateLinkReducer,
+    ...authEmptifySuccessReducer,
+    ...userPassChangeReducer,
+    ...userEmailChangeReducer,
   },
 });
 

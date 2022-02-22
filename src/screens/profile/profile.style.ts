@@ -26,6 +26,13 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     zIndex: -1,
   },
+  loading: {
+    position: 'relative',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: globalStyles.LIGHT_BACKGROUND_COLOR,
+  },
 });
 
 export default styles;

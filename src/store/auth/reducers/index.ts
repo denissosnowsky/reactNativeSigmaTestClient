@@ -7,3 +7,6 @@ export * from './authTestModeOff.reducer';
 export * from './userNameChange.reducer';
 export * from './userPhotoChange.reducer';
 export * from './authActivateLink.reducer';
+export * from './authEmptifySuccess.reducer';
+export * from './userPassChange.reducer';
+export * from './userEmailChange.reducer';

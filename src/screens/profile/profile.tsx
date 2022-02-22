@@ -12,6 +12,7 @@ import { todoActions } from '~store/todo';
 import { ThemeContext } from '~contexts';
 import { ButtonIcon } from '~components/common/button-icon';
 import globalStyles from '~global/constants.style';
+import { Loading } from '~components/common/loading';
 import styles from './profile.style';
 import { ProfilePhoto } from './components/profile-photo/profile-photo';
 import { ProflieInfo } from './components/profile-info/profile-info';
@@ -21,6 +22,7 @@ const Profile: VFC = () => {
   const dispatch = useDispatch();
 
   const testMode = useSelector(authSelectors.testMode);
+  const isLoading = useSelector(authSelectors.isLoading);
 
   const onSignOut = () => {
     if (testMode) {
@@ -30,6 +32,14 @@ const Profile: VFC = () => {
       dispatch(authThunks.authSignOutThunk());
     }
   };
+
+  if (isLoading) {
+    return (
+      <View style={styles.loading}>
+        <Loading />
+      </View>
+    );
+  }
 
   return (
     <Theme scaleAndOpacity={1}>

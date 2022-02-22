@@ -49,7 +49,8 @@ export type TodoButtonsNameType =
   | 'bookmark'
   | 'bookmark-outline'
   | 'pencil'
-  | 'exit-run';
+  | 'exit-run'
+  | 'badge-account-horizontal-outline';
 
 export enum CompletenceFilter {
   DEFAULT = '',
@@ -82,7 +83,8 @@ export type IconsNames =
   | 'low-priority'
   | 'none-priority'
   | 'pencil'
-  | 'logout';
+  | 'logout'
+  | 'name';
 
 export type PriorirtIconsType =
   | 'none-priority'

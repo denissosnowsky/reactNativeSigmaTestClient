@@ -15,13 +15,13 @@ const styles = StyleSheet.create({
   photoWrapper: {
     height: 150,
     width: 150,
-    borderRadius: 10,
+    borderRadius: 150,
     marginBottom: 10,
   },
   image: {
     height: '100%',
     width: '100%',
-    borderRadius: 10,
+    borderRadius: 150,
   },
 });
 
