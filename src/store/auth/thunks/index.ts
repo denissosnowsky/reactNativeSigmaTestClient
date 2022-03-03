@@ -7,6 +7,8 @@ import { userUploadPhotoThunk } from './userUploadPhoto.thunk';
 import { authSendActivationLinkThunk } from './authSendActivationLink.thunk';
 import { userChangePassThunk } from './userChangePass.thunk';
 import { userChangeEmailThunk } from './userChangeEmail.thunk';
+import { authNewPasswordThunk } from './authNewPassword.thunk';
+import { userGetPhotosThunk } from './userGetPhotos.thunk';
 
 export const authThunks = {
   authSignInThunk,
@@ -18,4 +20,6 @@ export const authThunks = {
   userChangeNameThunk,
   userUploadPhotoThunk,
   authSendActivationLinkThunk,
+  authNewPasswordThunk,
+  userGetPhotosThunk,
 };

@@ -1,44 +1,57 @@
-import { Button } from 'native-base';
-import React, { useState, VFC } from 'react';
-import { Image, View } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
+import React, { useEffect, useState, VFC } from 'react';
+import { Image, TouchableWithoutFeedback, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { Loading } from '~components/common/loading';
+import { authThunks } from '~store/auth/thunks';
+import { authActions } from '~store/auth';
+import authSelectors from '~store/auth/auth.selectors';
 import styles from './modal-photo-inner.style';
 
 export const ModalPhotoInner: VFC<Props> = ({ setNewPhoto }) => {
-  const [image, setImage] = useState<string>('');
+  const dispatch = useDispatch();
+  const avatars = useSelector(authSelectors.avatars);
+  const userPhoto = useSelector(authSelectors.user).photo;
+  const [chosenPhoto, setChosenPhoto] = useState('');
 
-  const pickImage = async () => {
-    const result: ImagePicker.ExpandImagePickerResult<
-      ImagePicker.ImagePickerOptions | ImagePicker.OpenFileBrowserOptions
-    > = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      aspect: [1, 1],
-      allowsEditing: true,
-      quality: 1,
-    });
+  useEffect(() => {
+    dispatch(authThunks.userGetPhotosThunk());
+    return () => {
+      dispatch(authActions.userGetPhotosErase());
+    };
+  }, []);
 
-    if (!result.cancelled) {
-      setImage(result.uri);
-      setNewPhoto(result.uri);
-    }
+  const onChosePhotoHandler = (photo: string) => {
+    setChosenPhoto(photo);
+    setNewPhoto(photo);
   };
+
+  if (!avatars) {
+    return (
+      <View style={styles.loading}>
+        <Loading />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.wrapper}>
-      {Boolean(image) && (
-        <View style={styles.photoWrapper}>
-          <Image
-            source={{
-              uri: image,
-            }}
-            style={styles.image}
-          />
-        </View>
-      )}
-      <Button style={styles.button} onPress={pickImage} size="lg" colorScheme="blue">
-        Upload photo...
-      </Button>
+      {avatars.map((avatar) => (
+        <TouchableWithoutFeedback key={avatar._id} onPress={() => onChosePhotoHandler(avatar._id)}>
+          <View style={styles.photoWrapper}>
+            <Image
+              source={{
+                uri: avatar.url,
+              }}
+              style={[
+                styles.image,
+                avatar.url === userPhoto && styles.chosen,
+                avatar._id === chosenPhoto && styles.active,
+              ]}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+      ))}
     </View>
   );
 };

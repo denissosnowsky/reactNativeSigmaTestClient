@@ -1,4 +1,4 @@
-import React, { useEffect, VFC } from 'react';
+import React, { useContext, useEffect, VFC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View } from 'react-native';
 
@@ -15,6 +15,7 @@ import styles from './screents.style';
 import { Auth } from './auth';
 
 export const Screens: VFC = () => {
+  const theme = useContext(ThemeContext);
   const dispatch = useDispatch();
   const todoError = useSelector(todoSelectors.error);
   const authError = useSelector(authSelectors.error);
@@ -39,7 +40,7 @@ export const Screens: VFC = () => {
 
   return (
     <ThemeContext.Provider value={isLightMode ? themes.light : themes.dark}>
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: theme.background }]}>
         {(isLogged && isUserActivated) || testMode ? <TabNavigation /> : <Auth />}
         <Alert
           text={todoError ? 'Some error happened' : authError}

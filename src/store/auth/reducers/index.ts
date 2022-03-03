@@ -10,3 +10,5 @@ export * from './authActivateLink.reducer';
 export * from './authEmptifySuccess.reducer';
 export * from './userPassChange.reducer';
 export * from './userEmailChange.reducer';
+export * from './authResetPassword.reducer';
+export * from './userGetPhotos.reducer';

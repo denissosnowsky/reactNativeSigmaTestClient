@@ -1,6 +1,5 @@
 import React, { VFC } from 'react';
 import { Image, Text, TouchableWithoutFeedback, View } from 'react-native';
-import Constants from 'expo-constants';
 
 import { ButtonIcon } from '~components/common/button-icon';
 import globalStyles from '~global/constants.style';
@@ -12,11 +11,7 @@ export const Photo: VFC<Props> = ({ avatar, tempPhoto, onModalOpen }) => {
       <Image
         style={styles.image}
         source={{
-          uri: avatar
-            ? `${Constants.manifest?.extra?.storage_url}${avatar}`
-            : tempPhoto
-            ? tempPhoto
-            : '',
+          uri: avatar ? avatar : tempPhoto ? tempPhoto : '',
         }}
       />
       <TouchableWithoutFeedback onPress={onModalOpen}>

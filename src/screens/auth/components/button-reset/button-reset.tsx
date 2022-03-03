@@ -2,9 +2,10 @@ import { Button } from 'native-base';
 import React, { useContext, VFC } from 'react';
 
 import { ThemeContext } from '~contexts';
-import styles from './button-question.style';
+import globalStyles from '~global/constants.style';
+import styles from './button-reset.style';
 
-export const ButtonQuestion: VFC<Props> = ({ isHide, haveAccount, onPress }) => {
+export const ButtonReset: VFC<Props> = ({ isHide, onPress }) => {
   const theme = useContext(ThemeContext);
 
   return (
@@ -13,12 +14,12 @@ export const ButtonQuestion: VFC<Props> = ({ isHide, haveAccount, onPress }) => 
         <Button
           variant="link"
           _text={{
-            color: '#ff0000',
+            color: globalStyles.LIGHT_MAIN_COLOR,
           }}
           style={styles.question}
           onPress={onPress}
         >
-          {haveAccount ? "Don't have an account?" : 'Already have an account?'}
+          Reset password
         </Button>
       )}
     </>
@@ -27,6 +28,5 @@ export const ButtonQuestion: VFC<Props> = ({ isHide, haveAccount, onPress }) => 
 
 type Props = {
   isHide: boolean;
-  haveAccount: boolean;
   onPress: () => void;
 };

@@ -29,17 +29,19 @@ export default {
     },
     extra: {
       prod_url: 'http://31.184.253.38',
-      dev_url: 'http://192.168.0.103:3000' /* 'http://172.20.10.2:3000' */,
+      dev_url:
+        /* 'http://192.168.0.103:3000' */ 'http://172.20.10.2:3000' /* 'http://192.168.1.10:3000' */,
       token: 'token',
-      storage_url: 'https://storage.googleapis.com/expo-13.appspot.com/',
+      storage_url: 'https://storage.googleapis.com/react-native-sigma-test.appspot.com/',
       firebaseConfig: {
-        apiKey: 'AIzaSyALNAy3CKb5kFzLCFG5CwvD1HA_bJcC_Zc',
-        authDomain: 'expo-13.firebaseapp.com',
-        projectId: 'expo-13',
-        storageBucket: 'expo-13.appspot.com',
-        messagingSenderId: '515893427539',
-        appId: '1:515893427539:web:2eb5da49c5fed8329f35a6',
+        apiKey: 'AIzaSyAR-AgJkEqdvrT1TDRyE4LBkLzxlzAr7XE',
+        authDomain: 'react-native-sigma-test.firebaseapp.com',
+        projectId: 'react-native-sigma-test',
+        storageBucket: 'react-native-sigma-test.appspot.com',
+        messagingSenderId: '929258666598',
+        appId: '1:929258666598:web:c67f1501eab8190e394ba7',
       },
+      imageAPI: 'https://avatars.dicebear.com/api/avataaars/',
     },
   },
 };

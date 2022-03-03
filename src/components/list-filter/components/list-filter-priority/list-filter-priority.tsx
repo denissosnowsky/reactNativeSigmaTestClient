@@ -18,7 +18,7 @@ export const ListFilterPriority: VFC<Props> = ({ priorityFilterMode, page, dispa
         size={globalStyles.ICON_SM_SIZE}
         style={styles.selectorIcon}
       />
-      <Selector optionsArray={getPriorityFilterData(page, dispatch)} />
+      {/* <Selector optionsArray={getPriorityFilterData(page, dispatch)} /> */}
     </View>
   );
 };

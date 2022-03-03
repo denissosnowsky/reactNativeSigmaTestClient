@@ -14,6 +14,8 @@ import {
   authActivateLinkReducer,
   authEmptifySuccessReducer,
   userPassChangeReducer,
+  authResetPasswordReducer,
+  userGetPhotosReducer,
 } from './reducers';
 import { userEmailChangeReducer } from './reducers/userEmailChange.reducer';
 
@@ -30,6 +32,8 @@ export type AuthState = {
   successAlert: string;
   testMode: boolean;
   isActivationLinkLoading: boolean;
+  isResetPasswordLoading: boolean;
+  avatars: Array<{ url: string; _id: string }> | null;
 };
 
 const initialState: AuthState = {
@@ -52,6 +56,8 @@ const initialState: AuthState = {
   successAlert: '',
   testMode: false,
   isActivationLinkLoading: false,
+  isResetPasswordLoading: false,
+  avatars: null,
 };
 
 export const counterSlice = createSlice({
@@ -70,6 +76,8 @@ export const counterSlice = createSlice({
     ...authEmptifySuccessReducer,
     ...userPassChangeReducer,
     ...userEmailChangeReducer,
+    ...authResetPasswordReducer,
+    ...userGetPhotosReducer,
   },
 });
 

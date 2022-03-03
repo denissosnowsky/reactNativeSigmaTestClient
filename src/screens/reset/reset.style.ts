@@ -26,6 +26,12 @@ const styles = StyleSheet.create({
   button: {
     fontSize: 20,
   },
+  form: {
+    width: '75%',
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default styles;

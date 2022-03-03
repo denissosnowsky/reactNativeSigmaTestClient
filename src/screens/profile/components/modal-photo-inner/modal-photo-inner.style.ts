@@ -13,15 +13,29 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   photoWrapper: {
-    height: 150,
-    width: 150,
-    borderRadius: 150,
+    height: 100,
+    width: 100,
+    borderRadius: 100,
     marginBottom: 10,
   },
   image: {
     height: '100%',
     width: '100%',
-    borderRadius: 150,
+    borderRadius: 100,
+    backgroundColor: '#ddd',
+  },
+  active: {
+    borderWidth: 2,
+    borderColor: globalStyles.LIGHT_MAIN_COLOR,
+  },
+  chosen: {
+    borderWidth: 2,
+    borderColor: 'red',
+  },
+  loading: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 200,
   },
 });
 

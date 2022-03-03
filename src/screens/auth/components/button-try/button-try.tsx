@@ -2,6 +2,7 @@ import { Button } from 'native-base';
 import React, { useContext, VFC } from 'react';
 
 import { ThemeContext } from '~contexts';
+import globalStyles from '~global/constants.style';
 import styles from './button-try.style';
 
 export const ButtonTry: VFC<Props> = ({ isHide, onPress }) => {
@@ -13,7 +14,7 @@ export const ButtonTry: VFC<Props> = ({ isHide, onPress }) => {
         <Button
           variant="link"
           _text={{
-            color: '#ff0000',
+            color: globalStyles.LIGHT_MAIN_COLOR,
           }}
           style={styles.question}
           onPress={onPress}
