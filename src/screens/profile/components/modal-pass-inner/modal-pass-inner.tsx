@@ -2,16 +2,26 @@ import React, { useState, VFC } from 'react';
 import { View } from 'react-native';
 
 import { Input } from '~components/common/input';
+import { Loading } from '~components/common/loading';
 import styles from './modal-pass-inner.style';
 
 export const ModalPassInner: VFC<Props> = ({
   oldPass,
-  onChangeOldPass,
   newPass,
-  onChangeNewPass,
   confirmPass,
+  isChangePasswordLoading,
+  onChangeOldPass,
+  onChangeNewPass,
   onChangeConfirmPass,
 }) => {
+  if (isChangePasswordLoading) {
+    return (
+      <View style={styles.loading}>
+        <Loading />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.wrapper}>
       <Input
@@ -44,9 +54,10 @@ export const ModalPassInner: VFC<Props> = ({
 
 type Props = {
   oldPass: string;
-  onChangeOldPass: (e: string) => void;
   newPass: string;
-  onChangeNewPass: (e: string) => void;
   confirmPass: string;
+  isChangePasswordLoading: boolean;
+  onChangeOldPass: (e: string) => void;
+  onChangeNewPass: (e: string) => void;
   onChangeConfirmPass: (e: string) => void;
 };

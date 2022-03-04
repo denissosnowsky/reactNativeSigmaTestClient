@@ -13,6 +13,11 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
+  loading: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default styles;

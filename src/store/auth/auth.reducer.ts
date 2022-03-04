@@ -33,6 +33,7 @@ export type AuthState = {
   testMode: boolean;
   isActivationLinkLoading: boolean;
   isResetPasswordLoading: boolean;
+  isChangePasswordLoading: boolean;
   avatars: Array<{ url: string; _id: string }> | null;
 };
 
@@ -57,6 +58,7 @@ const initialState: AuthState = {
   testMode: false,
   isActivationLinkLoading: false,
   isResetPasswordLoading: false,
+  isChangePasswordLoading: false,
   avatars: null,
 };
 

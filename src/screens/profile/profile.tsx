@@ -16,6 +16,7 @@ import { Loading } from '~components/common/loading';
 import styles from './profile.style';
 import { ProfilePhoto } from './components/profile-photo/profile-photo';
 import { ProflieInfo } from './components/profile-info/profile-info';
+import { ButtonOut } from './components/button-out/button-out';
 
 const Profile: VFC = () => {
   const theme = useContext(ThemeContext);
@@ -43,18 +44,24 @@ const Profile: VFC = () => {
 
   return (
     <Theme scaleAndOpacity={1}>
-      <ScrollView style={[styles.container, { backgroundColor: theme.background }]}>
-        <ButtonIcon
-          variant="logout"
-          onPress={onSignOut}
-          size={globalStyles.ICON_SM_SIZE}
-          style={styles.logout}
-        />
-        <View style={styles.wrapper}>
-          <ProfilePhoto />
-          <ProflieInfo />
+      {testMode ? (
+        <View style={[styles.testWrapper, { backgroundColor: theme.background }]}>
+          <ButtonOut onPress={onSignOut} />
         </View>
-      </ScrollView>
+      ) : (
+        <ScrollView style={[styles.container, { backgroundColor: theme.background }]}>
+          <ButtonIcon
+            variant="logout"
+            onPress={onSignOut}
+            size={globalStyles.ICON_SM_SIZE}
+            style={styles.logout}
+          />
+          <View style={styles.wrapper}>
+            <ProfilePhoto />
+            <ProflieInfo />
+          </View>
+        </ScrollView>
+      )}
     </Theme>
   );
 };

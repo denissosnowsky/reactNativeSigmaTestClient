@@ -18,7 +18,7 @@ export const ListFilterCompletence: VFC<Props> = ({ completenceFilterMode, page,
         size={globalStyles.ICON_SM_SIZE}
         style={styles.selectorIcon}
       />
-      {/* <Selector optionsArray={getCompletenceFilterData(page, dispatch)} /> */}
+      <Selector optionsArray={getCompletenceFilterData(page, dispatch)} />
     </View>
   );
 };

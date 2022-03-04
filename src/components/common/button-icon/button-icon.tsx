@@ -1,6 +1,12 @@
 import React, { FC, useMemo } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { StyleProp, TextStyle, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import {
+  AccessibilityRole,
+  StyleProp,
+  TextStyle,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native';
 
 import globalStyles from '~global/constants.style';
 import { IconsNames } from '~types/todo.types';
@@ -27,20 +33,18 @@ export const ButtonIcon: FC<Props> = ({
     );
   }, [variant, size, testID, style]);
 
+  const componentsProps = {
+    onPress,
+    accessibilityRole: 'button' as AccessibilityRole | undefined,
+    style: styles.wrapper,
+  };
+
   return (
     <>
       {hasOpacity ? (
-        <TouchableOpacity onPress={onPress} accessibilityRole="button" style={styles.wrapper}>
-          {Icon}
-        </TouchableOpacity>
+        <TouchableOpacity {...componentsProps}>{Icon}</TouchableOpacity>
       ) : (
-        <TouchableWithoutFeedback
-          onPress={onPress}
-          accessibilityRole="button"
-          style={styles.wrapper}
-        >
-          {Icon}
-        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback {...componentsProps}>{Icon}</TouchableWithoutFeedback>
       )}
     </>
   );

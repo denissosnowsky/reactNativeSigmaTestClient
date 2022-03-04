@@ -1,17 +1,16 @@
-import { PayloadAction } from '@reduxjs/toolkit';
-
+import constants from '~global/constants';
 import { AuthState } from '..';
 
 export const userPassChangeReducer = {
   userPassChangeRequested(state: AuthState) {
-    state.isLoading = true;
+    state.isChangePasswordLoading = true;
   },
   userPassChangeSuccess(state: AuthState) {
-    state.isLoading = false;
-    state.successAlert = 'Password was changed';
+    state.isChangePasswordLoading = false;
+    state.successAlert = 'Please, confirm password change via the link we sent on your email';
   },
   userPassChangeFailed(state: AuthState) {
-    state.isLoading = false;
-    state.error = "Error: password wasn't changed";
+    state.isChangePasswordLoading = false;
+    state.error = constants.CHANGE_PASS_ERROR;
   },
 };

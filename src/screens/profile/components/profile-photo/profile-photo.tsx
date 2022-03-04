@@ -1,8 +1,6 @@
-import React, { useEffect, useState, VFC } from 'react';
+import React, { useState, VFC } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { createClient } from 'pexels';
-import Constants from 'expo-constants';
 
 import { ModalWrapper } from '~components/common/modal-wrapper';
 import authSelectors from '~store/auth/auth.selectors';
@@ -11,8 +9,6 @@ import { ModalPhotoInner } from '../modal-photo-inner/modal-photo-inner';
 import styles from './profile-photo.style';
 import { AddPhoto } from './components/addPhoto/addPhoto';
 import { Photo } from './components/photo/photo';
-
-const client = createClient(Constants.manifest?.extra?.imageAPI);
 
 export const ProfilePhoto: VFC = () => {
   const dispatch = useDispatch();

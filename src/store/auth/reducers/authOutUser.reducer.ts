@@ -12,5 +12,6 @@ export const authOutUserReducer = {
       isActivated: false,
       activationLink: '',
     };
+    state.tempUserPhoto = '';
   },
 };

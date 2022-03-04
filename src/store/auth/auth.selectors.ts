@@ -13,6 +13,7 @@ const testMode = (state: AppState): boolean => state.auth.testMode;
 const tempPhoto = (state: AppState): string => state.auth.tempUserPhoto;
 const isActivationLinkLoading = (state: AppState) => state.auth.isActivationLinkLoading;
 const isResetPasswordLoading = (state: AppState) => state.auth.isResetPasswordLoading;
+const isChangePasswordLoading = (state: AppState) => state.auth.isChangePasswordLoading;
 const userAuth = (state: AppState) => state.auth;
 const avatars = (state: AppState) => state.auth.avatars;
 
@@ -28,6 +29,7 @@ export default {
   isInitializing,
   isActivationLinkLoading,
   isResetPasswordLoading,
+  isChangePasswordLoading,
   userAuth,
   userPhoto,
   avatars,

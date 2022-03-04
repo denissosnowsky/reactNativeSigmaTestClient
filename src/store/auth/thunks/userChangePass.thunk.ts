@@ -16,7 +16,7 @@ export const userChangePassThunk =
       });
 
       dispatch(authActions.userPassChangeSuccess());
-      setTimeout(() => dispatch(authActions.authEmptifySuccess()), 2000);
+      setTimeout(() => dispatch(authActions.authEmptifySuccess()), 5000);
     } catch {
       dispatch(authActions.userPassChangeFailed());
       setTimeout(() => dispatch(authActions.authEmptifyError()), 2000);

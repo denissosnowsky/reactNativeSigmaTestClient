@@ -5,6 +5,8 @@ import globalStyle from '~global/constants.style';
 const styles = StyleSheet.create({
   text: {
     fontSize: globalStyle.ALERT_FS,
+    width: '100%',
+    textAlign: 'center',
   },
   wrapper: {
     position: 'absolute',
@@ -13,7 +15,11 @@ const styles = StyleSheet.create({
     padding: 10,
     left: '50%',
     transform: [{ translateX: -150 }],
-    display: 'flex',
+    flexWrap: 'wrap',
+    flexShrink: 1,
+    borderRadius: 10,
+    zIndex: 999,
+    elevation: 999,
   },
   isShown: {
     display: 'flex',

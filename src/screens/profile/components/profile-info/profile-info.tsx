@@ -2,6 +2,7 @@ import React, { useEffect, useState, VFC } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
+import constants from '~global/constants';
 import { Button } from '~components/common/button';
 import { BlueText } from '~components/common/text';
 import authSelectors from '~store/auth/auth.selectors';
@@ -19,7 +20,9 @@ import { ModalEmailInner } from '../modal-email-inner/modal-email-inner';
 export const ProflieInfo: VFC = () => {
   const dispatch = useDispatch();
 
+  const error = useSelector(authSelectors.error);
   const user: Omit<UserDAO, 'token'> = useSelector(authSelectors.user);
+  const isChangePasswordLoading = useSelector(authSelectors.isChangePasswordLoading);
 
   const [newName, setNewName] = useState<string>(user.name);
   const [newEmail, setNewEmail] = useState<string>(user.email);
@@ -37,6 +40,16 @@ export const ProflieInfo: VFC = () => {
   useEffect(() => {
     setNewEmail(user.email);
   }, [user.email]);
+
+  useEffect(() => {
+    if (error === constants.CHANGE_PASS_ERROR) {
+      setOldPass('');
+    }
+    if (error === constants.MISMATCH_PASS_ERROR || error === constants.MINIMUN_PASS_ERROR) {
+      setNewPass('');
+      setConfirmPass('');
+    }
+  }, [error]);
 
   const openNameModal = () => {
     setIsNameModalOpened(true);
@@ -83,12 +96,12 @@ export const ProflieInfo: VFC = () => {
 
   const onPassModalConfirm = () => {
     if (newPass !== confirmPass) {
-      dispatch(authActions.authAddError('Password mismatch'));
+      dispatch(authActions.authAddError(constants.MISMATCH_PASS_ERROR));
       setTimeout(() => dispatch(authActions.authEmptifyError()), 2000);
       return;
     }
     if (newPass.length < 6) {
-      dispatch(authActions.authAddError('Minimum password length - 6 symbols'));
+      dispatch(authActions.authAddError(constants.MINIMUN_PASS_ERROR));
       setTimeout(() => dispatch(authActions.authEmptifyError()), 2000);
       return;
     }
@@ -140,8 +153,8 @@ export const ProflieInfo: VFC = () => {
       </ModalWrapper>
       <ModalWrapper
         showModal={isPasswordModalOpened}
-        confirm={onPassModalConfirm}
-        decline={closePasswordModal}
+        confirm={!isChangePasswordLoading ? onPassModalConfirm : () => undefined}
+        decline={!isChangePasswordLoading ? closePasswordModal : () => undefined}
         text="Changing password"
       >
         <ModalPassInner
@@ -151,6 +164,7 @@ export const ProflieInfo: VFC = () => {
           onChangeNewPass={setNewPass}
           onChangeOldPass={setOldPass}
           onChangeConfirmPass={setConfirmPass}
+          isChangePasswordLoading={isChangePasswordLoading}
         />
       </ModalWrapper>
     </>

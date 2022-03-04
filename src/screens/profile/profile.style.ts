@@ -26,6 +26,13 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     zIndex: -1,
   },
+  testWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 30,
+    paddingRight: 30,
+  },
   loading: {
     position: 'relative',
     height: '100%',

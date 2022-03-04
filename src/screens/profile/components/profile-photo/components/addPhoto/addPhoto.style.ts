@@ -4,7 +4,6 @@ import globalStyles from '~global/constants.style';
 
 const styles = StyleSheet.create({
   addAvatar: {
-    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: globalStyles.LIGHT_CANCEL_COLOR,
@@ -16,6 +15,10 @@ const styles = StyleSheet.create({
   },
   addButton: {
     marginTop: 10,
+  },
+  text: {
+    fontSize: 30,
+    color: globalStyles.LIGHT_MAIN_COLOR,
   },
 });
 
