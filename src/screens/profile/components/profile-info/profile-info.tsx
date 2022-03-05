@@ -21,6 +21,7 @@ export const ProflieInfo: VFC = () => {
   const dispatch = useDispatch();
 
   const error = useSelector(authSelectors.error);
+  const successAlert = useSelector(authSelectors.successAlert);
   const user: Omit<UserDAO, 'token'> = useSelector(authSelectors.user);
   const isChangePasswordLoading = useSelector(authSelectors.isChangePasswordLoading);
 
@@ -49,7 +50,10 @@ export const ProflieInfo: VFC = () => {
       setNewPass('');
       setConfirmPass('');
     }
-  }, [error]);
+    if (successAlert) {
+      setIsPasswordModalOpened(false);
+    }
+  }, [error, successAlert]);
 
   const openNameModal = () => {
     setIsNameModalOpened(true);
@@ -94,7 +98,7 @@ export const ProflieInfo: VFC = () => {
     closeEmailModal();
   };
 
-  const onPassModalConfirm = () => {
+  const onPassModalConfirm = async () => {
     if (newPass !== confirmPass) {
       dispatch(authActions.authAddError(constants.MISMATCH_PASS_ERROR));
       setTimeout(() => dispatch(authActions.authEmptifyError()), 2000);
