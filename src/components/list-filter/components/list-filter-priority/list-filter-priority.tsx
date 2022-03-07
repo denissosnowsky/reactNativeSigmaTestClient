@@ -1,5 +1,5 @@
-import React, { VFC } from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useState, VFC } from 'react';
+import { Animated, View } from 'react-native';
 import { Dispatch } from '@reduxjs/toolkit';
 
 import globalStyles from '~global/constants.style';
@@ -10,15 +10,38 @@ import { ImportantEnum } from '~types/todo.types';
 import { Selector } from '~components/common/selector';
 import styles from './list-filter-priority.style';
 
-export const ListFilterPriority: VFC<Props> = ({ priorityFilterMode, page, dispatch }) => {
+export const ListFilterPriority: VFC<Props> = ({
+  priorityFilterMode,
+  page,
+  wrapperHeight,
+  dispatch,
+}) => {
+  const [isShown, setIsShown] = useState(false);
+
+  useEffect(() => {
+    const aniamtionId = wrapperHeight.addListener((v) => {
+      if (v.value <= 0) {
+        setIsShown(false);
+      }
+      if (v.value > 0) {
+        setIsShown(true);
+      }
+    });
+    return () => wrapperHeight.removeListener(aniamtionId);
+  });
+
   return (
     <View style={[styles.filterWrapper, { zIndex: -1, elevation: -1 }]}>
-      <ButtonIcon
-        variant={iconPickerImportantFilter(priorityFilterMode)}
-        size={globalStyles.ICON_SM_SIZE}
-        style={styles.selectorIcon}
-      />
-      <Selector optionsArray={getPriorityFilterData(page, dispatch)} />
+      {isShown && (
+        <>
+          <ButtonIcon
+            variant={iconPickerImportantFilter(priorityFilterMode)}
+            size={globalStyles.ICON_SM_SIZE}
+            style={styles.selectorIcon}
+          />
+          <Selector optionsArray={getPriorityFilterData(page, dispatch)} />
+        </>
+      )}
     </View>
   );
 };
@@ -26,5 +49,6 @@ export const ListFilterPriority: VFC<Props> = ({ priorityFilterMode, page, dispa
 type Props = {
   priorityFilterMode: ImportantEnum;
   page: number;
+  wrapperHeight: Animated.Value;
   dispatch: Dispatch<any>;
 };

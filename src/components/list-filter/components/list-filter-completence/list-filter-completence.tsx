@@ -1,5 +1,5 @@
-import React, { VFC } from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useState, VFC } from 'react';
+import { Animated, View } from 'react-native';
 import { Dispatch } from '@reduxjs/toolkit';
 
 import { ButtonIcon } from '~components/common/button-icon';
@@ -10,15 +10,38 @@ import globalStyles from '~global/constants.style';
 import { CompletenceFilter } from '~types/todo.types';
 import styles from './list-filter-completence.style';
 
-export const ListFilterCompletence: VFC<Props> = ({ completenceFilterMode, page, dispatch }) => {
+export const ListFilterCompletence: VFC<Props> = ({
+  completenceFilterMode,
+  page,
+  wrapperHeight,
+  dispatch,
+}) => {
+  const [isShown, setIsShown] = useState(false);
+
+  useEffect(() => {
+    const aniamtionId = wrapperHeight.addListener((v) => {
+      if (v.value <= 0) {
+        setIsShown(false);
+      }
+      if (v.value > 0) {
+        setIsShown(true);
+      }
+    });
+    return () => wrapperHeight.removeListener(aniamtionId);
+  });
+
   return (
     <View style={styles.filterWrapper}>
-      <ButtonIcon
-        variant={iconPickerCompleteFilter(completenceFilterMode)}
-        size={globalStyles.ICON_SM_SIZE}
-        style={styles.selectorIcon}
-      />
-      <Selector optionsArray={getCompletenceFilterData(page, dispatch)} />
+      {isShown && (
+        <>
+          <ButtonIcon
+            variant={iconPickerCompleteFilter(completenceFilterMode)}
+            size={globalStyles.ICON_SM_SIZE}
+            style={styles.selectorIcon}
+          />
+          <Selector optionsArray={getCompletenceFilterData(page, dispatch)} />
+        </>
+      )}
     </View>
   );
 };
@@ -26,5 +49,6 @@ export const ListFilterCompletence: VFC<Props> = ({ completenceFilterMode, page,
 type Props = {
   completenceFilterMode: CompletenceFilter;
   page: number;
+  wrapperHeight: Animated.Value;
   dispatch: Dispatch<any>;
 };

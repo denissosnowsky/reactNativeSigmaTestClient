@@ -27,8 +27,14 @@ export const ListFilter: VFC<Props> = ({ scaleAndOpacity, height }) => {
         page={page}
         completenceFilterMode={completenceFilterMode}
         dispatch={dispatch}
+        wrapperHeight={height}
       />
-      <ListFilterPriority page={page} priorityFilterMode={priorityFilterMode} dispatch={dispatch} />
+      <ListFilterPriority
+        page={page}
+        priorityFilterMode={priorityFilterMode}
+        dispatch={dispatch}
+        wrapperHeight={height}
+      />
     </Animated.View>
   );
 };

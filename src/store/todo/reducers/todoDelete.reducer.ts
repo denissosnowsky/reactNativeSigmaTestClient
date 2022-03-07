@@ -40,7 +40,9 @@ export const todoDeleteReducer = {
         ? SortTypes.DEFAULT
         : state.filterMode;
     state.cursor = isLastIdDeletedHandle(state.cursor, action.payload)
-      ? Math.max(...updatedTodos.map((todo) => todo.id))
+      ? updatedTodos.length > 0
+        ? Math.max(...updatedTodos.map((todo) => todo.id))
+        : 0
       : state.cursor;
   },
   todoDeleteSuccessful(state: TodoState, action: PayloadAction<Array<number>>) {
