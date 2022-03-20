@@ -92,7 +92,7 @@ describe('Todo e2e operations', () => {
     // When
     cy.visit('/');
     // Then
-    _cy.findAllByText('Add your first Todo').should('be.visible');
+    _cy.findAllByText('No todos found').should('be.visible');
   });
 
   it('user should be able to filter todos by id', async () => {

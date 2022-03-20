@@ -112,6 +112,6 @@ describe('TodoForm component', () => {
       </NativeBaseProvider>,
     );
     // Then
-    expect(queryByText('Add your first Todo')).toBeTruthy();
+    expect(queryByText('No todos found')).toBeTruthy();
   });
 });

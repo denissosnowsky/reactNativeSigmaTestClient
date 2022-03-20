@@ -2,23 +2,23 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   wrapepr: {
-    height: 110,
-    width: '75%',
+    height: 'auto',
+    width: '100%',
+    paddingLeft: 20,
+    paddingRight: 20,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginTop: 10,
   },
-  twoBtnEditBlock: {
+  filter: {
+    height: 40,
+    width: 40,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '40%',
-  },
-  threeBtnEditBlock: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '60%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 5,
   },
 });
 

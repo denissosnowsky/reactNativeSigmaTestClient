@@ -10,6 +10,7 @@ let maxIdFromDeletedTodos: number;
 const isLastIdDeletedHandle = (prevLastId: number, deletedIds: Array<number>) => {
   let isLastDeleted: boolean;
   const maxIdFromDeletedIds = Math.max(...deletedIds);
+
   maxIdFromDeletedTodos = maxIdFromDeletedIds;
   if (maxIdFromDeletedIds === prevLastId) {
     isLastDeleted = true;
@@ -39,7 +40,9 @@ export const todoDeleteReducer = {
         ? SortTypes.DEFAULT
         : state.filterMode;
     state.cursor = isLastIdDeletedHandle(state.cursor, action.payload)
-      ? Math.max(...updatedTodos.map((todo) => todo.id))
+      ? updatedTodos.length > 0
+        ? Math.max(...updatedTodos.map((todo) => todo.id))
+        : 0
       : state.cursor;
   },
   todoDeleteSuccessful(state: TodoState, action: PayloadAction<Array<number>>) {

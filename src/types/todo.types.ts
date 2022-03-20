@@ -1,3 +1,6 @@
+import { Dispatch } from 'react';
+import { Animated } from 'react-native';
+
 export enum SortTypes {
   DEFAULT = 'DEFAULT',
   ID_ASC = 'ID_ASC',
@@ -18,15 +21,16 @@ export enum TodosColumns {
 }
 
 export type TodoDAO = {
-  userId: number;
+  userId: number | string;
   title: string;
 };
 
 export type TodoDTO = {
-  userId: number;
+  userId: number | string;
   id: number;
   title: string;
   completed: boolean;
+  important: ImportantEnum;
 };
 
 export type TodoButtonsNameType =
@@ -34,4 +38,62 @@ export type TodoButtonsNameType =
   | 'delete-circle'
   | 'content-save'
   | 'cancel'
-  | 'checkbox-multiple-marked-circle';
+  | 'checkbox-multiple-marked-circle'
+  | 'circle-off-outline'
+  | 'menu-down'
+  | 'menu-up'
+  | 'checkbox-blank-circle-outline'
+  | 'check-circle'
+  | 'filter'
+  | 'filter-menu-outline'
+  | 'bookmark'
+  | 'bookmark-outline'
+  | 'pencil'
+  | 'exit-run'
+  | 'badge-account-horizontal-outline';
+
+export enum CompletenceFilter {
+  DEFAULT = '',
+  COMPLETED = 'complete',
+  UNCOMPLETED = 'uncomplete',
+}
+
+export enum ImportantEnum {
+  DEFAULT = '',
+  HIGH = 'high',
+  NORMAL = 'normal',
+  LOW = 'low',
+}
+
+export type IconsNames =
+  | 'add'
+  | 'delete'
+  | 'save'
+  | 'cancel'
+  | 'select-all'
+  | 'default-hide'
+  | 'filter-opened'
+  | 'filter-closed'
+  | 'down'
+  | 'up'
+  | 'circle-outline'
+  | 'check'
+  | 'high-priority'
+  | 'normal-priority'
+  | 'low-priority'
+  | 'none-priority'
+  | 'pencil'
+  | 'logout'
+  | 'name';
+
+export type PriorirtIconsType =
+  | 'none-priority'
+  | 'high-priority'
+  | 'normal-priority'
+  | 'low-priority';
+
+export type DropdownFilterType = {
+  name: string;
+  icon: IconsNames;
+  action: () => void;
+}[];

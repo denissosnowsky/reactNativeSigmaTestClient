@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 2,
   },
+  text: {
+    textAlign: 'center',
+  },
 });
 
 export default styles;

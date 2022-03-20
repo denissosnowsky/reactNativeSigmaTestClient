@@ -13,10 +13,8 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowRadius: 2,
     shadowOpacity: 0.2,
-    elevation: 5,
     marginTop: 15,
     marginBottom: 7,
-    padding: 10,
   },
   active: {
     borderColor: globalStyles.LIGHT_MAIN_COLOR,
@@ -24,22 +22,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 5,
     shadowColor: globalStyles.LIGHT_MAIN_COLOR,
-    elevation: 15,
-  },
-  id: {
-    width: 45,
-    display: 'flex',
-    alignItems: 'center',
-  },
-  text: {
-    flex: 1,
-    paddingLeft: 5,
-    paddingRight: 5,
-  },
-  complete: {
-    width: 55,
-    display: 'flex',
-    alignItems: 'center',
   },
 });
 

@@ -1,49 +1,60 @@
-import React, { useCallback, VFC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native';
+import {
+  AccessibilityRole,
+  StyleProp,
+  TextStyle,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native';
 
 import globalStyles from '~global/constants.style';
-import { TodoButtonsNameType } from '~types/todo.types';
+import { IconsNames } from '~types/todo.types';
+import styles from './button-icon.style';
+import { iconNamePicker } from './utils/iconNamePicker';
 
-export const ButtonIcon: VFC<Props> = ({ onPress, variant }) => {
-  const iconNamePicker = useCallback(
-    (
-      btnVariant: typeof variant,
-    ): {
-      name: TodoButtonsNameType;
-      color: string;
-    } => {
-      switch (btnVariant) {
-        case 'add':
-          return { name: 'plus-circle', color: globalStyles.SUCCESS_COLOR };
-        case 'delete':
-          return { name: 'delete-circle', color: globalStyles.DELETE_COLOR };
-        case 'save':
-          return { name: 'content-save', color: globalStyles.LIGHT_MAIN_COLOR };
-        case 'select-all':
-          return {
-            name: 'checkbox-multiple-marked-circle',
-            color: globalStyles.SUCCESS_COLOR,
-          };
-        default:
-          return { name: 'cancel', color: globalStyles.LIGHT_CANCEL_COLOR };
-      }
-    },
-    [],
-  );
-
-  return (
-    <TouchableOpacity onPress={onPress} accessibilityRole="button">
+export const ButtonIcon: FC<Props> = ({
+  onPress,
+  variant,
+  size,
+  style,
+  testID,
+  hasOpacity = true,
+}) => {
+  const Icon = useMemo(() => {
+    return (
       <MaterialCommunityIcons
         name={iconNamePicker(variant).name}
-        size={globalStyles.ICON_MED_SIZE}
         color={iconNamePicker(variant).color}
+        size={size ?? globalStyles.ICON_MED_SIZE}
+        style={style}
+        testID={testID}
       />
-    </TouchableOpacity>
+    );
+  }, [variant, size, testID, style]);
+
+  const componentsProps = {
+    onPress,
+    accessibilityRole: 'button' as AccessibilityRole | undefined,
+    style: styles.wrapper,
+  };
+
+  return (
+    <>
+      {hasOpacity ? (
+        <TouchableOpacity {...componentsProps}>{Icon}</TouchableOpacity>
+      ) : (
+        <TouchableWithoutFeedback {...componentsProps}>{Icon}</TouchableWithoutFeedback>
+      )}
+    </>
   );
 };
 
 type Props = {
+  variant: IconsNames;
+  size?: number;
+  style?: StyleProp<TextStyle>;
   onPress?: () => void;
-  variant: 'add' | 'delete' | 'save' | 'cancel' | 'select-all';
+  testID?: string;
+  hasOpacity?: boolean;
 };

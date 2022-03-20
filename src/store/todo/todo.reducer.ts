@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { SortTypes, TodoDTO } from '~types/todo.types';
+import { CompletenceFilter, ImportantEnum, SortTypes, TodoDTO } from '~types/todo.types';
 import {
   todoAddReducer,
   todoFetchReducer,
@@ -15,36 +15,53 @@ import {
   todoEmptifyReducer,
   todoNextPageReducer,
   todoSelectAllReducer,
+  todoEditChangeModalModeReducer,
+  todoEditDeleteModalModeReducer,
+  todoCompletenceFilterReducer,
+  todoImportanceFilterReducer,
+  todoFormInputReducer,
+  todoResetAllReducer,
+  todoTestsAddReducer,
 } from './reducers';
 
 export type TodoState = {
-  loading: boolean;
   error: string;
+  limit: number;
+  skip: number;
   cursor: number;
+  loading: boolean;
   todos: Array<TodoDTO>;
+  formInput: string;
   editingMode: boolean;
-  editingTodos: Array<TodoDTO>;
   editingInput: string;
   filterMode: SortTypes;
   allTodosCount: number;
-  limit: number;
-  skip: number;
+  editingTodos: Array<TodoDTO>;
+  isDeleteModalOpened: boolean;
+  isChangeModalOpened: boolean;
   deletedTodosBeforeNewPage: number;
+  importantFilterMode: ImportantEnum;
+  completenceFilterMode: CompletenceFilter;
 };
 
 const initialState: TodoState = {
-  loading: false,
-  error: '',
+  skip: 0,
+  limit: 30,
   cursor: 0,
   todos: [],
-  editingMode: false,
+  error: '',
+  formInput: '',
+  loading: true,
   editingTodos: [],
   editingInput: '',
-  filterMode: SortTypes.DEFAULT,
   allTodosCount: 0,
-  limit: 30,
-  skip: 0,
+  editingMode: false,
+  isDeleteModalOpened: false,
+  isChangeModalOpened: false,
   deletedTodosBeforeNewPage: 0,
+  filterMode: SortTypes.DEFAULT,
+  importantFilterMode: ImportantEnum.DEFAULT,
+  completenceFilterMode: CompletenceFilter.DEFAULT,
 };
 
 export const counterSlice = createSlice({
@@ -64,6 +81,13 @@ export const counterSlice = createSlice({
     ...todoEmptifyReducer,
     ...todoNextPageReducer,
     ...todoSelectAllReducer,
+    ...todoEditChangeModalModeReducer,
+    ...todoEditDeleteModalModeReducer,
+    ...todoCompletenceFilterReducer,
+    ...todoImportanceFilterReducer,
+    ...todoFormInputReducer,
+    ...todoResetAllReducer,
+    ...todoTestsAddReducer,
   },
 });
 

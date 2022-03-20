@@ -1,8 +1,13 @@
-import { KeyboardStatic } from 'react-native';
+import { Keyboard } from 'react-native';
 
-export const clearFormHandler = (setFormValue: (arg: string) => void, Keyboard: KeyboardStatic) => {
-  return () => {
-    setFormValue('');
-    Keyboard.dismiss();
-  };
+import { ImportantEnum } from '~types/todo.types';
+
+export const clearFormHandler = (
+  setFormValue: (arg: string) => void,
+  setChosenPriority: (arg: ImportantEnum | null) => void,
+  priority: ImportantEnum | null,
+) => {
+  setFormValue('');
+  setChosenPriority(priority);
+  Keyboard.dismiss();
 };

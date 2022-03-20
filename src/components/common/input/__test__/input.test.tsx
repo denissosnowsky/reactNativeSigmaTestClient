@@ -49,7 +49,7 @@ describe('Input component', () => {
     // When
     const { getByPlaceholderText } = render(
       <NativeBaseProvider initialWindowMetrics={inset}>
-        <Input placeholder={placeholder} onChange={jest.fn()} underlined />
+        <Input placeholder={placeholder} onChange={jest.fn()} isUnderlined />
       </NativeBaseProvider>,
     );
     // Then
@@ -66,7 +66,7 @@ describe('Input component', () => {
     // When
     const { getByPlaceholderText } = render(
       <NativeBaseProvider initialWindowMetrics={inset}>
-        <Input placeholder={placeholder} onChange={callbackMock} underlined />
+        <Input placeholder={placeholder} onChange={callbackMock} isUnderlined />
       </NativeBaseProvider>,
     );
     const input = getByPlaceholderText(placeholder);

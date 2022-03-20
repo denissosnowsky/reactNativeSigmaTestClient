@@ -1,14 +1,24 @@
+import { Keyboard } from 'react-native';
+
+import { ImportantEnum } from '~types/todo.types';
+
 export const onSelectHandler = (
   isMultipleEditing: boolean,
   isCurrentItemEditing: boolean,
-  deselectClb: () => void,
-  selectClb: () => void,
+  deselect: () => void,
+  select: () => void,
+  cancelEdit: () => void,
+  setChosenPriority: (arg: ImportantEnum | null) => void,
 ) => {
   if (isMultipleEditing) {
     if (isCurrentItemEditing) {
-      deselectClb();
+      deselect();
+      setChosenPriority(null);
     } else {
-      selectClb();
+      select();
     }
+  } else {
+    cancelEdit();
   }
+  Keyboard.dismiss();
 };

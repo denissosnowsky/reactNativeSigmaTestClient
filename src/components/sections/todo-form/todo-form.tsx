@@ -1,98 +1,123 @@
-import React, { VFC } from 'react';
-import { Keyboard, View } from 'react-native';
+import React, { useMemo, useRef, useState, VFC } from 'react';
+import { Animated, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ButtonIcon } from '~components/common/button-icon';
-import { Input } from '~components/common/input';
-import { todoThunks, todoActions } from '~store/todo';
 import todoSelectors from '~store/todo/todo.selectors';
-import { dispatchSelection } from '~utils/dispatchSelection';
+import authSelectors from '~store/auth/auth.selectors';
 import { ModalFC } from '~components/common/modal';
+import { useChangeColor } from '~hooks/useChangeColor';
+import { ListFilter } from '~components/list-filter';
+import { ImportantEnum } from '~types/todo.types';
+import { useAnimation } from './hooks/useAnimation';
+import { TodoFormState } from './utils/TodoFormState';
+import { TodoFormInput } from './components/todo-form-input';
+import { TodoFormButtons } from './components/todo-form-buttons';
 import styles from './todo-form.style';
-import { clearFormHandler } from './utils/clearFormHandler';
-import { addTodoHandler } from './utils/addTodoHandler';
-import { changeTodoHandler } from './utils/changeTodoHandler';
-import { cancelHandler } from './utils/cancelHandler';
-import { deleteTodoHandler } from './utils/deleteTodoHandler';
-import { selectAllTodosHandler } from './utils/selectAllTodosHandler';
 
-export const TodoForm: VFC = () => {
+export const TodoForm: VFC<Props> = ({
+  listScrollY,
+  scrollAnimatedOffset,
+  chosenPriority,
+  setChosenPriority,
+}) => {
   const dispatch = useDispatch();
-  const [showModal, setShowModal] = React.useState(false);
-  const [formValue, setFormValue] = React.useState('');
+
+  const [filter, setFilter] = useState(false);
+  const [titleColor, setTitleColor] = useChangeColor();
+
+  const letterWidth = useRef(new Animated.Value(0)).current;
+  const filtersHeight = useRef(new Animated.Value(0)).current;
+  const letterScaleAndOpacity = useRef(new Animated.Value(0)).current;
+  const filtersScaleAndOpacity = useRef(new Animated.Value(0)).current;
+
   const isEditingMode = useSelector(todoSelectors.editingMode);
   const editingTodos = useSelector(todoSelectors.editingTodos);
   const editingInput = useSelector(todoSelectors.editingInput);
-  const isMultipleEditing = editingTodos.length > 1 && isEditingMode;
-  const isSaveButtonShouldBeShown =
-    !isMultipleEditing && !editingTodos[0]?.completed && isEditingMode;
+  const isDeleteModalOpened = useSelector(todoSelectors.isDeleteModalOpened);
+  const formInput = useSelector(todoSelectors.formInput);
+  const userId = useSelector(authSelectors.userId);
+  const testMode = useSelector(authSelectors.testMode);
 
-  const addHandler = () =>
-    addTodoHandler(
-      formValue,
-      dispatchSelection(dispatch, todoThunks.todoAddThunk({ userId: 1, title: formValue })),
-      clearFormHandler(setFormValue, Keyboard),
-    );
+  const ItemStateClassParams = {
+    userId,
+    filter,
+    formInput,
+    titleColor,
+    editingInput,
+    editingTodos,
+    isEditingMode,
+    listScrollY,
+    letterWidth,
+    isDeleteModalOpened,
+    scrollAnimatedOffset,
+    filtersHeight,
+    chosenPriority,
+    letterScaleAndOpacity,
+    filtersScaleAndOpacity,
+    dispatch,
+    setFilter,
+    setTitleColor,
+    setChosenPriority,
+  };
 
-  const changeHandler = () =>
-    changeTodoHandler(
-      dispatchSelection(dispatch, todoThunks.todoChangeThunk(editingTodos[0]!.id, editingInput)),
-      clearFormHandler(setFormValue, Keyboard),
-    );
+  const ItemState = useMemo(
+    () => new TodoFormState(ItemStateClassParams),
+    Object.values(ItemStateClassParams),
+  );
 
-  const cancelAllHandler = () =>
-    cancelHandler(
-      dispatchSelection(dispatch, todoActions.todoEditModeOff()),
-      clearFormHandler(setFormValue, Keyboard),
-      setShowModal,
-    );
-
-  const deleteHandler = () =>
-    deleteTodoHandler(
-      dispatchSelection(dispatch, todoThunks.todoDeleteThunk(editingTodos)),
-      clearFormHandler(setFormValue, Keyboard),
-      setShowModal,
-    );
-
-  const selectAllHandler = () =>
-    selectAllTodosHandler(dispatchSelection(dispatch, todoActions.todoSelectAll()));
+  useAnimation(
+    listScrollY,
+    scrollAnimatedOffset,
+    letterScaleAndOpacity,
+    letterWidth,
+    ItemState.logoLetterWidth,
+  );
 
   return (
     <>
       <View style={styles.wrapepr}>
         {!isEditingMode ? (
-          <>
-            <Input
-              placeholder="Add new todo"
-              onChange={setFormValue}
-              value={formValue}
-              underlined
-            />
-            <ButtonIcon onPress={addHandler} variant="add" />
-          </>
+          <TodoFormInput
+            letterScaleAndOpacity={ItemState.letterScaleAndOpacity}
+            letterWidth={ItemState.letterWidth}
+            titleColor={ItemState.titleColor}
+            filter={ItemState.filter}
+            formValue={ItemState.formInput}
+            setFormValue={ItemState.changeFormInput}
+            filterOnChange={ItemState.onFilterClickHandler}
+            addOnChange={ItemState.addHandler}
+            setTitleColor={ItemState.setTitleColor}
+          />
         ) : (
-          <View
-            style={
-              isSaveButtonShouldBeShown || isMultipleEditing
-                ? styles.threeBtnEditBlock
-                : styles.twoBtnEditBlock
-            }
-            testID="btnWrapper"
-          >
-            {isSaveButtonShouldBeShown && <ButtonIcon onPress={changeHandler} variant="save" />}
-            {isMultipleEditing && <ButtonIcon onPress={selectAllHandler} variant="select-all" />}
-            <ButtonIcon onPress={() => setShowModal(true)} variant="delete" />
-            <ButtonIcon onPress={cancelAllHandler} variant="cancel" />
-          </View>
+          <TodoFormButtons
+            isMultipleEditing={ItemState.isMultipleEditing}
+            chosenPriority={ItemState.chosenPriority}
+            currentTodoPriority={ItemState.currentTodoPriority}
+            nonChosenPriorityButtons={ItemState.nonChosenPriorityButtons}
+            isSaveButtonShouldBeShown={ItemState.isSaveButtonShouldBeShown}
+            changeHandler={ItemState.changeHandler}
+            selectAllHandler={ItemState.selectAllHandler}
+            cancelAllHandler={ItemState.cancelAllHandler}
+            todoEditDeleteModalModeOn={ItemState.todoEditDeleteModalModeOn}
+          />
         )}
       </View>
       <ModalFC
-        showModal={showModal}
-        closeModal={() => setShowModal(false)}
-        itemsQuantity={editingTodos.length}
-        confirm={deleteHandler}
-        decline={cancelAllHandler}
+        showModal={isDeleteModalOpened}
+        confirm={ItemState.deleteHandler}
+        decline={ItemState.cancelAllHandler}
+        text={`Delete ${editingTodos.length} ${ItemState.isMultipleEditing ? 'todos' : 'todo'}?`}
       />
+      {!isEditingMode && !testMode && (
+        <ListFilter height={filtersHeight} scaleAndOpacity={filtersScaleAndOpacity} />
+      )}
     </>
   );
+};
+
+type Props = {
+  listScrollY: Animated.Value;
+  scrollAnimatedOffset: number;
+  chosenPriority: ImportantEnum | null;
+  setChosenPriority: (arg: ImportantEnum | null) => void;
 };

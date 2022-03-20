@@ -5,16 +5,21 @@ import globalStyle from '~global/constants.style';
 const styles = StyleSheet.create({
   text: {
     fontSize: globalStyle.ALERT_FS,
+    width: '100%',
+    textAlign: 'center',
   },
   wrapper: {
-    backgroundColor: globalStyle.LIGHT_SUCCESS_ALERT_BG,
     position: 'absolute',
     top: 70,
     width: 300,
     padding: 10,
     left: '50%',
     transform: [{ translateX: -150 }],
-    display: 'flex',
+    flexWrap: 'wrap',
+    flexShrink: 1,
+    borderRadius: 10,
+    zIndex: 999,
+    elevation: 999,
   },
   isShown: {
     display: 'flex',

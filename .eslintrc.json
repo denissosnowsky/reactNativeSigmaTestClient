@@ -50,7 +50,14 @@
     "no-shadow": 0,
     "prefer-destructuring": 0,
     "react-hooks/exhaustive-deps": 0,
-    "import/no-extraneous-dependencies": 0
+    "import/no-extraneous-dependencies": 0,
+    "react/no-array-index-key": 0,
+    "no-unneeded-ternary": 0,
+    "lines-between-class-members": 0,
+    "@typescript-eslint/no-unused-vars": 0,
+    "react/destructuring-assignment": 0,
+    "react/jsx-props-no-spreading": 0,
+    "prefer-regex-literals": 0
   },
   "overrides": [
     {
@@ -59,7 +66,8 @@
         "default-param-last": "off",
         "no-param-reassign": "off",
         "no-self-assign": "off",
-        "@typescript-eslint/no-unused-vars": "off"
+        "@typescript-eslint/no-unused-vars": "off",
+        "quotes": "off"
       }
     },
     {
@@ -83,6 +91,12 @@
       "files": ["src/navigation/**/*"],
       "rules": {
         "react/no-unstable-nested-components": "off"
+      }
+    },
+    {
+      "files": ["src/screens/auth/components/**/*"],
+      "rules": {
+        "quotes": "off"
       }
     }
   ],

@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'relative',
   },
+  wrapper: {
+    position: 'relative',
+    height: '100%',
+  },
   body: {
     width: '100%',
     flex: 1,
@@ -17,6 +21,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 50,
     zIndex: 2,
+    elevation: 3,
   },
   showAlert: {
     display: 'flex',

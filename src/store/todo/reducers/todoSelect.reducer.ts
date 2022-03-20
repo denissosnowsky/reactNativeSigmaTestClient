@@ -11,5 +11,6 @@ export const todoSelectReducer = {
   },
   todoDeselectOn(state: TodoState, action: PayloadAction<number>) {
     state.editingTodos = state.editingTodos.filter((todo) => todo.id !== action.payload);
+    state.editingInput = state.editingTodos[0].title;
   },
 };

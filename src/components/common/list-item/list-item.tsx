@@ -1,130 +1,79 @@
-import React, { Ref, useContext, useEffect, useRef, VFC } from 'react';
+import React, { Ref, useContext, useEffect, useMemo, useRef, VFC } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
-import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import globalStyles from '~global/constants.style';
-import { todoActions } from '~store/todo';
 import todosSelectors from '~store/todo/todo.selectors';
 import { ThemeContext } from '~contexts';
-import { dispatchSelection } from '~utils/dispatchSelection';
-import { BlueText } from '../text';
+import { ImportantEnum } from '~types/todo.types';
 import styles from './list-item.style';
-import { Input } from '../input';
-import { onCheckPressHandle } from './utils/onCheckPressHandle';
-import { onSelectHandler } from './utils/onSelectHandler';
+import { ListItemState } from './utils/listItemState';
+import { ListItemId } from './components/list-item-id';
+import { ListItemText } from './components/list-item-text';
+import { ListItemStatus } from './components/list-item-status';
 
 export const ListItem: VFC<Props> = ({
   id,
-  text,
-  complete,
-  editingMode,
-  onPressCheck,
-  onLongPress,
+  title,
+  completed,
+  important,
+  chosenPriority,
+  setChosenPriority,
 }) => {
+  const theme = useContext(ThemeContext);
   const dispatch = useDispatch();
+  const inputRef: Ref<HTMLInputElement> = useRef(null);
   const inputValue = useSelector(todosSelectors.editingInput);
   const isEdiditngMode = useSelector(todosSelectors.editingMode);
   const editingTodos = useSelector(todosSelectors.editingTodos);
-  const inputRef: Ref<HTMLInputElement> = useRef(null);
-  const isMultipleEditing = editingTodos.length > 1 && isEdiditngMode;
-  const isCurrentItemEditing = editingTodos.some((todo) => todo.id === id);
-  const isIdShouldBeShown = complete || !editingMode || isMultipleEditing;
-  const isUncompleteTodoIsEditing = editingMode && !complete && !isMultipleEditing;
-  const isTodoSelectedOrCompleted =
-    (complete && !isMultipleEditing) || (isCurrentItemEditing && isMultipleEditing);
-  const theme = useContext(ThemeContext);
+
+  const ItemState = useMemo(() => {
+    return new ListItemState(
+      completed,
+      chosenPriority,
+      inputValue,
+      isEdiditngMode,
+      editingTodos,
+      id,
+      dispatch,
+      setChosenPriority,
+    );
+  }, [completed, chosenPriority, inputValue, isEdiditngMode, editingTodos, id]);
 
   useEffect(() => {
     inputRef.current?.focus();
-  }, [editingMode]);
+  }, [ItemState.isCurrentItemEditing]);
 
   return (
     <TouchableWithoutFeedback
-      onLongPress={onLongPress}
+      onLongPress={ItemState.onLongPressTodoHandle}
       delayLongPress={globalStyles.DEALY_PRESS}
-      onPress={() =>
-        onSelectHandler(
-          isMultipleEditing,
-          isCurrentItemEditing,
-          dispatchSelection(dispatch, todoActions.todoDeselectOn(id)),
-          dispatchSelection(dispatch, todoActions.todoSelectOn(id)),
-        )
-      }
+      onPress={ItemState.onSelectTodoHandler}
       testID="list-item-wrapper"
     >
       <View
         style={[
           styles.wrapper,
-          editingMode && styles.active,
-          { backgroundColor: theme.listItemBG },
+          ItemState.isCurrentItemEditing && styles.active,
+          { backgroundColor: theme.listItemBG, elevation: -999 },
         ]}
       >
-        {isIdShouldBeShown && (
-          <View style={styles.id}>
-            <BlueText fs={globalStyles.MAIN_FS}>{`${id}.`}</BlueText>
-          </View>
-        )}
-        <View style={styles.text}>
-          {isUncompleteTodoIsEditing ? (
-            <Input
-              placeholder="Enter todo"
-              value={inputValue}
-              onChange={(value: string) => dispatch(todoActions.todoEditingInputChange(value))}
-              ref={inputRef}
-            />
-          ) : (
-            <BlueText fs={globalStyles.MAIN_FS} isCrossed={complete}>
-              {text}
-            </BlueText>
-          )}
-        </View>
-        <View style={styles.complete}>
-          {isUncompleteTodoIsEditing ? (
-            <MaterialCommunityIcons
-              testID="pencil"
-              name="pencil"
-              size={globalStyles.ICON_EXSM_SIZE}
-              color={globalStyles.LIGHT_CANCEL_COLOR}
-            />
-          ) : isTodoSelectedOrCompleted ? (
-            <AntDesign
-              name="checkcircle"
-              size={globalStyles.ICON_SM_SIZE}
-              color={globalStyles.SUCCESS_COLOR}
-              testID="check"
-              onPress={
-                isMultipleEditing
-                  ? () =>
-                      onSelectHandler(
-                        isMultipleEditing,
-                        isCurrentItemEditing,
-                        dispatchSelection(dispatch, todoActions.todoDeselectOn(id)),
-                        dispatchSelection(dispatch, todoActions.todoSelectOn(id)),
-                      )
-                  : () => onCheckPressHandle(onPressCheck)
-              }
-            />
-          ) : (
-            <MaterialCommunityIcons
-              name="checkbox-blank-circle-outline"
-              testID="circle-blank"
-              size={globalStyles.ICON_SM_SIZE}
-              color={globalStyles.ICON_DEF_COLOR}
-              onPress={
-                isMultipleEditing
-                  ? () =>
-                      onSelectHandler(
-                        isMultipleEditing,
-                        isCurrentItemEditing,
-                        dispatchSelection(dispatch, todoActions.todoDeselectOn(id)),
-                        dispatchSelection(dispatch, todoActions.todoSelectOn(id)),
-                      )
-                  : () => onCheckPressHandle(onPressCheck)
-              }
-            />
-          )}
-        </View>
+        <ListItemId id={id} priorityType={important} isShown={ItemState.isIdShouldBeShown} />
+        <ListItemText
+          text={title}
+          ref={inputRef}
+          onChange={(value: string) => ItemState.onInputChangeHandler(value)}
+          inputValue={inputValue}
+          isCompleted={completed}
+          isEditing={ItemState.isUncompletedAndSoleEditingMode}
+        />
+        <ListItemStatus
+          isTodoSolelyEditing={ItemState.isUncompletedAndSoleEditingMode}
+          isTodoSelectedOrCompleted={ItemState.isTodoSelectedOrCompleted}
+          isMultipleEditingMode={ItemState.isMultipleEditingMode}
+          onSelectTodoHandler={ItemState.onSelectTodoHandler}
+          onCheckPressTodoHandle={ItemState.onCheckPressTodoHandle}
+        />
       </View>
     </TouchableWithoutFeedback>
   );
@@ -132,9 +81,9 @@ export const ListItem: VFC<Props> = ({
 
 type Props = {
   id: number;
-  text: string;
-  complete: boolean;
-  editingMode?: boolean;
-  onPressCheck: () => void;
-  onLongPress: () => void;
+  title: string;
+  completed: boolean;
+  important: ImportantEnum;
+  chosenPriority: ImportantEnum | null;
+  setChosenPriority: (arg: ImportantEnum | null) => void;
 };

@@ -1,17 +1,69 @@
-import React, { useContext, VFC } from 'react';
-import { Text, View } from 'react-native';
+import React, { useContext, useState, VFC } from 'react';
+import { Button } from 'native-base';
+import { Image, ScrollView, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import * as ImagePicker from 'expo-image-picker';
+
+import { authThunks } from '~store/auth/thunks';
+import { authActions } from '~store/auth';
 import { Theme } from '~components/containers/theme';
+import authSelectors from '~store/auth/auth.selectors';
+import { todoActions } from '~store/todo';
 import { ThemeContext } from '~contexts';
-
+import { ButtonIcon } from '~components/common/button-icon';
+import globalStyles from '~global/constants.style';
+import { Loading } from '~components/common/loading';
 import styles from './profile.style';
+import { ProfilePhoto } from './components/profile-photo/profile-photo';
+import { ProflieInfo } from './components/profile-info/profile-info';
+import { ButtonOut } from './components/button-out/button-out';
 
-export const Profile: VFC = () => {
+const Profile: VFC = () => {
   const theme = useContext(ThemeContext);
-  return (
-    <Theme>
-      <View style={[styles.container, { backgroundColor: theme.background }]}>
-        <Text>Profile Page</Text>
+  const dispatch = useDispatch();
+
+  const testMode = useSelector(authSelectors.testMode);
+  const isLoading = useSelector(authSelectors.isLoading);
+
+  const onSignOut = () => {
+    if (testMode) {
+      dispatch(authActions.authTestModeOff());
+      dispatch(todoActions.todoResetAll());
+    } else {
+      dispatch(authThunks.authSignOutThunk());
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <View style={styles.loading}>
+        <Loading />
       </View>
+    );
+  }
+
+  return (
+    <Theme scaleAndOpacity={1}>
+      {testMode ? (
+        <View style={[styles.testWrapper, { backgroundColor: theme.background }]}>
+          <ButtonOut onPress={onSignOut} />
+        </View>
+      ) : (
+        <ScrollView style={[styles.container, { backgroundColor: theme.background }]}>
+          <ButtonIcon
+            variant="logout"
+            onPress={onSignOut}
+            size={globalStyles.ICON_SM_SIZE}
+            style={styles.logout}
+          />
+          <View style={styles.wrapper}>
+            <ProfilePhoto />
+            <ProflieInfo />
+          </View>
+        </ScrollView>
+      )}
     </Theme>
   );
 };
+
+export default Profile;

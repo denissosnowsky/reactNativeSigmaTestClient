@@ -1,9 +1,11 @@
 export default {
   SUCCESS_COLOR: '#21B017',
   DELETE_COLOR: 'red',
+  WHITE_COLOR: '#fff',
 
   LIGHT_BACKGROUND_COLOR: '#FFF69C',
-  LIGHT_SUCCESS_ALERT_BG: 'rgba(255, 117, 120, 0.9)',
+  LIGHT_ERROR_ALERT_BG: 'rgba(255, 117, 120, 0.9)',
+  LIGHT_SUCCESS_ALERT_BG: 'rgba(117, 255, 179, 0.9)',
   LIGHT_MAIN_COLOR: '#362EFF',
   LIGHT_NB_GREY_COLOR: 'coolGray.800',
   LIGHT_PLACEHOLDER_COLOR: '#618EFF',
@@ -24,13 +26,16 @@ export default {
   DARK_CANCEL_COLOR: '#000',
 
   ICON_MED_SIZE: 50,
-  ICON_SM_SIZE: 35,
-  ICON_EXSM_SIZE: 30,
+  ICON_SM_SIZE: 40,
+  ICON_EXSM_SIZE: 25,
   ICON_DEF_COLOR: '#000',
+  ICON_ARROW_SIZE: 30,
 
+  SM_FS: 17,
   MAIN_FS: 20,
   ALERT_FS: 23,
   BIG_FS: 35,
+  MID_FS: 25,
 
   CONTAINER_WD: '75%',
   FULL_WD: '100%',
@@ -52,4 +57,8 @@ export default {
   HEADER_COLOR_7: '#000000',
 
   TAB_BAR_FS: 12,
+
+  HIGH_P_COLOR: 'red',
+  NORMAL_P_COLOR: 'orange',
+  LOW_P_COLOR: 'green',
 };

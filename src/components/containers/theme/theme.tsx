@@ -1,34 +1,37 @@
 import React, { FC } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Animated, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Ionicons } from '@expo/vector-icons';
 
 import { themeActions } from '~store/theme';
 import themeSelectors from '~store/theme/theme.selectors';
-import { dispatchSelection } from '~utils/dispatchSelection';
 import styles from './theme.styles';
-import { switchThemeHandler } from './utils/switchThemeHandler';
+import { ThemeIcon } from './components/theme-icon';
 
-export const Theme: FC = ({ children }) => {
+export const Theme: FC<Props> = ({ children, scaleAndOpacity }) => {
   const dispatch = useDispatch();
   const isLightMode = useSelector(themeSelectors.isLightMode);
 
   const switchHandler = () => {
-    switchThemeHandler(dispatchSelection(dispatch, themeActions.switchThemeOn()));
+    dispatch(themeActions.switchThemeOn());
   };
 
   return (
     <>
       {children}
-      <View style={styles.wrapepr}>
+      <Animated.View
+        style={[
+          styles.wrapepr,
+          { transform: [{ scale: scaleAndOpacity }], opacity: scaleAndOpacity },
+        ]}
+      >
         <TouchableOpacity onPress={switchHandler}>
-          {isLightMode ? (
-            <Ionicons name="md-sunny" size={50} color="orange" testID="sun" />
-          ) : (
-            <Ionicons name="moon" size={50} color="#fff" testID="moon" />
-          )}
+          <ThemeIcon isLightMode={isLightMode} />
         </TouchableOpacity>
-      </View>
+      </Animated.View>
     </>
   );
+};
+
+type Props = {
+  scaleAndOpacity: Animated.Value | number;
 };
